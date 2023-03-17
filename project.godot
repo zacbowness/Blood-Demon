@@ -12,7 +12,6 @@ config_version=4
 
 config/name="Sidescroller 2D"
 run/main_scene="res://Scenes/Main.tscn"
-config/icon="res://icon.png"
 
 [gui]
 

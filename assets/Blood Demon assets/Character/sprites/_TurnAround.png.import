@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/_Idle.png-0a5a61693ac8ae506d4a6d81ed0c10ba.stex"
+path="res://.import/_TurnAround.png-1fdcb9adad1850d0d660bb6370c8a55b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://_Idle.png"
-dest_files=[ "res://.import/_Idle.png-0a5a61693ac8ae506d4a6d81ed0c10ba.stex" ]
+source_file="res://assets/Blood Demon assets/Character/sprites/_TurnAround.png"
+dest_files=[ "res://.import/_TurnAround.png-1fdcb9adad1850d0d660bb6370c8a55b.stex" ]
 
 [params]
 

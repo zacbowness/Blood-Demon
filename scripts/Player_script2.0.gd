@@ -22,19 +22,27 @@ func _physics_process(delta):
 		motion.x += ACCEL
 		$Camera2D.offset_h = .55
 		$AnimatedSprite.play("Run")
-		$AnimatedSprite.scale.x = 1
-		$CollisionShape2D.position.x = 0
 	elif Input.is_action_pressed("move_left"):
 		motion.x -= ACCEL
 		$Camera2D.offset_h = -.55
 		$AnimatedSprite.play("Run")
-		$AnimatedSprite.scale.x = -1
-		$CollisionShape2D.position.x = 10
 	else:
 		motion.x = lerp(motion.x, 0, 0.2)
 		$AnimatedSprite.play("Idle")
 	
+	var direction = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 	
+	if motion.x > 0:
+		$AnimatedSprite.scale.x = 1
+	elif motion.x < 0:
+		$AnimatedSprite.scale.x = -1
+	elif motion.x == 0:
+		$AnimatedSprite.play("Idle")
+	
+	if motion.x >= 0 and direction <0:
+		$AnimatedSprite.play("Turn Around")
+	elif motion.x <= 0 and direction >0:
+		$AnimatedSprite.play("Turn Around")
 	
 	if is_on_floor():
 		if Input.is_action_pressed("jump"):
@@ -49,8 +57,3 @@ func _physics_process(delta):
 	
 	motion = move_and_slide(motion, UP)
 
-func turn_around():
-	$AnimatedSprite.play("Turn Around")
-	print(1)
-	facing_right = not facing_right
-	$AnimatedSprite.flip_h = not $AnimatedSprite.flip_h

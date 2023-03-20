@@ -1,15 +1,57 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=54 format=2]
 
-[ext_resource path="res://assets/Blood Demon assets/Character/sprites/_Idle.png" type="Texture" id=1]
-[ext_resource path="res://assets/Blood Demon assets/Character/sprites/_Jump.png" type="Texture" id=2]
-[ext_resource path="res://assets/Blood Demon assets/Character/sprites/_Run.png" type="Texture" id=3]
-[ext_resource path="res://assets/Blood Demon assets/Character/sprites/_JumpFallInbetween.png" type="Texture" id=4]
-[ext_resource path="res://assets/Blood Demon assets/Character/sprites/_Fall.png" type="Texture" id=5]
+[ext_resource path="res://assets/Character/sprites/_Idle.png" type="Texture" id=1]
+[ext_resource path="res://assets/Character/sprites/_Jump.png" type="Texture" id=2]
+[ext_resource path="res://assets/Character/sprites/_Run.png" type="Texture" id=3]
+[ext_resource path="res://assets/Character/sprites/_JumpFallInbetween.png" type="Texture" id=4]
+[ext_resource path="res://assets/Character/sprites/_Fall.png" type="Texture" id=5]
 [ext_resource path="res://scripts/Player_script2.0.gd" type="Script" id=6]
-[ext_resource path="res://assets/Blood Demon assets/Character/sprites/_TurnAround.png" type="Texture" id=7]
+[ext_resource path="res://assets/Character/sprites/_TurnAround.png" type="Texture" id=7]
+[ext_resource path="res://assets/Character/sprites/_Attack.png" type="Texture" id=8]
+[ext_resource path="res://assets/Character/sprites/_Attack2.png" type="Texture" id=9]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 11.5, 19 )
+[sub_resource type="RectangleShape2D" id=44]
+extents = Vector2( 8, 19 )
+
+[sub_resource type="AtlasTexture" id=34]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 120, 80 )
+
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 8 )
+region = Rect2( 120, 0, 120, 80 )
+
+[sub_resource type="AtlasTexture" id=36]
+atlas = ExtResource( 8 )
+region = Rect2( 240, 0, 120, 80 )
+
+[sub_resource type="AtlasTexture" id=37]
+atlas = ExtResource( 8 )
+region = Rect2( 360, 0, 120, 80 )
+
+[sub_resource type="AtlasTexture" id=38]
+atlas = ExtResource( 9 )
+region = Rect2( 0, 0, 120, 80 )
+
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 9 )
+region = Rect2( 120, 0, 120, 80 )
+
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 9 )
+region = Rect2( 240, 0, 120, 80 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 9 )
+region = Rect2( 360, 0, 120, 80 )
+
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 9 )
+region = Rect2( 480, 0, 120, 80 )
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 9 )
+region = Rect2( 600, 0, 120, 80 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 5 )
@@ -137,6 +179,16 @@ region = Rect2( 240, 0, 120, 80 )
 
 [sub_resource type="SpriteFrames" id=30]
 animations = [ {
+"frames": [ SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ) ],
+"loop": true,
+"name": "Attack",
+"speed": 15.0
+}, {
+"frames": [ SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ), SubResource( 42 ), SubResource( 43 ) ],
+"loop": true,
+"name": "Attack2",
+"speed": 17.0
+}, {
 "frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
 "name": "Fall",
@@ -160,7 +212,7 @@ animations = [ {
 "frames": [ SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ), SubResource( 25 ), SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 29 ) ],
 "loop": true,
 "name": "Run",
-"speed": 15.0
+"speed": 17.0
 }, {
 "frames": [ SubResource( 31 ), SubResource( 32 ), SubResource( 33 ) ],
 "loop": false,
@@ -168,12 +220,15 @@ animations = [ {
 "speed": 25.0
 } ]
 
+[sub_resource type="RectangleShape2D" id=45]
+extents = Vector2( 14.5, 19.5 )
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 6 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 21 )
-shape = SubResource( 1 )
+[node name="HitBox" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 21 )
+shape = SubResource( 44 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -184,7 +239,7 @@ current = true
 zoom = Vector2( 0.4, 0.4 )
 limit_smoothed = true
 smoothing_enabled = true
-smoothing_speed = 10.0
+smoothing_speed = 8.0
 offset_h = 0.55
 offset_v = 0.03
 editor_draw_limits = true
@@ -195,9 +250,18 @@ __meta__ = {
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 4.5, 0 )
 frames = SubResource( 30 )
-animation = "Idle"
-frame = 6
+animation = "Attack"
+frame = 2
 playing = true
 __meta__ = {
 "_edit_group_": true
 }
+
+[node name="AttackArea" type="Area2D" parent="." groups=["Sword"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2( 44.5, 19.5 )
+shape = SubResource( 45 )
+disabled = true
+
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]

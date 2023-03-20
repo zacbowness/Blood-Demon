@@ -58,6 +58,10 @@ animation = "Idle"
 frame = 5
 
 [node name="Enemy" parent="." instance=ExtResource( 1 )]
-position = Vector2( -91, 162 )
+position = Vector2( -83, 161 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [editable path="Player"]
+[editable path="Enemy"]

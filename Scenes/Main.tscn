@@ -60,7 +60,7 @@ limit_bottom = 234
 
 [node name="AnimatedSprite" parent="Player" index="2"]
 animation = "Idle"
-frame = 6
+frame = 2
 
 [node name="Enemy" parent="." instance=ExtResource( 1 )]
 position = Vector2( 163, -33 )

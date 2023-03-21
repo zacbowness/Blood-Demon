@@ -1,12 +1,16 @@
 extends KinematicBody2D
 
 const UP = Vector2(0, -1)
-const GRAVITY = 15*2
-const MAXFALLSPEED = 200*2
-const MAXSPEED = 80*2
-const JUMPFORCE = 200*2
-const ACCEL = 10*2
+export var GRAVITY = 15*2
+export var MAXFALLSPEED = 200*2
+export var MAXSPEED = 80*2
+export var SPRINTMOD = 2.0
+export var JUMPFORCE = 200*2
+export var ACCEL = 10*2
+export var ATTACKPUSH = 30
 
+
+var isSprinting = false
 var isAttacking = false
 var attackAlt = false
 var motion = Vector2()
@@ -23,11 +27,27 @@ func _physics_process(delta):
 
 func update_movement():
 	if Input.is_action_pressed("move_right"):
-		motion.x += ACCEL
-		$Camera2D.offset_h = .55
+#		Check if sprinting:
+		if Input.is_action_pressed("move_right") and Input.is_action_just_pressed("sprint"):
+			MAXSPEED = SPRINTMOD*MAXSPEED
+			motion.x += ACCEL
+			$Camera2D.offset_h = .55
+		if Input.is_action_just_released("sprint"):
+			MAXSPEED = MAXSPEED/SPRINTMOD
+		else:
+			motion.x += ACCEL
+			$Camera2D.offset_h = .55
 	elif Input.is_action_pressed("move_left"):
-		motion.x -= ACCEL
-		$Camera2D.offset_h = -.55
+#		Check if sprinting:
+		if Input.is_action_pressed("move_left") and Input.is_action_just_pressed("sprint"):
+			MAXSPEED = SPRINTMOD*MAXSPEED
+			motion.x -= ACCEL
+		if Input.is_action_just_released("sprint"):
+			MAXSPEED = MAXSPEED/SPRINTMOD
+			$Camera2D.offset_h = -.55
+		else:
+			motion.x-= ACCEL
+			$Camera2D.offset_h = -.55
 	else:
 		motion.x = lerp(motion.x, 0, 0.2)
 	
@@ -36,7 +56,8 @@ func update_movement():
 			motion.y = -JUMPFORCE
 	
 	if Input.is_action_pressed("attack"):
-		motion.x += 30*$AnimatedSprite.scale.x
+		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
+
 
 func apply_gravity():
 	motion.y += GRAVITY

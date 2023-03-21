@@ -4,7 +4,7 @@
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=25]
-extents = Vector2( 18, 25.5 )
+extents = Vector2( 12.5, 25.5 )
 
 [sub_resource type="Animation" id=53]
 resource_name = "Attack"
@@ -72,13 +72,13 @@ tracks/0/keys = {
 }
 
 [sub_resource type="RectangleShape2D" id=24]
-extents = Vector2( 24, 21.5 )
+extents = Vector2( 28.5, 21.5 )
 
 [sub_resource type="RectangleShape2D" id=23]
-extents = Vector2( 26, 26.5 )
+extents = Vector2( 28.5, 26.5 )
 
 [sub_resource type="RectangleShape2D" id=26]
-extents = Vector2( 4.5, 25.5 )
+extents = Vector2( 4.5, 3.75 )
 
 [node name="Enemy" type="KinematicBody2D"]
 position = Vector2( 437, 305 )
@@ -87,18 +87,19 @@ collision_mask = 0
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 3, 0.5 )
+position = Vector2( 3.5, 0.5 )
 shape = SubResource( 25 )
 
 [node name="EnemyHitBox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitBox"]
-position = Vector2( 3, 0.5 )
+position = Vector2( 4, 0.5 )
 shape = SubResource( 25 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 hframes = 28
+frame = 24
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 reset_on_save = false
@@ -115,14 +116,14 @@ monitorable = false
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 modulate = Color( 0.14902, 0, 1, 1 )
 self_modulate = Color( 0, 0.0392157, 1, 1 )
-position = Vector2( 49, -5.5 )
+position = Vector2( 44.5, -5.5 )
 shape = SubResource( 24 )
 
 [node name="PlayerDetector" type="Area2D" parent="."]
 collision_layer = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
-position = Vector2( 47, -0.5 )
+position = Vector2( 44.5, -0.5 )
 shape = SubResource( 23 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
@@ -132,12 +133,12 @@ collision_mask = 2
 
 [node name="WallDetector" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallDetector"]
-position = Vector2( 25.5, 0.5 )
+position = Vector2( 21, -1 )
 shape = SubResource( 26 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_PlayerDetector_body_entered"]
 [connection signal="body_exited" from="PlayerDetector" to="." method="_on_PlayerDetector_body_exited"]
+[connection signal="body_entered" from="WallDetector" to="." method="_on_WallDetector_body_entered"]

@@ -55,10 +55,10 @@ limit_bottom = 234
 
 [node name="AnimatedSprite" parent="Player" index="2"]
 animation = "Idle"
-frame = 5
+frame = 3
 
 [node name="Enemy" parent="." instance=ExtResource( 1 )]
-position = Vector2( -83, 161 )
+position = Vector2( -222, -28 )
 __meta__ = {
 "_edit_group_": true
 }

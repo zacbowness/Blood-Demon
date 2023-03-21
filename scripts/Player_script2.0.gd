@@ -2,10 +2,10 @@ extends KinematicBody2D
 
 const UP = Vector2(0, -1)
 export var GRAVITY = 15*2
-export var MAXFALLSPEED = 200*2
-export var MAXSPEED = 80*2
-export var SPRINTMOD = 1.5
-export var JUMPFORCE = 200*2
+export var MAXFALLSPEED = 300*2
+export var MAXSPEED = 90*2
+export var SPRINTMOD = 2.0
+export var JUMPFORCE = 290*2
 export var ACCEL = 10*2
 export var ATTACKPUSH = 100*2
 
@@ -18,12 +18,13 @@ func _physics_process(delta):
 	apply_gravity()
 	
 	update_movement()
-	
+
 	animate_sprite()
 	
 	motion = move_and_slide(motion, UP)
 
 func update_movement():
+#	// MOVE LEFT & RIGHT //
 	if Input.is_action_pressed("move_right"):
 		motion.x += ACCEL
 		$Camera2D.offset_h = .55
@@ -33,19 +34,37 @@ func update_movement():
 	else:
 		motion.x = lerp(motion.x, 0, 0.2)
 	
+#	// SPRINTING //
 	if Input.is_action_pressed("sprint"):
 		MAXSPEED = lerp(MAXSPEED, 180*SPRINTMOD, 0.5)
 	else:
-		MAXSPEED = lerp(MAXSPEED, 180, 0.05)
+		MAXSPEED = lerp(MAXSPEED, 180, 0.1)
 	
+#	// MAXSPEED LIMIT //
 	motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)
 	
+#	// JUMPING //
 	if is_on_floor():
 		if Input.is_action_pressed("jump"):
 			motion.y = -JUMPFORCE
 	
+#	// ATTACK MOTION //
 	if Input.is_action_just_pressed("attack"):
 		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
+	
+#	// ATTACK AREA ENABLING //
+	if ($AnimatedSprite.animation == "Attack"):
+		if $AnimatedSprite.frame == 1 or $AnimatedSprite.frame == 2:
+			$AttackArea/CollisionShape2D.disabled = false
+			z_index = 1
+		else:$AttackArea/CollisionShape2D.disabled = true
+	elif $AnimatedSprite.animation == "Attack2":
+		if $AnimatedSprite.frame == 2:
+			$AttackArea/CollisionShape2D.disabled = false
+			z_index = 1
+		else:$AttackArea/CollisionShape2D.disabled = true
+	else:
+		z_index = 0
 
 func apply_gravity():
 	motion.y += GRAVITY
@@ -53,13 +72,15 @@ func apply_gravity():
 		motion.y = MAXFALLSPEED
 
 func animate_sprite():
-	
+#	// HANDLING ANIMATIONS //
 	if not isAttacking:
+	#	// MOVE LEFT & RIGHT //
 		if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"):
 			$AnimatedSprite.play("Run")
 		else:
 			$AnimatedSprite.play("Idle")
 		
+	#	// JUMPING //
 		if not is_on_floor():
 			if motion.y < 0:
 				$AnimatedSprite.play("Jump")
@@ -68,38 +89,39 @@ func animate_sprite():
 			else:
 				$AnimatedSprite.play("Fall")
 		
+	#	// SPRINTING //
 		if Input.is_action_pressed("sprint"):
-			$AnimatedSprite.speed_scale = 1.3
+			$AnimatedSprite.speed_scale = abs(motion.x/200)
 		else:
 			$AnimatedSprite.speed_scale = 1
 		
+	#	// TURN AROUND ANIM //
 		var direction = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
-		if (motion.x > 0 and direction <0) or (motion.x < 0 and direction >0):
+		if ((motion.x > 140 and direction <0) or (motion.x < -140 and direction >0)):
 			if is_on_floor():
 				$AnimatedSprite.play("Turn Around")
 	
+#	// FLIP SPRITE & HITBOXES //
 	if motion.x > 0:
 		$AnimatedSprite.scale.x = 1
 		$HitBox.position.x = 0
-		$AttackArea/CollisionShape2D.position.x = 44.5
+		$AttackArea/CollisionShape2D.position.x = 40
 	elif motion.x < 0:
 		$AnimatedSprite.scale.x = -1
 		$HitBox.position.x = 10
-		$AttackArea/CollisionShape2D.position.x = -44.5
+		$AttackArea/CollisionShape2D.position.x = -30
 	
-	
+#	// ATTACK ANIM //
 	if Input.is_action_just_pressed("attack"):
 		$AnimatedSprite.speed_scale = 1
 		if not attackAlt:
 			$AnimatedSprite.play("Attack")
 		else:
 			$AnimatedSprite.play("Attack2")
-		$AttackArea/CollisionShape2D.disabled = false
 		isAttacking = true;
 		attackAlt = not attackAlt
-		
 
 func _on_AnimatedSprite_animation_finished():
+#	// STOP ATTACK STATE //
 	if $AnimatedSprite.animation == "Attack" or $AnimatedSprite.animation == "Attack2":
-		$AttackArea/CollisionShape2D.disabled = true
 		isAttacking = false;

@@ -19,6 +19,10 @@ func _process(delta):
 		detect_turn_around()
 	if ($AnimationPlayer.current_animation == "Attack"):
 		return	
+	if is_on_wall():
+		is_moving_right = !is_moving_right
+		scale.x = -scale.x
+	
 	
 func move_character():
 	velocity.x = -speed if is_moving_right else speed
@@ -30,10 +34,6 @@ func detect_turn_around():
 		is_moving_right = !is_moving_right
 		scale.x = -scale.x
 
-func _on_WallDetector_body_entered(body):
-	is_moving_right = !is_moving_right
-	scale.x = -scale.x
-		
 func _on_PlayerDetector_body_entered(body):
 	$AnimationPlayer.play("Attack")
 	inRange = true 
@@ -55,4 +55,4 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			isAttacking = false 
 			$AnimationPlayer.play("Walk")
 		
-		
+

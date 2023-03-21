@@ -4,10 +4,10 @@ const UP = Vector2(0, -1)
 export var GRAVITY = 15*2
 export var MAXFALLSPEED = 200*2
 export var MAXSPEED = 80*2
-export var SPRINTMOD = 2.0
+export var SPRINTMOD = 1.5
 export var JUMPFORCE = 200*2
 export var ACCEL = 10*2
-export var ATTACKPUSH = 30
+export var ATTACKPUSH = 100*2
 
 var isSprinting = false
 var isAttacking = false
@@ -34,10 +34,12 @@ func update_movement():
 		motion.x = lerp(motion.x, 0, 0.2)
 	
 	if Input.is_action_pressed("sprint"):
-		motion.x = clamp(motion.x, -MAXSPEED*SPRINTMOD, MAXSPEED*SPRINTMOD)
+		MAXSPEED = lerp(MAXSPEED, 180*SPRINTMOD, 0.5)
 	else:
-		motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)
-
+		MAXSPEED = lerp(MAXSPEED, 180, 0.05)
+	
+	motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)
+	
 	if is_on_floor():
 		if Input.is_action_pressed("jump"):
 			motion.y = -JUMPFORCE
@@ -66,6 +68,11 @@ func animate_sprite():
 			else:
 				$AnimatedSprite.play("Fall")
 		
+		if Input.is_action_pressed("sprint"):
+			$AnimatedSprite.speed_scale = 1.3
+		else:
+			$AnimatedSprite.speed_scale = 1
+		
 		var direction = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 		if (motion.x > 0 and direction <0) or (motion.x < 0 and direction >0):
 			if is_on_floor():
@@ -79,15 +86,18 @@ func animate_sprite():
 		$AnimatedSprite.scale.x = -1
 		$HitBox.position.x = 10
 		$AttackArea/CollisionShape2D.position.x = -44.5
-
+	
+	
 	if Input.is_action_just_pressed("attack"):
+		$AnimatedSprite.speed_scale = 1
 		if not attackAlt:
 			$AnimatedSprite.play("Attack")
 		else:
 			$AnimatedSprite.play("Attack2")
+		$AttackArea/CollisionShape2D.disabled = false
 		isAttacking = true;
 		attackAlt = not attackAlt
-		$AttackArea/CollisionShape2D.disabled = false
+		
 
 func _on_AnimatedSprite_animation_finished():
 	if $AnimatedSprite.animation == "Attack" or $AnimatedSprite.animation == "Attack2":

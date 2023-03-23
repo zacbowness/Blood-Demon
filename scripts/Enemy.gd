@@ -1,4 +1,5 @@
 extends KinematicBody2D
+signal hit
 
 var is_moving_right = true 
 
@@ -12,8 +13,8 @@ var inRange = false
 func _ready():
 	$AnimationPlayer.play("Walk")
 
+
 func _process(delta):
-	#print(isAttacking)
 	if (isAttacking != true && inRange == false && $AnimationPlayer.current_animation != "Attack"):
 		move_character()
 		detect_turn_around()
@@ -55,4 +56,10 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			isAttacking = false 
 			$AnimationPlayer.play("Walk")
 		
+
+func _on_HitBox_body_entered(body):
+	emit_signal("hit")
+
+
+
 

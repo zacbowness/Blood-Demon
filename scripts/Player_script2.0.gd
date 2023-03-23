@@ -135,7 +135,12 @@ func _set_health(value):
 
 
 func _on_PlayerHurtbox_area_entered(area):
+	takeDamage()
+	
+func takeDamage():
 	print("ouch")
 	blinker.start_blinking(self,invincibility_duration)
-	hurtbox.start_invincibility(invincibility_duration)
-	
+	hurtbox.start_invincibility(invincibility_duration)	
+
+func _on_Enemy_hit():
+	takeDamage()

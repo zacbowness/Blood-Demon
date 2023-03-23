@@ -66,7 +66,7 @@ limit_bottom = 234
 
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 7 )
-frame = 5
+frame = 8
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 collision_mask = 1
@@ -78,6 +78,8 @@ scale = Vector2( 1.25, 1.25 )
 __meta__ = {
 "_edit_group_": true
 }
+
+[connection signal="hit" from="Enemy" to="Player" method="_on_Enemy_hit"]
 
 [editable path="Player"]
 [editable path="Player/PlayerHurtbox"]

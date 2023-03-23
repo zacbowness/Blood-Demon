@@ -118,10 +118,12 @@ func animate_sprite():
 	if motion.x > 0:
 		$AnimatedSprite.scale.x = 1
 		$HitBox.position.x = 0
+		$PlayerHurtbox.position.x = 0
 		$AttackArea/CollisionShape2D.position.x = 40
 	elif motion.x < 0:
 		$AnimatedSprite.scale.x = -1
 		$HitBox.position.x = 10
+		$PlayerHurtbox.position.x = 10
 		$AttackArea/CollisionShape2D.position.x = -30
 
 #	// ATTACK ANIM //

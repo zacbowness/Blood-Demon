@@ -251,7 +251,6 @@ __meta__ = {
 position = Vector2( 4.5, 0 )
 frames = SubResource( 30 )
 animation = "Attack"
-frame = 2
 playing = true
 __meta__ = {
 "_edit_group_": true

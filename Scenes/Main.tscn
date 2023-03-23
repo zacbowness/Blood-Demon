@@ -47,9 +47,6 @@ collision_mask = 6
 __meta__ = {
 "_edit_group_": true
 }
-MAXSPEED = 180
-SPRINTMOD = 2.3
-JUMPFORCE = 590
 
 [node name="Camera2D" parent="Player" index="1"]
 zoom = Vector2( 0.5, 0.5 )
@@ -60,7 +57,7 @@ limit_bottom = 234
 
 [node name="AnimatedSprite" parent="Player" index="2"]
 animation = "Idle"
-frame = 6
+frame = 2
 
 [node name="Enemy" parent="." instance=ExtResource( 1 )]
 position = Vector2( 163, -33 )

@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal hit 
+
 var is_moving_right = true 
 
 var gravity = 9.8
@@ -43,6 +45,8 @@ func hit():
 
 func end_of_hit():
 	$HitBox.monitoring = false  
+	
+
 
 func _on_PlayerDetector_body_exited(body):
 	inRange = false 
@@ -56,3 +60,5 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			$AnimationPlayer.play("Walk")
 		
 
+func _on_HitBox_body_entered(body):
+	emit_signal("hit")

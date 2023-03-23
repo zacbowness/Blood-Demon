@@ -35,7 +35,7 @@ func _physics_process(delta):
 	motion = move_and_slide(motion, UP)
 
 func update_movement():
-	#	// MOVE LEFT & RIGHT //
+#	// MOVE LEFT & RIGHT //
 	if Input.is_action_pressed("move_right"):
 		motion.x += ACCEL
 		$Camera2D.offset_h = .55

@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 signal health_updated(health)
 signal killed()
+signal hitEnemy()
 
 const invincibility_duration = 1.5
 onready var hurtbox = $PlayerHurtbox
@@ -167,3 +168,7 @@ func takeDamage():
 
 func _on_Enemy_hit():
 	takeDamage()
+
+
+func _on_AttackArea_body_entered(body):
+	emit_signal("hitEnemy")

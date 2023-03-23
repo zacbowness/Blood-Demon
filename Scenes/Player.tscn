@@ -324,6 +324,7 @@ __meta__ = {
 }
 
 [node name="AttackArea" type="Area2D" parent="." groups=["Sword"]]
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 position = Vector2( 44.5, 19.5 )
@@ -342,6 +343,7 @@ shape = SubResource( 60 )
 [node name="Blinker" parent="." instance=ExtResource( 14 )]
 
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[connection signal="body_entered" from="AttackArea" to="." method="_on_AttackArea_body_entered"]
 [connection signal="area_entered" from="PlayerHurtbox" to="." method="_on_PlayerHurtbox_area_entered"]
 
 [editable path="PlayerHurtbox"]

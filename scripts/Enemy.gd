@@ -61,11 +61,10 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 func death():
 	$HitBox.monitoring = false  
 	hide()
+	queue_free()
 
 func _on_HitBox_body_entered(body):
 	emit_signal("hit", damage, is_moving_right)
 
-func _on_Player_hitEnemy():
-	$AnimationPlayer.play("Death")
-	$CollisionShape2D.free()
-	speed = 0
+
+	

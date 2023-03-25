@@ -180,8 +180,10 @@ func takeDamage(damage):
 
 
 func _on_AttackArea_body_entered(body):
-	emit_signal("hitEnemy")
-
+	if "Skeleton" in body.name:
+		body.death()
+	elif "Goblin" in body.name:
+		body.death()
 
 func _on_Enemy_hit(damage, dir_right):
 	takeDamage(damage)

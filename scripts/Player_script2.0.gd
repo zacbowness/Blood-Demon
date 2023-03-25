@@ -79,7 +79,6 @@ func update_movement():
 	else:
 		z_index = 0
 
-
 func apply_gravity():
 	motion.y += GRAVITY
 	if motion.y > MAXFALLSPEED:
@@ -149,7 +148,7 @@ func damage (amount):
 		_set_health(health - amount)
 
 #Stops player from getting hit or moving when dead
-func kill():
+func die():
 	set_physics_process(false)
 	apply_gravity()
 	$AnimatedSprite.play("Death") 
@@ -163,7 +162,7 @@ func _set_health(value):
 		emit_signal("health_updated", health)
 		print (health) 
 		if health == 0:
-			kill()
+			die()
 			emit_signal("killed")
 
 func _on_PlayerHurtbox_area_entered(area):

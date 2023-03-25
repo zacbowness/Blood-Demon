@@ -9,6 +9,7 @@ var speed = -30
 var isAttacking = false;
 var animation = false;
 var inRange = false 
+var damage = 300
 
 func _ready():
 	$AnimationPlayer.play("Walk")

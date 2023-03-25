@@ -19,6 +19,7 @@ export var ATTACKPUSH = 30
 export (float) var max_health = 1000
 onready var health = max_health setget _set_health
 onready var invulnerability_timer = $InvulnerabilityTimer
+var damage = 300
 
 var isSprinting = false
 var isAttacking = false
@@ -146,25 +147,32 @@ func damage (amount):
 	if invulnerability_timer.is_stopped():
 		invulnerability_timer.start()
 		_set_health(health - amount)
-		
+
+#Stops player from getting hit or moving when dead
 func kill():
-	pass
+	set_physics_process(false)
+	apply_gravity()
+	$AnimatedSprite.play("Death") 
+	$PlayerHurtbox/CollisionShape2D.disabled = true
 		
+#Updates the players health
 func _set_health(value):
 	var prev_health = health 
 	health = clamp (value,0, max_health)
 	if health != prev_health:
 		emit_signal("health_updated", health)
+		print (health) 
 		if health == 0:
 			kill()
 			emit_signal("killed")
 
-
 func _on_PlayerHurtbox_area_entered(area):
 	takeDamage()
-	
+
+#Function called when player is hit
 func takeDamage():
 	print("ouch")
+	_set_health(health - damage)
 	blinker.start_blinking(self,invincibility_duration)
 	hurtbox.start_invincibility(invincibility_duration)	
 

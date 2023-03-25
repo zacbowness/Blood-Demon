@@ -15,21 +15,20 @@ export var MAXSPEED = 80*2
 export var SPRINTMOD = 2.0
 export var JUMPFORCE = 200*2
 export var ACCEL = 10*2
-export var ATTACKPUSH = 30
+export var ATTACKPUSH = 150
 export (float) var max_health = 1000
 onready var health = max_health setget _set_health
 onready var invulnerability_timer = $InvulnerabilityTimer
-var damage = 300
 
-var isSprinting = false
+var isAlive = false
 var isAttacking = false
 var attackAlt = false
+var facing_right = true
 var motion = Vector2()
 
 func _physics_process(delta):
 	apply_gravity()
 	
-	motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)
 	update_movement()
 	
 	animate_sprite()
@@ -40,9 +39,11 @@ func update_movement():
 #	// MOVE LEFT & RIGHT //
 	if Input.is_action_pressed("move_right"):
 		motion.x += ACCEL
+		facing_right = true
 		$Camera2D.offset_h = .55
 	elif Input.is_action_pressed("move_left"):
 		motion.x-= ACCEL
+		facing_right = false
 		$Camera2D.offset_h = -.55
 	else:
 		motion.x = lerp(motion.x, 0, 0.2)
@@ -111,16 +112,17 @@ func animate_sprite():
 	#	// TURN AROUND ANIM //
 		var direction = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 		if ((motion.x > 140 and direction <0) or (motion.x < -140 and direction >0)):
+			facing_right = !facing_right
 			if is_on_floor():
 				$AnimatedSprite.play("Turn Around")
 	
 #	// FLIP SPRITE & HITBOXES //
-	if motion.x > 0:
+	if facing_right:
 		$AnimatedSprite.scale.x = 1
 		$HitBox.position.x = 0
 		$PlayerHurtbox.position.x = 0
 		$AttackArea/CollisionShape2D.position.x = 40
-	elif motion.x < 0:
+	else:
 		$AnimatedSprite.scale.x = -1
 		$HitBox.position.x = 10
 		$PlayerHurtbox.position.x = 10
@@ -150,13 +152,13 @@ func damage (amount):
 #Stops player from getting hit or moving when dead
 func die():
 	set_physics_process(false)
-	apply_gravity()
 	$AnimatedSprite.play("Death") 
+	apply_gravity()
 	$PlayerHurtbox/CollisionShape2D.disabled = true
 		
 #Updates the players health
 func _set_health(value):
-	var prev_health = health 
+	var prev_health = health
 	health = clamp (value,0, max_health)
 	if health != prev_health:
 		emit_signal("health_updated", health)
@@ -165,19 +167,26 @@ func _set_health(value):
 			die()
 			emit_signal("killed")
 
-func _on_PlayerHurtbox_area_entered(area):
-	takeDamage()
+#func _on_PlayerHurtbox_area_entered(area):
+#
+#	takeDamage()
 
 #Function called when player is hit
-func takeDamage():
-	print("ouch")
+func takeDamage(damage):
 	_set_health(health - damage)
-	blinker.start_blinking(self,invincibility_duration)
-	hurtbox.start_invincibility(invincibility_duration)	
-
-func _on_Enemy_hit():
-	takeDamage()
+#	blinker.start_blinking(self,invincibility_duration)
+#	hurtbox.start_invincibility(invincibility_duration)	
+	
 
 
 func _on_AttackArea_body_entered(body):
 	emit_signal("hitEnemy")
+
+
+func _on_Enemy_hit(damage, dir_right):
+	takeDamage(damage)
+	if dir_right:
+		motion = Vector2(500, -150)
+	else:
+		motion = Vector2(-500, -150)
+	MAXSPEED = 500

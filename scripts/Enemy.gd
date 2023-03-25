@@ -1,5 +1,5 @@
 extends KinematicBody2D
-signal hit
+signal hit(damage, dir)
 
 var is_moving_right = true 
 
@@ -24,8 +24,8 @@ func _process(delta):
 	if is_on_wall():
 		is_moving_right = !is_moving_right
 		scale.x = -scale.x
-	
-	
+
+
 func move_character():
 	velocity.x = -speed if is_moving_right else speed
 	velocity.y += gravity
@@ -63,7 +63,7 @@ func death():
 	hide()
 
 func _on_HitBox_body_entered(body):
-	emit_signal("hit")
+	emit_signal("hit", damage, is_moving_right)
 
 func _on_Player_hitEnemy():
 	$AnimationPlayer.play("Death")

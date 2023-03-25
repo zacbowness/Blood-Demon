@@ -241,7 +241,7 @@ animations = [ {
 "frames": [ SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ), SubResource( 65 ), SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ) ],
 "loop": false,
 "name": "Death",
-"speed": 10.0
+"speed": 17.0
 }, {
 "frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
 "loop": true,
@@ -325,12 +325,12 @@ shape = SubResource( 45 )
 disabled = true
 
 [node name="PlayerHurtbox" parent="." instance=ExtResource( 12 )]
+position = Vector2( -1, 19 )
 collision_layer = 0
 collision_mask = 6
 whiten_material = ExtResource( 13 )
 
 [node name="CollisionShape2D" parent="PlayerHurtbox" index="0"]
-position = Vector2( -1.5, 19 )
 shape = SubResource( 60 )
 
 [node name="Blinker" parent="." instance=ExtResource( 14 )]

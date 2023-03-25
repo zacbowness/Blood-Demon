@@ -66,7 +66,6 @@ limit_bottom = 234
 
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 7 )
-frame = 9
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 collision_mask = 1

@@ -178,12 +178,17 @@ func _on_AttackArea_body_entered(body):
 func _on_Enemy_hit(damage, dir_right):
 	if $Blinker/BlinkTimer.is_stopped():
 		takeDamage(damage)
-		if dir_right:
-			motion = Vector2(500, -150)
-		else:
-			motion = Vector2(-500, -150)
-		MAXSPEED = 500	#Not certain what this is for -- Zac
+		apply_knockback(dir_right)
 
 func _on_PlayerHurtbox_area_entered(area):
-	if (area.get_parent().isDead == false):
-		takeDamage(enemy_damage)
+	var enemy = area.get_parent()
+	if (enemy.isDead == false) and enemy in get_tree().get_nodes_in_group("Enemy"):
+		takeDamage(enemy.damage)
+		apply_knockback(position.x > enemy.position.x)
+	
+func apply_knockback(direction):
+	if direction:
+		motion = Vector2(600, -150)
+	else:
+		motion = Vector2(-600, -150)
+	MAXSPEED = 600

@@ -71,6 +71,7 @@ func death():
 	isDead = true 
 	speed = 0
 	z_index = -1
+	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)
 	$AnimationPlayer.play("Death")
 	$HitBox.monitoring = false

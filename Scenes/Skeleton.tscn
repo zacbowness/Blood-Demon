@@ -45,7 +45,8 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=54]
 resource_name = "Death"
-length = 0.35
+length = 3.5
+step = 1.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -53,7 +54,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"times": PoolRealArray( 0, 1, 2, 3 ),
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 8, 9, 10, 11 ]

@@ -9,7 +9,7 @@ var speed = -30
 var isAttacking = false;
 var animation = false;
 var inRange = false 
-var damage = 300
+var damage = 100
 
 func _ready():
 	$AnimationPlayer.play("Walk")
@@ -58,7 +58,6 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			isAttacking = false 
 			$AnimationPlayer.play("Walk")
 		
-
 func death():
 	$HitBox.monitoring = false  
 	hide()

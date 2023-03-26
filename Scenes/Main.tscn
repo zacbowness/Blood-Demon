@@ -84,4 +84,5 @@ position = Vector2( -190, -29 )
 
 [editable path="Player"]
 [editable path="Player/PlayerHurtbox"]
+[editable path="Player/Blinker"]
 [editable path="Skeleton"]

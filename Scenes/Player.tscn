@@ -341,3 +341,4 @@ shape = SubResource( 60 )
 [connection signal="area_entered" from="PlayerHurtbox" to="." method="_on_PlayerHurtbox_area_entered"]
 
 [editable path="PlayerHurtbox"]
+[editable path="Blinker"]

@@ -18,7 +18,7 @@ export var ACCEL = 10*2
 export var ATTACKPUSH = 150
 export (float) var max_health = 1000
 onready var health = max_health setget _set_health
-#onready var invulnerability_timer = $InvulnerabilityTimer
+var enemy_damage = 100 #This is a temporary variable to test damage when hitting enemey 
 
 var isAlive = false
 var isAttacking = false
@@ -144,11 +144,6 @@ func _on_AnimatedSprite_animation_finished():
 		$AttackArea/CollisionShape2D.disabled = true
 		isAttacking = false;
 
-#func damage (amount):
-#	if invulnerability_timer.is_stopped():
-#		invulnerability_timer.start()
-#		_set_health(health - amount)
-
 #Stops player from getting hit or moving when dead
 func die():
 	set_physics_process(false)
@@ -167,17 +162,12 @@ func _set_health(value):
 			die()
 			emit_signal("killed")
 
-#func _on_PlayerHurtbox_area_entered(area):
-#
-#	takeDamage()
-
-#Function called when player is hit
+#Makes player invincible for certain amount of time
 func takeDamage(damage):
-	_set_health(health - damage)
-#	blinker.start_blinking(self,invincibility_duration)
-#	hurtbox.start_invincibility(invincibility_duration)	
-	
-
+	_set_health(health - damage)	
+	hurtbox.player_hit(true)
+	blinker.start_blinking(self,invincibility_duration)
+	hurtbox.start_invincibility(invincibility_duration)	
 
 func _on_AttackArea_body_entered(body):
 	if "Skeleton" in body.name:
@@ -186,9 +176,13 @@ func _on_AttackArea_body_entered(body):
 		body.death()
 
 func _on_Enemy_hit(damage, dir_right):
-	takeDamage(damage)
-	if dir_right:
-		motion = Vector2(500, -150)
-	else:
-		motion = Vector2(-500, -150)
-	MAXSPEED = 500
+	if $Blinker/BlinkTimer.is_stopped(): 
+		takeDamage(damage)
+		if dir_right:
+			motion = Vector2(500, -150)
+		else:
+			motion = Vector2(-500, -150)
+		MAXSPEED = 500	#Not certain what this is for -- Zac
+
+func _on_PlayerHurtbox_area_entered(area):
+	takeDamage(enemy_damage)

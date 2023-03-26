@@ -278,7 +278,7 @@ animations = [ {
 extents = Vector2( 18.5, 19.5 )
 
 [sub_resource type="RectangleShape2D" id=60]
-extents = Vector2( 8, 19 )
+extents = Vector2( 9, 19 )
 
 [node name="Player" type="KinematicBody2D"]
 material = SubResource( 47 )

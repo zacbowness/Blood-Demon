@@ -176,7 +176,7 @@ func _on_AttackArea_body_entered(body):
 		body.death()
 
 func _on_Enemy_hit(damage, dir_right):
-	if $Blinker/BlinkTimer.is_stopped(): 
+	if $Blinker/BlinkTimer.is_stopped():
 		takeDamage(damage)
 		if dir_right:
 			motion = Vector2(500, -150)

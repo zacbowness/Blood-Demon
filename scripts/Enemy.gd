@@ -25,14 +25,15 @@ func _ready():
 
 
 func _process(delta):
-	if (isAttacking != true && inRange == false && $AnimationPlayer.current_animation != "Attack"):
-		move_character()
-		detect_turn_around()
-	if ($AnimationPlayer.current_animation == "Attack"):
-		return	
-	if is_on_wall():
-		is_moving_right = !is_moving_right
-		scale.x = -scale.x
+	if (isDead == false):
+		if (isAttacking != true && inRange == false && $AnimationPlayer.current_animation != "Attack"):
+			move_character()
+			detect_turn_around()
+		if ($AnimationPlayer.current_animation == "Attack"):
+			return	
+		if is_on_wall():
+			is_moving_right = !is_moving_right
+			scale.x = -scale.x
 
 
 func move_character():
@@ -69,14 +70,13 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 func death():
 	isDead = true 
 	speed = 0
-	$HitBox/CollisionShape2D.disabled = true  
+	z_index = -1
+	$CollisionShape2D.set_deferred("disabled", true)
 	$AnimationPlayer.play("Death")
-	$CollisionShape2D.disabled = true
-	$EnemyHitBox/CollisionShape2D.disabled = true
-	$PlayerDetector/CollisionShape2D.disabled = true
 	$HitBox.monitoring = false
 	$EnemyHitBox.monitoring = false
 	$PlayerDetector.monitoring = false
+	set_collision_mask_bit(3, false)
 	$Timer.start()
 
 func _on_HitBox_body_entered(body):

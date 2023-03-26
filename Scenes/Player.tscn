@@ -19,8 +19,9 @@
 [sub_resource type="ShaderMaterial" id=47]
 shader = SubResource( 46 )
 
-[sub_resource type="RectangleShape2D" id=44]
-extents = Vector2( 8, 19 )
+[sub_resource type="CapsuleShape2D" id=71]
+radius = 8.0
+height = 22.0
 
 [sub_resource type="AtlasTexture" id=34]
 atlas = ExtResource( 8 )
@@ -286,7 +287,7 @@ script = ExtResource( 6 )
 
 [node name="HitBox" type="CollisionShape2D" parent="."]
 position = Vector2( -1, 19 )
-shape = SubResource( 44 )
+shape = SubResource( 71 )
 __meta__ = {
 "_edit_group_": true
 }

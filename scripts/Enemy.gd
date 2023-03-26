@@ -13,6 +13,7 @@ var damage = 300
 
 func _ready():
 	$AnimationPlayer.play("Walk")
+	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
 
 
 func _process(delta):
@@ -64,7 +65,5 @@ func death():
 	queue_free()
 
 func _on_HitBox_body_entered(body):
+	print(body.name)
 	emit_signal("hit", damage, is_moving_right)
-
-
-	

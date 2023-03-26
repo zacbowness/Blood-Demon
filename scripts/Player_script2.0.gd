@@ -18,7 +18,7 @@ export var ACCEL = 10*2
 export var ATTACKPUSH = 150
 export (float) var max_health = 1000
 onready var health = max_health setget _set_health
-onready var invulnerability_timer = $InvulnerabilityTimer
+#onready var invulnerability_timer = $InvulnerabilityTimer
 
 var isAlive = false
 var isAttacking = false
@@ -144,10 +144,10 @@ func _on_AnimatedSprite_animation_finished():
 		$AttackArea/CollisionShape2D.disabled = true
 		isAttacking = false;
 
-func damage (amount):
-	if invulnerability_timer.is_stopped():
-		invulnerability_timer.start()
-		_set_health(health - amount)
+#func damage (amount):
+#	if invulnerability_timer.is_stopped():
+#		invulnerability_timer.start()
+#		_set_health(health - amount)
 
 #Stops player from getting hit or moving when dead
 func die():

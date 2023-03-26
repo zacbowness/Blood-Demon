@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Additional enemy added (Goblin)
 - Enemy will attack player when in range
 - Player moves back when hit
-- 
+- Enemy Death Animations
 
 ## [1.0.0] - 2023-03-20
 

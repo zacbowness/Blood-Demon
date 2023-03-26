@@ -10,10 +10,18 @@ var isAttacking = false;
 var animation = false;
 var inRange = false 
 var damage = 100
+var isDead = false
+
 
 func _ready():
 	$AnimationPlayer.play("Walk")
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
+	if (get_node(".").name == "Goblin"):
+		speed = -50 
+		damage = 70
+	elif (get_node(".").name == "Skeleton"): 
+		speed = -30
+		damage = 100
 
 
 func _process(delta):
@@ -59,10 +67,22 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			$AnimationPlayer.play("Walk")
 		
 func death():
-	$HitBox.monitoring = false  
-	hide()
-	queue_free()
+	isDead = true 
+	speed = 0
+	$HitBox/CollisionShape2D.disabled = true  
+	$AnimationPlayer.play("Death")
+	$CollisionShape2D.disabled = true
+	$EnemyHitBox/CollisionShape2D.disabled = true
+	$PlayerDetector/CollisionShape2D.disabled = true
+	$HitBox.monitoring = false
+	$EnemyHitBox.monitoring = false
+	$PlayerDetector.monitoring = false
+	$Timer.start()
 
 func _on_HitBox_body_entered(body):
 	print(body.name)
 	emit_signal("hit", damage, is_moving_right)
+
+
+func _on_Timer_timeout():
+	queue_free()

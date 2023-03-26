@@ -16,7 +16,8 @@ func player_hit(area: Area2D) -> void:
 
 #Player flashes white when hitting enemy body 
 func _on_PlayerHurtbox_area_entered(area: Area2D) -> void:
-	flash ()
+	if (area.get_parent().isDead == false):
+		flash ()
 
 #The function called to make character flash white
 func flash ():

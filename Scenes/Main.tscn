@@ -80,7 +80,8 @@ __meta__ = {
 }
 
 [node name="Goblin" parent="." instance=ExtResource( 5 )]
-position = Vector2( -190, -29 )
+position = Vector2( -220, -42 )
+scale = Vector2( 1.5, 1.5 )
 
 [editable path="Player"]
 [editable path="Player/PlayerHurtbox"]

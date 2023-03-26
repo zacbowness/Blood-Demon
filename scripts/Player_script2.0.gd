@@ -185,4 +185,5 @@ func _on_Enemy_hit(damage, dir_right):
 		MAXSPEED = 500	#Not certain what this is for -- Zac
 
 func _on_PlayerHurtbox_area_entered(area):
-	takeDamage(enemy_damage)
+	if (area.get_parent().isDead == false):
+		takeDamage(enemy_damage)

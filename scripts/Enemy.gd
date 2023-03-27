@@ -13,6 +13,7 @@ var damage = 100
 var isDead = false
 var seeWall = false 
 
+const Fireball = preload("res://Scenes/FireBall.tscn")
 
 func _ready():
 	$AnimationPlayer.play("Walk")
@@ -21,6 +22,9 @@ func _ready():
 		speed = -50 
 		damage = 70
 	elif (get_node(".").name == "Skeleton"): 
+		speed = -30
+		damage = 100
+	elif (get_node(".").name == "FireWorm"): 
 		speed = -30
 		damage = 100
 

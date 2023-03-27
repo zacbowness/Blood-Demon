@@ -1,12 +1,16 @@
 extends Area2D
 signal hit(damage, dir)
 
-const speed = 100
+const speed = 200
 var velocity = Vector2()
 var direction = 1
+var damage = 50
+var is_moving_right = true
+
+
 
 func _ready():
-	pass
+	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
 
 func set_fireball_direction(dir):
 	direction = dir
@@ -16,6 +20,10 @@ func set_fireball_direction(dir):
 	
 func _physics_process(delta):
 	velocity.x = speed * delta * direction
+	if (direction == 1):
+		is_moving_right = true 
+	else:
+		is_moving_right = false 
 	translate(velocity)
 	$AnimationPlayer.play("Shoot")
 
@@ -23,6 +31,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 	queue_free()
 
 func _on_Fireball_body_entered(body):
-	print("HI")
 	$AnimationPlayer.play("Explode")
 	set_physics_process(false)
+	if (body.name == "Player"):
+		emit_signal("hit", damage, is_moving_right)

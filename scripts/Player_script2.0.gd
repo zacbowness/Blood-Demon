@@ -15,57 +15,57 @@ export var MAXSPEED = 80*2
 export var SPRINTMOD = 2.0
 export var JUMPFORCE = 200*2
 export var ACCEL = 10*2
-export var ATTACKPUSH = 150
+export var ATTACKPUSH = 70
 export (float) var max_health = 1000
 onready var health = max_health setget _set_health
-var enemy_damage = 100 #This is a temporary variable to test damage when hitting enemey 
 
-var isAlive = false
+var isAlive = true
 var isAttacking = false
 var attackAlt = false
 var facing_right = true
 var motion = Vector2()
+var controllable
 
 func _physics_process(delta):
+	controllable = (isAlive and !isAttacking)
 	apply_gravity()
 	
 	update_movement()
 	
 	animate_sprite()
-	
+#	// MAXSPEED LIMIT //
+	motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)	
 	motion = move_and_slide(motion, UP)
 
 func update_movement():
-#	// MOVE LEFT & RIGHT //
-	if Input.is_action_pressed("move_right"):
-		motion.x += ACCEL
-		facing_right = true
-		$Camera2D.offset_h = .55
-	elif Input.is_action_pressed("move_left"):
-		motion.x-= ACCEL
-		facing_right = false
-		$Camera2D.offset_h = -.55
-	else:
-		motion.x = lerp(motion.x, 0, 0.2)
+	if controllable:
+	#	// MOVE LEFT & RIGHT //
+		if Input.is_action_pressed("move_right"):
+			motion.x += ACCEL
+			facing_right = true
+			$Camera2D.offset_h = .55
+		elif Input.is_action_pressed("move_left"):
+			motion.x-= ACCEL
+			facing_right = false
+			$Camera2D.offset_h = -.55
+		else:
+			motion.x = lerp(motion.x, 0, 0.2)
+		
+	#	// SPRINTING //
+		if Input.is_action_pressed("sprint"):
+			MAXSPEED = lerp(MAXSPEED, 180*SPRINTMOD, 0.5)
+		else:
+			MAXSPEED = lerp(MAXSPEED, 180, 0.1)
 	
-#	// SPRINTING //
-	if Input.is_action_pressed("sprint"):
-		MAXSPEED = lerp(MAXSPEED, 180*SPRINTMOD, 0.5)
-	else:
-		MAXSPEED = lerp(MAXSPEED, 180, 0.1)
-
-#	// MAXSPEED LIMIT //
-	motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)
-
-#	// JUMPING //
-	if is_on_floor():
-		if Input.is_action_pressed("jump"):
-			motion.y = -JUMPFORCE
-	
-#	// ATTACK MOTION //
-	if Input.is_action_just_pressed("attack"):
-		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
-	
+	#	// JUMPING //
+		if is_on_floor():
+			if Input.is_action_pressed("jump"):
+				motion.y = -JUMPFORCE
+		
+	#	// ATTACK MOTION //
+		if Input.is_action_just_pressed("attack"):
+			motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
+		
 #	// ATTACK AREA ENABLING //
 	if ($AnimatedSprite.animation == "Attack"):
 		if $AnimatedSprite.frame == 1 or $AnimatedSprite.frame == 2:
@@ -87,7 +87,7 @@ func apply_gravity():
 
 func animate_sprite():
 #	// HANDLING ANIMATIONS //
-	if not isAttacking:
+	if !isAttacking and isAlive:
 	#	// MOVE LEFT & RIGHT //
 		if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"):
 			$AnimatedSprite.play("Run")
@@ -146,7 +146,7 @@ func _on_AnimatedSprite_animation_finished():
 
 #Stops player from getting hit or moving when dead
 func die():
-	set_physics_process(false)
+	isAlive = false
 	$AnimatedSprite.play("Death") 
 	apply_gravity()
 	$PlayerHurtbox/CollisionShape2D.disabled = true
@@ -170,9 +170,7 @@ func takeDamage(damage):
 	hurtbox.start_invincibility(invincibility_duration)	
 
 func _on_AttackArea_body_entered(body):
-	if "Skeleton" in body.name:
-		body.death()
-	elif "Goblin" in body.name:
+	if body in get_tree().get_nodes_in_group("Enemy"):
 		body.death()
 
 func _on_Enemy_hit(damage, dir_right):

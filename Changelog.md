@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enemy will attack player when in range
 - Player moves back when hit
 - Enemy Death Animations
+- Player takes knockback and damage when touching enemy
 
 ## [1.0.0] - 2023-03-20
 

@@ -161,13 +161,15 @@ func _set_health(value):
 		if health == 0:
 			die()
 			emit_signal("killed")
+	return health
 
 #Makes player invincible for certain amount of time
 func takeDamage(damage):
-	_set_health(health - damage)	
-	hurtbox.player_hit(true)
-	blinker.start_blinking(self,invincibility_duration)
-	hurtbox.start_invincibility(invincibility_duration)	
+	var current_health = _set_health(health - damage)
+	if current_health > clamp (0,0,max_health):
+		hurtbox.player_hit(true)
+		blinker.start_blinking(self,invincibility_duration)
+		hurtbox.start_invincibility(invincibility_duration)	
 
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):

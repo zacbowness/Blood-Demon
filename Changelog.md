@@ -7,10 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- No unreleased files 
+- Added spikes to the main game scene 
+##[0.3.0] - 2023-03-27
 
+### Added
 
-## [2.0.0] - 2023-03-26
+ - Health Bar for player
+ 
+### Fixed
+ - Player takes knockback when hit in the air and dies
+ - Player does not flash white when hit while dead
+
+## [0.2.0] - 2023-03-26
 
 ### Added
 
@@ -21,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enemy Death Animations
 - Player takes knockback and damage when touching enemy
 
-## [1.0.0] - 2023-03-20
+## [0.1.0] - 2023-03-20
 
 ### Added
 

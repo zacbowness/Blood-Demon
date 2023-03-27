@@ -47,8 +47,9 @@ func detect_turn_around():
 		scale.x = -scale.x
 
 func _on_PlayerDetector_body_entered(body):
-	$AnimationPlayer.play("Attack")
-	inRange = true 
+	if (seeWall == false ):
+		$AnimationPlayer.play("Attack")
+		inRange = true 
 
 func hit():
 	$HitBox.monitoring = true 
@@ -60,7 +61,7 @@ func _on_PlayerDetector_body_exited(body):
 	inRange = false 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
-	if (anim_name == "Attack"):
+	if (anim_name == "Attack" && seeWall == false):
 		if (inRange):
 			$AnimationPlayer.play("Attack")
 		else:
@@ -87,3 +88,12 @@ func _on_HitBox_body_entered(body):
 
 func _on_Timer_timeout():
 	queue_free()
+
+func Fireball():
+	var fireattack = Fireball.instance()
+	if (is_moving_right == true):
+		fireattack.set_fireball_direction(1)
+	else:
+		fireattack.set_fireball_direction(-1)					
+		get_parent().add_child(fireattack)
+		fireattack.global_position = $FireBallPlacer.global_position

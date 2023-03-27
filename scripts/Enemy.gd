@@ -11,6 +11,7 @@ var animation = false;
 var inRange = false 
 var damage = 100
 var isDead = false
+var seeWall = false 
 
 
 func _ready():
@@ -88,6 +89,13 @@ func _on_HitBox_body_entered(body):
 
 func _on_Timer_timeout():
 	queue_free()
+
+func _on_WallDetector_body_entered(body):
+	seeWall = true
+
+
+func _on_WallDetector_body_exited(body):
+	seeWall = false 
 
 func Fireball():
 	var fireattack = Fireball.instance()

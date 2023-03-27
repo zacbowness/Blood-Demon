@@ -179,10 +179,13 @@ func _on_Enemy_hit(damage, dir_right):
 		apply_knockback(dir_right)
 
 func _on_PlayerHurtbox_area_entered(area):
-	var enemy = area.get_parent()
-	if (enemy.isDead == false) and enemy in get_tree().get_nodes_in_group("Enemy"):
-		takeDamage(enemy.damage)
-		apply_knockback(position.x > enemy.position.x)
+	var body = area.get_parent()
+	if body in get_tree().get_nodes_in_group("Enemy"):
+		if (body.isDead == false):
+			takeDamage(body.damage)
+			apply_knockback(position.x > body.position.x)
+	if body in get_tree().get_nodes_in_group("Trap"):
+		takeDamage(1000)
 	
 func apply_knockback(direction):
 	if direction:

@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
  - Health Bar for player
+ - Added Fire Worm
+ - Added Ranged Fire Worm Attack
  
 ### Fixed
  - Player takes knockback when hit in the air and dies

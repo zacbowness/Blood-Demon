@@ -30,6 +30,7 @@ var isMoving = false
 var facing_right = true
 var motion = Vector2()
 var controllable
+var playerDamage = 100
 
 func _ready():
 	connect("health_updated", get_tree().get_nodes_in_group("HUD")[0], "_on_Player_health_updated")
@@ -221,7 +222,9 @@ func takeDamage(damage):
 
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):
-		body.death()
+		body.health = (body.health - playerDamage)
+		if (body.health <= 0):
+			body.death()
 
 func _on_Enemy_hit(damage, dir_right):
 	if $Blinker/BlinkTimer.is_stopped() and isAlive:

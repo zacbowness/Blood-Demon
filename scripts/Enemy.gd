@@ -12,6 +12,7 @@ var inRange = false
 var damage = 100
 var isDead = false
 var seeWall = false 
+var health = 1000
 
 const Fireball = preload("res://Scenes/FireBall.tscn")
 
@@ -19,12 +20,15 @@ func _ready():
 	$AnimationPlayer.play("Walk")
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
 	if (get_node(".").name == "Goblin"):
+		health = 100
 		speed = -50 
 		damage = 70
 	elif (get_node(".").name == "Skeleton"): 
+		health = 200
 		speed = -30
 		damage = 100
 	elif (get_node(".").name == "FireWorm"): 
+		health = 100
 		speed = -30
 		damage = 100
 
@@ -109,3 +113,4 @@ func Fireball():
 		fireattack.set_fireball_direction(-1)					
 		get_parent().add_child(fireattack)
 		fireattack.global_position = $FireBallPlacer.global_position
+ 

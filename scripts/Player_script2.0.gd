@@ -51,7 +51,6 @@ func _physics_process(delta):
 	animate_sprite()
 
 	motion = move_and_slide(motion, UP)
-	
 
 func update_movement():
 	if controllable:
@@ -159,21 +158,22 @@ func animate_sprite():
 			$AttackArea/CollisionShape2D.position.x = -30
 
 #	// ATTACK ANIM //
-	if Input.is_action_just_pressed("attack") and stamina>20 and $StunTimer.is_stopped():
-		_set_stamina(stamina-20);$StaminaRegenBuffer.start()
-		$AnimatedSprite.speed_scale = 1
+	if Input.is_action_just_pressed("attack") and stamina>25 and $StunTimer.is_stopped():
+		_set_stamina(stamina-25);$StaminaRegenBuffer.start()
+		$AnimatedSprite.speed_scale = 1;print(2)
 		if not attackAlt:
 			$AnimatedSprite.play("Attack")
 		else:
 			$AnimatedSprite.play("Attack2")
 		isAttacking = true
+		attackAlt = !attackAlt
 
 func _on_AnimatedSprite_animation_finished():
 #	// STOP ATTACK STATE //
 	if $AnimatedSprite.animation == "Attack" or $AnimatedSprite.animation == "Attack2":
 		$AttackArea/CollisionShape2D.disabled = true
 		isAttacking = false;
-		attackAlt = not attackAlt
+		attackAlt = !attackAlt
 	if $AnimatedSprite.animation == "Hit":
 		isAttacking = false
 
@@ -220,7 +220,6 @@ func takeDamage(damage):
 		hurtbox.start_invincibility(invincibility_duration)	
 
 func _on_AttackArea_body_entered(body):
-	print(body)
 	if body in get_tree().get_nodes_in_group("Enemy"):
 		body.death()
 

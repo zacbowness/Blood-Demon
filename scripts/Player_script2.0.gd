@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal health_updated(health)
+signal stamina_updated(stamina)
 signal killed()
 signal hitEnemy()
 
@@ -18,13 +19,21 @@ export var ACCEL = 10*2
 export var ATTACKPUSH = 70
 export (float) var max_health = 1000
 onready var health = max_health setget _set_health
+export (float) var max_stamina = 100
+onready var stamina = max_stamina setget _set_stamina
 
 var isAlive = true
 var isAttacking = false
 var attackAlt = false
+var isSprinting = false
+var isMoving = false
 var facing_right = true
 var motion = Vector2()
 var controllable
+
+func _ready():
+	connect("health_updated", get_tree().get_nodes_in_group("HUD")[0], "_on_Player_health_updated")
+	connect("stamina_updated", get_tree().get_nodes_in_group("HUD")[0], "_on_Player_stamina_updated")
 
 func _physics_process(delta):
 	controllable = (isAlive and !isAttacking)
@@ -36,6 +45,8 @@ func _physics_process(delta):
 #	// MAXSPEED LIMIT //
 	motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)	
 	motion = move_and_slide(motion, UP)
+	if $StaminaRegenBuffer.is_stopped():
+		_set_stamina(stamina+.75)
 
 func update_movement():
 	if controllable:
@@ -43,28 +54,36 @@ func update_movement():
 		if Input.is_action_pressed("move_right"):
 			motion.x += ACCEL
 			facing_right = true
+			isMoving = true
 			$Camera2D.offset_h = .55
 		elif Input.is_action_pressed("move_left"):
 			motion.x-= ACCEL
 			facing_right = false
+			isMoving = true
 			$Camera2D.offset_h = -.55
 		else:
 			motion.x = lerp(motion.x, 0, 0.2)
+			isMoving = false
 		
 	#	// SPRINTING //
-		if Input.is_action_pressed("sprint"):
+		if Input.is_action_pressed("sprint") and stamina >0 and isMoving:
 			MAXSPEED = lerp(MAXSPEED, 180*SPRINTMOD, 0.5)
+			isSprinting = true
 		else:
 			MAXSPEED = lerp(MAXSPEED, 180, 0.1)
+			isSprinting = false
 	
 	#	// JUMPING //
 		if is_on_floor():
-			if Input.is_action_pressed("jump"):
+			if Input.is_action_pressed("jump") and stamina>30:
 				motion.y = -JUMPFORCE
+				_set_stamina(stamina-30);$StaminaRegenBuffer.start()
 		
 	#	// ATTACK MOTION //
-		if Input.is_action_just_pressed("attack"):
+		if Input.is_action_just_pressed("attack") and stamina>20:
 			motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
+			MAXSPEED = 180
+			motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)
 		
 #	// ATTACK AREA ENABLING //
 	if ($AnimatedSprite.animation == "Attack"):
@@ -87,7 +106,7 @@ func apply_gravity():
 
 func animate_sprite():
 #	// HANDLING ANIMATIONS //
-	if !isAttacking and isAlive:
+	if controllable:
 	#	// MOVE LEFT & RIGHT //
 		if Input.is_action_pressed("move_right") or Input.is_action_pressed("move_left"):
 			$AnimatedSprite.play("Run")
@@ -104,8 +123,9 @@ func animate_sprite():
 				$AnimatedSprite.play("Fall")
 		
 	#	// SPRINTING //
-		if Input.is_action_pressed("sprint"):
+		if Input.is_action_pressed("sprint") and isMoving:
 			$AnimatedSprite.speed_scale = abs(motion.x/200)
+			_set_stamina(stamina - .8);$StaminaRegenBuffer.start()
 		else:
 			$AnimatedSprite.speed_scale = 1
 
@@ -129,20 +149,21 @@ func animate_sprite():
 		$AttackArea/CollisionShape2D.position.x = -30
 
 #	// ATTACK ANIM //
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_just_pressed("attack") and stamina>20:
+		_set_stamina(stamina-20);$StaminaRegenBuffer.start()
 		$AnimatedSprite.speed_scale = 1
 		if not attackAlt:
 			$AnimatedSprite.play("Attack")
 		else:
 			$AnimatedSprite.play("Attack2")
-		isAttacking = true;
-		attackAlt = not attackAlt
+		isAttacking = true
 
 func _on_AnimatedSprite_animation_finished():
 #	// STOP ATTACK STATE //
 	if $AnimatedSprite.animation == "Attack" or $AnimatedSprite.animation == "Attack2":
 		$AttackArea/CollisionShape2D.disabled = true
 		isAttacking = false;
+		attackAlt = not attackAlt
 
 #Stops player from getting hit or moving when dead
 func die():
@@ -157,11 +178,17 @@ func _set_health(value):
 	health = clamp (value,0, max_health)
 	if health != prev_health:
 		emit_signal("health_updated", health)
-		print (health) 
 		if health == 0:
 			die()
 			emit_signal("killed")
 	return health
+
+#Updates the players stamina
+func _set_stamina(value):
+	var prev_stamina = stamina
+	stamina = clamp (value,0, max_stamina)
+	if stamina != prev_stamina:
+		emit_signal("stamina_updated", stamina)
 
 #Makes player invincible for certain amount of time
 func takeDamage(damage):
@@ -195,3 +222,7 @@ func apply_knockback(direction):
 	else:
 		motion = Vector2(-600, -150)
 	MAXSPEED = 600
+
+func _on_StaminaRegenBuffer_timeout():
+	$StaminaRegenBuffer.stop()
+

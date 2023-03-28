@@ -36,17 +36,22 @@ func _ready():
 	connect("stamina_updated", get_tree().get_nodes_in_group("HUD")[0], "_on_Player_stamina_updated")
 
 func _physics_process(delta):
-	controllable = (isAlive and !isAttacking)
+	controllable = (isAlive and !isAttacking) and $StunTimer.is_stopped()
+	
+#	// MAXSPEED LIMIT //
+	motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)	
 	apply_gravity()
 	
 	update_movement()
 	
+#	// RESET MAXSPEED IF CHANGED //
+	if isAlive:MAXSPEED = lerp(MAXSPEED, 180, 0.1)
+	else:MAXSPEED = lerp(MAXSPEED, 0, 0.1)
+	
 	animate_sprite()
-#	// MAXSPEED LIMIT //
-	motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)	
+
 	motion = move_and_slide(motion, UP)
-	if $StaminaRegenBuffer.is_stopped():
-		_set_stamina(stamina+.75)
+	
 
 func update_movement():
 	if controllable:
@@ -70,7 +75,6 @@ func update_movement():
 			MAXSPEED = lerp(MAXSPEED, 180*SPRINTMOD, 0.5)
 			isSprinting = true
 		else:
-			MAXSPEED = lerp(MAXSPEED, 180, 0.1)
 			isSprinting = false
 	
 	#	// JUMPING //
@@ -84,7 +88,8 @@ func update_movement():
 			motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
 			MAXSPEED = 180
 			motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)
-		
+	
+	
 #	// ATTACK AREA ENABLING //
 	if ($AnimatedSprite.animation == "Attack"):
 		if $AnimatedSprite.frame == 1 or $AnimatedSprite.frame == 2:
@@ -98,6 +103,10 @@ func update_movement():
 		else:$AttackArea/CollisionShape2D.disabled = true
 	else:
 		z_index = 0
+	
+#	// REGEN STAMINA //
+	if $StaminaRegenBuffer.is_stopped():
+		_set_stamina(stamina+.75)
 
 func apply_gravity():
 	motion.y += GRAVITY
@@ -137,19 +146,20 @@ func animate_sprite():
 				$AnimatedSprite.play("Turn Around")
 	
 #	// FLIP SPRITE & HITBOXES //
-	if facing_right:
-		$AnimatedSprite.scale.x = 1
-		$HitBox.position.x = 0
-		$PlayerHurtbox.position.x = 0
-		$AttackArea/CollisionShape2D.position.x = 40
-	else:
-		$AnimatedSprite.scale.x = -1
-		$HitBox.position.x = 10
-		$PlayerHurtbox.position.x = 10
-		$AttackArea/CollisionShape2D.position.x = -30
+	if isAlive:
+		if facing_right:
+			$AnimatedSprite.scale.x = 1
+			$HitBox.position.x = 0
+			$PlayerHurtbox.position.x = 0
+			$AttackArea/CollisionShape2D.position.x = 40
+		else:
+			$AnimatedSprite.scale.x = -1
+			$HitBox.position.x = 10
+			$PlayerHurtbox.position.x = 10
+			$AttackArea/CollisionShape2D.position.x = -30
 
 #	// ATTACK ANIM //
-	if Input.is_action_just_pressed("attack") and stamina>20:
+	if Input.is_action_just_pressed("attack") and stamina>20 and $StunTimer.is_stopped():
 		_set_stamina(stamina-20);$StaminaRegenBuffer.start()
 		$AnimatedSprite.speed_scale = 1
 		if not attackAlt:
@@ -171,7 +181,14 @@ func die():
 	$AnimatedSprite.play("Death") 
 	apply_gravity()
 	$PlayerHurtbox/CollisionShape2D.disabled = true
-		
+	if facing_right:
+		$HitBox.position.x = -23
+	else:
+		$HitBox.position.x = 30
+	$HitBox.position.y = 32
+	$HitBox.shape.radius = 6
+	$HitBox.shape.height = 30
+	$HitBox.rotation_degrees = 90
 #Updates the players health
 func _set_health(value):
 	var prev_health = health
@@ -192,6 +209,8 @@ func _set_stamina(value):
 
 #Makes player invincible for certain amount of time
 func takeDamage(damage):
+	$StunTimer.start()
+	$AnimatedSprite.play("Hit")
 	var current_health = _set_health(health - damage)
 	if current_health > clamp (0,0,max_health):
 		hurtbox.player_hit(true)
@@ -203,7 +222,7 @@ func _on_AttackArea_body_entered(body):
 		body.death()
 
 func _on_Enemy_hit(damage, dir_right):
-	if $Blinker/BlinkTimer.is_stopped():
+	if $Blinker/BlinkTimer.is_stopped() and isAlive:
 		takeDamage(damage)
 		apply_knockback(dir_right)
 
@@ -218,11 +237,8 @@ func _on_PlayerHurtbox_area_entered(area):
 	
 func apply_knockback(direction):
 	if direction:
-		motion = Vector2(600, -150)
+		motion = Vector2(200, -150)
 	else:
-		motion = Vector2(-600, -150)
-	MAXSPEED = 600
-
-func _on_StaminaRegenBuffer_timeout():
-	$StaminaRegenBuffer.stop()
-
+		motion = Vector2(-200, -150)
+	MAXSPEED = 200
+	facing_right = !direction

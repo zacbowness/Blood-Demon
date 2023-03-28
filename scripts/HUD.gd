@@ -15,5 +15,7 @@ func _on_Player_health_updated(health):
 
 func _on_Player_stamina_updated(stamina):
 	stamina_bar_over.value = stamina
-	update_tween2.interpolate_property(stamina_bar_under, "value", stamina_bar_under.value, stamina, 0.9, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+
+func _physics_process(delta):
+	update_tween2.interpolate_property(stamina_bar_under, "value", stamina_bar_under.value, stamina_bar_over.value, 0.9, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	update_tween2.start()

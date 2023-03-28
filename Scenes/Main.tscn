@@ -88,7 +88,7 @@ position = Vector2( 218, 413 )
 scale = Vector2( 1.5, 1.5 )
 
 [node name="FireWorm" parent="." instance=ExtResource( 7 )]
-position = Vector2( 121, 274 )
+position = Vector2( 706, 274 )
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]
 

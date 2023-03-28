@@ -174,6 +174,8 @@ func _on_AnimatedSprite_animation_finished():
 		$AttackArea/CollisionShape2D.disabled = true
 		isAttacking = false;
 		attackAlt = not attackAlt
+	if $AnimatedSprite.animation == "Hit":
+		isAttacking = false
 
 #Stops player from getting hit or moving when dead
 func die():
@@ -218,6 +220,7 @@ func takeDamage(damage):
 		hurtbox.start_invincibility(invincibility_duration)	
 
 func _on_AttackArea_body_entered(body):
+	print(body)
 	if body in get_tree().get_nodes_in_group("Enemy"):
 		body.death()
 

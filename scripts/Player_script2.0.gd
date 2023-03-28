@@ -117,7 +117,7 @@ func animate_sprite():
 			if motion.y < 0:
 				$AnimatedSprite.play("Jump")
 			elif motion.y > -55 and motion.y < 55:
-				$AnimatedSprite.play("Fall_transition");print($AnimatedSprite.frame)
+				$AnimatedSprite.play("Fall_transition")
 			else:
 				$AnimatedSprite.play("Fall")
 		

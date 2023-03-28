@@ -16,7 +16,7 @@ func player_hit(area: Area2D) -> void:
 
 #Player flashes white when hitting enemy body 
 func _on_PlayerHurtbox_area_entered(area: Area2D) -> void:
-	if (area.get_parent() in get_tree().get_nodes_in_group("Enemy")):
+	if (area.get_parent() in get_tree().get_nodes_in_group("Enemy") && !get_parent().isRolling):
 		if (area.get_parent().isDead == false):
 			flash ()
 

@@ -91,7 +91,6 @@ func death():
 	$Timer.start()
 
 func _on_HitBox_body_entered(body):
-	print(body.name)
 	emit_signal("hit", damage, is_moving_right)
 
 

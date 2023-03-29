@@ -336,7 +336,7 @@ animations = [ {
 "frames": [ SubResource( 31 ), SubResource( 32 ), SubResource( 33 ) ],
 "loop": false,
 "name": "Turn Around",
-"speed": 6.0
+"speed": 20.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=45]

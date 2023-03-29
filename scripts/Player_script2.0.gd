@@ -30,8 +30,10 @@ var attackAlt = false
 var isSprinting = false
 var isMoving = false
 var facing_right = true
+var isTurning = false
 var motion = Vector2()
 var controllable
+var direction
 
 func _ready():
 	connect("health_updated", get_tree().get_nodes_in_group("HUD")[0], "_on_Player_health_updated")
@@ -39,13 +41,13 @@ func _ready():
 
 func _physics_process(delta):
 	apply_gravity()
-	
 	update_movement()
 	animate_sprite()
 
 
 func update_movement():
 	controllable = (isAlive and !isAttacking and $StunTimer.is_stopped() and !isRolling)
+	direction = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 	if controllable:
 	#	// MOVE LEFT & RIGHT //
 		if Input.is_action_pressed("move_right"):
@@ -75,17 +77,22 @@ func update_movement():
 			if Input.is_action_pressed("jump") and stamina>30:
 				motion.y = -JUMPFORCE
 		
+	#	// TURN AROUND //
+		if ((motion.x > 140 and direction <0) or (motion.x < -140 and direction >0)) && !isTurning:
+			if is_on_floor():
+				isTurning = true
+		
 #	// ATTACK MOTION //
 	if Input.is_action_just_pressed("attack") && $StunTimer.is_stopped() && !isRolling:
-		_set_stamina(stamina-15);$StaminaRegenBuffer.start()
-		if stamina>15:
+		_set_stamina(stamina-20);$StaminaRegenBuffer.start()
+		if stamina>0:
 			motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
 			isAttacking = true
 			attackAlt = !attackAlt
 	
 #	// I FRAME ROLL //
 	if Input.is_action_just_pressed("right-click") && $StunTimer.is_stopped():
-		if stamina > 35 && !isRolling:
+		if stamina > 30 && !isRolling:
 			_set_stamina(stamina-35);$StaminaRegenBuffer.start()
 			isRolling = true
 			motion.x += ROLLPUSH*$AnimatedSprite.scale.x
@@ -107,9 +114,9 @@ func animate_sprite():
 #	// HANDLING ANIMATIONS //
 	if controllable:
 	#	// MOVE LEFT & RIGHT //
-		if isMoving:
+		if isMoving && !isTurning:
 			$AnimatedSprite.play("Run")
-		else:
+		elif !isTurning:
 			$AnimatedSprite.play("Idle")
 		
 	#	// JUMPING //	
@@ -128,11 +135,9 @@ func animate_sprite():
 			$AnimatedSprite.speed_scale = 1
 
 	#	// TURN AROUND ANIM //
-		var direction = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
-		if ((motion.x > 140 and direction <0) or (motion.x < -140 and direction >0)):
-			facing_right = !facing_right
-			if is_on_floor():
-				$AnimatedSprite.play("Turn Around")
+		if isTurning:
+			if direction == -1: facing_right = true;else:facing_right=false
+			$AnimatedSprite.play("Turn Around");$AnimatedSprite.speed_scale =1
 		
 #	// ATTACK ANIM //
 	if isAttacking:
@@ -275,3 +280,5 @@ func _on_AnimatedSprite_animation_finished():
 		isRolling = false
 	if $AnimatedSprite.animation == "Roll":
 		isRolling = false
+	if $AnimatedSprite.animation =="Turn Around":
+		isTurning = false

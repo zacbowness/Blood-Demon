@@ -1,7 +1,7 @@
 extends KinematicBody2D
 signal hit(damage, dir)
 
-var is_moving_right = false 
+export var is_moving_right = false 
 var initialDirection
 var gravity = 9.8
 var velocity = Vector2(0,0)
@@ -20,30 +20,23 @@ const Fireball = preload("res://Scenes/FireBall.tscn")
 func _ready():
 	$AnimationPlayer.play("Walk")
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
-	if (is_moving_right == true):
-		scale.x = scale.x 
-		initialDirection = 1
-	else :
-		scale.x = -scale.x
-		initialDirection = -1
+	if !is_moving_right:
+		scale.x = -scale.x;
 	if (get_node(".").name == "Goblin"):
 		health = 100
-		speed = 50 * initialDirection 
+		speed = -50
 		weaponType = "Melee"
 		damage = 70
 	elif (get_node(".").name == "Skeleton"): 
 		health = 200
-		speed = 30 * initialDirection
+		speed = -30
 		damage = 100
 		weaponType = "Melee"
 	elif (get_node(".").name == "FireWorm"): 
 		health = 100
-		speed = 30 * initialDirection
+		speed = -30
 		damage = 100
 		weaponType = "Ranged"
-
-	
-
 
 func _process(delta):
 	if (isDead == false):
@@ -52,6 +45,7 @@ func _process(delta):
 			detect_turn_around()
 		if ($AnimationPlayer.current_animation == "Attack"):
 			return	
+
 		if is_on_wall():
 			is_moving_right = !is_moving_right
 			scale.x = -scale.x

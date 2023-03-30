@@ -1,36 +1,49 @@
 extends KinematicBody2D
 signal hit(damage, dir)
 
-var is_moving_right = true 
-
+var is_moving_right = false 
+var initialDirection
 var gravity = 9.8
 var velocity = Vector2(0,0)
-var speed = -30
-var isAttacking = false;
-var animation = false;
+var speed;
+var isAttacking = false
+var animation = false
 var inRange = false 
 var damage = 100
 var isDead = false
 var seeWall = false 
 var health = 1000
+var weaponType
 
 const Fireball = preload("res://Scenes/FireBall.tscn")
 
 func _ready():
 	$AnimationPlayer.play("Walk")
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
+	if (is_moving_right == true):
+		scale.x = scale.x 
+		initialDirection = 1
+	else :
+		scale.x = -scale.x
+		initialDirection = -1
+	print(initialDirection)
 	if (get_node(".").name == "Goblin"):
 		health = 100
-		speed = -50 
+		speed = 50 * initialDirection 
+		weaponType = "Melee"
 		damage = 70
 	elif (get_node(".").name == "Skeleton"): 
 		health = 200
-		speed = -30
+		speed = 30 * initialDirection
 		damage = 100
+		weaponType = "Melee"
 	elif (get_node(".").name == "FireWorm"): 
 		health = 100
-		speed = -30
+		speed = 30 * initialDirection
 		damage = 100
+		weaponType = "Ranged"
+
+	
 
 
 func _process(delta):
@@ -47,6 +60,7 @@ func _process(delta):
 
 func move_character():
 	velocity.x = -speed if is_moving_right else speed
+	print(speed)
 	velocity.y += gravity
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -60,8 +74,12 @@ func _on_PlayerDetector_body_entered(body):
 		$AnimationPlayer.play("Attack")
 		inRange = true 
 
+	
+
 func hit():
 	$HitBox.monitoring = true 
+	$Attack.play()
+
 
 func end_of_hit():
 	$HitBox.monitoring = false  
@@ -84,6 +102,7 @@ func death():
 	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)
 	$AnimationPlayer.play("Death")
+	$Death.play()
 	$HitBox.monitoring = false
 	$EnemyHitBox.monitoring = false
 	$PlayerDetector.monitoring = false
@@ -105,6 +124,7 @@ func _on_WallDetector_body_exited(body):
 	seeWall = false 
 
 func Fireball():
+	$Attack.play()
 	var fireattack = Fireball.instance()
 	if (is_moving_right == true):
 		fireattack.set_fireball_direction(1)

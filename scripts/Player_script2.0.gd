@@ -89,13 +89,14 @@ func update_movement():
 		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
 		isAttacking = true
 		attackAlt = !attackAlt
-	
+
 #	// I FRAME ROLL //
 	if Input.is_action_just_pressed("right-click") && $StunTimer.is_stopped():
 		if stamina > 30 && !isRolling:
 			_set_stamina(stamina-35);$StaminaRegenBuffer.start()
 			isRolling = true
 			motion.x += ROLLPUSH*$AnimatedSprite.scale.x
+
 	
 #	// REGEN STAMINA //
 	if $StaminaRegenBuffer.is_stopped():_set_stamina(stamina+.75)
@@ -123,6 +124,7 @@ func animate_sprite():
 		if not is_on_floor():
 			if motion.y < 0:
 				$AnimatedSprite.play("Jump")
+				$Jump.play()
 			elif motion.y > -55 and motion.y < 55:
 				$AnimatedSprite.play("Fall_transition")
 			else:
@@ -141,6 +143,7 @@ func animate_sprite():
 		
 #	// ATTACK ANIM //
 	if isAttacking:
+		$Attack.play()
 		$AnimatedSprite.speed_scale = 1
 		if not attackAlt:$AnimatedSprite.play("Attack")
 		else:$AnimatedSprite.play("Attack2")
@@ -148,7 +151,7 @@ func animate_sprite():
 #	// I FRAME ROLL //
 	if isRolling:
 		$AnimatedSprite.play("Roll")
-	
+		$Roll.play()
 #	// FLIP SPRITE & HITBOXES //
 	if isAlive:
 		$HitBox.shape.radius = 8
@@ -204,6 +207,7 @@ func setMaxSpeed():
 #Stops player from getting hit or moving when dead
 func die():
 	isAlive = false
+	$Death.play()
 	$AnimatedSprite.play("Death") 
 	apply_gravity()
 	$PlayerHurtbox/CollisionShape2D.disabled = true
@@ -238,6 +242,7 @@ func _set_stamina(value):
 func takeDamage(damage):
 	$StunTimer.start()
 	$AnimatedSprite.play("Hit")
+	$TakeDamage.play()
 	var current_health = _set_health(health - damage)
 	if current_health > clamp (0,0,max_health):
 		hurtbox.player_hit(true)

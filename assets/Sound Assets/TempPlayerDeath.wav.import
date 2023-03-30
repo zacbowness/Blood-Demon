@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/TempPlayerDeath.wav-cd86c57e49e85a03e53f948f35fca99d.sample"
+
+[deps]
+
+source_file="res://assets/Sound Assets/TempPlayerDeath.wav"
+dest_files=[ "res://.import/TempPlayerDeath.wav-cd86c57e49e85a03e53f948f35fca99d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -10,6 +10,7 @@ var damage = 100
 var isDead = false
 var health = 100
 
+
 #New variables:
 var motion = Vector2()
 export(String) var type

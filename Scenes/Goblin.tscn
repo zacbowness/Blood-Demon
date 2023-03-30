@@ -12,7 +12,8 @@ extents = Vector2( 15.875, 18.25 )
 
 [sub_resource type="Animation" id=53]
 resource_name = "Attack"
-length = 0.85
+length = 0.45
+step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -20,7 +21,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 2, 4, 5, 6, 7 ]
@@ -32,7 +33,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.7, 0.8 ),
+"times": PoolRealArray( 0.35, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "values": [ {
 "args": [  ],
@@ -116,7 +117,7 @@ shape = SubResource( 25 )
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
 hframes = 28
-frame = 12
+frame = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 reset_on_save = false

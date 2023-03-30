@@ -20,12 +20,12 @@ func _ready():
 	$AnimationPlayer.play("Walk")
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
 	if (get_node(".").name == "Goblin"):
-		health = 100
-		speed = -50 
+		health = 200
+		speed = -100 
 		damage = 70
 	elif (get_node(".").name == "Skeleton"): 
-		health = 200
-		speed = -30
+		health = 300
+		speed = -50
 		damage = 100
 	elif (get_node(".").name == "FireWorm"): 
 		health = 100

@@ -22,6 +22,7 @@ export (float) var max_health = 1000
 onready var health = max_health setget _set_health
 export (float) var max_stamina = 100
 onready var stamina = max_stamina setget _set_stamina
+var PlayerDamage = 100
 
 var isAlive = true
 var isAttacking = false
@@ -260,7 +261,9 @@ func _on_Enemy_hit(damage, dir_right):
 
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):
-		body.death()
+		body.health = body.health - PlayerDamage
+		if (body.health <= 0):
+			body.death()
 
 func _on_PlayerHurtbox_area_entered(area):
 	var body = area.get_parent()

@@ -20,10 +20,10 @@ export var ACCEL = 10*2
 export var ATTACKPUSH = 70
 export var ROLLPUSH = 250
 export (float) var max_health = 1000
-onready var health = max_health setget _set_health
 export (float) var max_stamina = 100
+
+onready var health = max_health setget _set_health
 onready var stamina = max_stamina setget _set_stamina
-var playerDamage = 100
 
 var isAlive = true
 var isAttacking = false
@@ -36,10 +36,13 @@ var isTurning = false
 var motion = Vector2()
 var controllable
 var direction
+var playerDamage = 100
+var spawnPosition = position
 
 func _ready():
-	connect("health_updated", get_tree().get_nodes_in_group("HUD")[0], "_on_Player_health_updated")
-	connect("stamina_updated", get_tree().get_nodes_in_group("HUD")[0], "_on_Player_stamina_updated")
+	connect("health_updated", get_parent().get_node("HUD"), "_on_Player_health_updated")
+	connect("stamina_updated", get_parent().get_node("HUD"), "_on_Player_stamina_updated")
+	spawnPosition = position
 
 func _physics_process(delta):
 	apply_gravity()
@@ -56,12 +59,10 @@ func update_movement():
 			motion.x += ACCEL
 			facing_right = true
 			isMoving = true
-			$Camera2D.offset_h = .55
 		elif Input.is_action_pressed("move_left"):
 			motion.x-= ACCEL
 			facing_right = false
 			isMoving = true
-			$Camera2D.offset_h = -.55
 		else:
 			motion.x = lerp(motion.x, 0, 0.2)
 			isMoving = false
@@ -165,11 +166,13 @@ func animate_sprite():
 			$HitBox.position.x = 0
 			$PlayerHurtbox.position.x = 0
 			$AttackArea/CollisionShape2D.position.x = 40
+			$Camera2D.offset_h = .55
 		else:
 			$AnimatedSprite.scale.x = -1
 			$HitBox.position.x = 10
 			$PlayerHurtbox.position.x = 10
 			$AttackArea/CollisionShape2D.position.x = -30
+			$Camera2D.offset_h = -.55
 	else:motion.x = lerp(motion.x, 0, .05)
 	
 #	// ENABLE PHASE WHEN ROLLING //
@@ -221,6 +224,14 @@ func die():
 	$HitBox.shape.radius = 6
 	$HitBox.shape.height = 30
 	$HitBox.rotation_degrees = 90
+	$SpawnTimer.start()
+
+func spawn():
+	position = spawnPosition
+	isAlive = true;facing_right = true
+	_set_health(max_health)
+	blinker.start_blinking(self,invincibility_duration)
+	hurtbox.start_invincibility(invincibility_duration)	
 
 #Updates the players health
 func _set_health(value):
@@ -239,6 +250,7 @@ func _set_stamina(value):
 	stamina = clamp (value,0, max_stamina)
 	if stamina != prev_stamina:
 		emit_signal("stamina_updated", stamina)
+	return stamina
 
 #Makes player invincible for certain amount of time
 func takeDamage(damage):
@@ -276,6 +288,8 @@ func _on_AttackArea_body_entered(body):
 			body.death()
 
 func _on_PlayerHurtbox_area_entered(area):
+	if area in get_tree().get_nodes_in_group("Checkpoint"):
+		spawnPosition = area.position;return
 	var body = area.get_parent()
 	if body in get_tree().get_nodes_in_group("Enemy"):
 		if (body.isDead == false) && (!isRolling):
@@ -295,3 +309,6 @@ func _on_AnimatedSprite_animation_finished():
 		isRolling = false
 	if $AnimatedSprite.animation =="Turn Around":
 		isTurning = false
+
+func _on_SpawnTimer_timeout():
+	spawn()

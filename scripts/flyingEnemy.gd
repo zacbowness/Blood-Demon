@@ -24,10 +24,8 @@ func _physics_process(delta):
 			motion.y = speed
 		if $Up.is_colliding() == true && dir == true:
 			dir = false
-			print("Collision")
 		if $Down.is_colliding() == true && dir == false:
-			dir = true	
-			print("Collision")
+			dir = true
 			
 #	Left and right movement		
 	if type == "lr":
@@ -37,10 +35,8 @@ func _physics_process(delta):
 			motion.x = speed
 		if $Right.is_colliding() == true:
 			dir = false
-			print("Collision")
 		if $Left.is_colliding() == true:
-			dir = true	
-			print("Collision")
+			dir = true
 		
 			
 	motion = move_and_slide(motion)

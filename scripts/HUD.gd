@@ -5,8 +5,6 @@ onready var update_tween = $Node2D/UpdateTween
 onready var health_bar_under = $Node2D/HealthBarUnder
 
 onready var stamina_bar_over = $StaminaBar/StaminaBarOver
-onready var update_tween2 = $StaminaBar/TweenStamina
-onready var stamina_bar_under = $StaminaBar/StaminaBarUnder
 
 func _on_Player_health_updated(health):
 	health_bar_over.value = health
@@ -16,6 +14,11 @@ func _on_Player_health_updated(health):
 func _on_Player_stamina_updated(stamina):
 	stamina_bar_over.value = stamina
 
-func _physics_process(delta):
-	update_tween2.interpolate_property(stamina_bar_under, "value", stamina_bar_under.value, stamina_bar_over.value, 0.9, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
-	update_tween2.start()
+func _ready():
+	var player = get_tree().get_nodes_in_group("Player")[0]
+	health_bar_over.max_value = player.max_health
+	health_bar_over.value = player.max_health
+	health_bar_under.max_value = player.max_health
+	health_bar_under.value = player.max_health
+	stamina_bar_over.max_value = player.max_stamina
+	stamina_bar_over.value = player.max_stamina

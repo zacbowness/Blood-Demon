@@ -22,7 +22,11 @@ export (float) var max_health = 1000
 onready var health = max_health setget _set_health
 export (float) var max_stamina = 100
 onready var stamina = max_stamina setget _set_stamina
+<<<<<<< HEAD
 var PlayerDamage = 100
+=======
+var playerDamage = 100
+>>>>>>> 52c716f136275bd4513dc450114c211983f430ba
 
 var isAlive = true
 var isAttacking = false
@@ -261,7 +265,11 @@ func _on_Enemy_hit(damage, dir_right):
 
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):
+<<<<<<< HEAD
 		body.health = body.health - PlayerDamage
+=======
+		body.health = (body.health - playerDamage)
+>>>>>>> 52c716f136275bd4513dc450114c211983f430ba
 		if (body.health <= 0):
 			body.death()
 

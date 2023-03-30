@@ -111,6 +111,6 @@ func Fireball():
 		fireattack.set_fireball_direction(1)
 	else:
 		fireattack.set_fireball_direction(-1)					
-		get_parent().add_child(fireattack)
-		fireattack.global_position = $FireBallPlacer.global_position
+	get_parent().add_child(fireattack)
+	fireattack.global_position = $FireBallPlacer.global_position
  

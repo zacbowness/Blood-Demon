@@ -22,11 +22,7 @@ export (float) var max_health = 1000
 onready var health = max_health setget _set_health
 export (float) var max_stamina = 100
 onready var stamina = max_stamina setget _set_stamina
-<<<<<<< HEAD
-var PlayerDamage = 100
-=======
 var playerDamage = 100
->>>>>>> 52c716f136275bd4513dc450114c211983f430ba
 
 var isAlive = true
 var isAttacking = false
@@ -80,7 +76,7 @@ func update_movement():
 	#	// JUMPING //
 		if is_on_floor():
 			if Input.is_action_pressed("jump") and stamina>30:
-				motion.y = -JUMPFORCE
+				motion.y = -JUMPFORCE;isTurning=false
 		
 	#	// TURN AROUND //
 		if ((motion.x > 140 and direction <0) or (motion.x < -140 and direction >0)) && !isTurning:
@@ -88,12 +84,11 @@ func update_movement():
 				isTurning = true
 		
 #	// ATTACK MOTION //
-	if Input.is_action_just_pressed("attack") && $StunTimer.is_stopped() && !isRolling:
+	if Input.is_action_just_pressed("attack") && stamina>20 && $StunTimer.is_stopped() && !isRolling:
 		_set_stamina(stamina-20);$StaminaRegenBuffer.start()
-		if stamina>0:
-			motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
-			isAttacking = true
-			attackAlt = !attackAlt
+		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
+		isAttacking = true
+		attackAlt = !attackAlt
 	
 #	// I FRAME ROLL //
 	if Input.is_action_just_pressed("right-click") && $StunTimer.is_stopped():
@@ -265,11 +260,7 @@ func _on_Enemy_hit(damage, dir_right):
 
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):
-<<<<<<< HEAD
-		body.health = body.health - PlayerDamage
-=======
 		body.health = (body.health - playerDamage)
->>>>>>> 52c716f136275bd4513dc450114c211983f430ba
 		if (body.health <= 0):
 			body.death()
 

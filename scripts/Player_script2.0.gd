@@ -9,6 +9,7 @@ const invincibility_duration = 1.5
 onready var hurtbox = $PlayerHurtbox
 onready var blinker = $Blinker
 
+const red_duration = 0.15
 const UP = Vector2(0, -1)
 export var GRAVITY = 15*2
 export var MAXFALLSPEED = 200*2
@@ -260,7 +261,11 @@ func _on_Enemy_hit(damage, dir_right):
 
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):
+		var sprite = body.get_node("Sprite")
 		body.health = (body.health - playerDamage)
+		sprite.material.set_shader_param("red",true)
+		yield(get_tree().create_timer(red_duration),"timeout")
+		sprite.material.set_shader_param("red",false)
 		if (body.health <= 0):
 			body.death()
 

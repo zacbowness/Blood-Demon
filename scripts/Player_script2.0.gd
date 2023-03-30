@@ -78,6 +78,7 @@ func update_movement():
 		if is_on_floor():
 			if Input.is_action_pressed("jump"):
 				motion.y = -JUMPFORCE;isTurning=false
+				$Jump.play()
 		
 	#	// TURN AROUND //
 		if ((motion.x > 140 and direction <0) or (motion.x < -140 and direction >0)) && !isTurning:
@@ -90,6 +91,7 @@ func update_movement():
 		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
 		isAttacking = true
 		attackAlt = !attackAlt
+		$Attack.play()
 
 #	// I FRAME ROLL //
 	if Input.is_action_just_pressed("right-click") && $StunTimer.is_stopped():
@@ -97,6 +99,7 @@ func update_movement():
 			_set_stamina(stamina-35);$StaminaRegenBuffer.start()
 			isRolling = true
 			motion.x += ROLLPUSH*$AnimatedSprite.scale.x
+			$Roll.play()
 
 	
 #	// REGEN STAMINA //
@@ -125,7 +128,6 @@ func animate_sprite():
 		if not is_on_floor():
 			if motion.y < 0:
 				$AnimatedSprite.play("Jump")
-				$Jump.play()
 			elif motion.y > -55 and motion.y < 55:
 				$AnimatedSprite.play("Fall_transition")
 			else:
@@ -144,7 +146,6 @@ func animate_sprite():
 		
 #	// ATTACK ANIM //
 	if isAttacking:
-		$Attack.play()
 		$AnimatedSprite.speed_scale = 1
 		if not attackAlt:$AnimatedSprite.play("Attack")
 		else:$AnimatedSprite.play("Attack2")
@@ -152,7 +153,7 @@ func animate_sprite():
 #	// I FRAME ROLL //
 	if isRolling:
 		$AnimatedSprite.play("Roll")
-		$Roll.play()
+		
 #	// FLIP SPRITE & HITBOXES //
 	if isAlive:
 		$HitBox.shape.radius = 8

@@ -26,7 +26,6 @@ func _ready():
 	else :
 		scale.x = -scale.x
 		initialDirection = -1
-	print(initialDirection)
 	if (get_node(".").name == "Goblin"):
 		health = 100
 		speed = 50 * initialDirection 
@@ -60,7 +59,6 @@ func _process(delta):
 
 func move_character():
 	velocity.x = -speed if is_moving_right else speed
-	print(speed)
 	velocity.y += gravity
 	velocity = move_and_slide(velocity, Vector2.UP)
 

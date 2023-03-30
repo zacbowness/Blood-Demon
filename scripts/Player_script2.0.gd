@@ -89,15 +89,15 @@ func update_movement():
 	if Input.is_action_just_pressed("attack") && stamina>20 && $StunTimer.is_stopped() && !isRolling:
 		_set_stamina(stamina-20);$StaminaRegenBuffer.start()
 		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
-		isAttacking = true
+		isAttacking = true;print(1)
 		attackAlt = !attackAlt
 		$Attack.play()
 
 #	// I FRAME ROLL //
-	if Input.is_action_just_pressed("right-click") && $StunTimer.is_stopped():
+	if Input.is_action_just_pressed("right-click") && $StunTimer.is_stopped() && !isAttacking:
 		if stamina > 30 && !isRolling:
 			_set_stamina(stamina-35);$StaminaRegenBuffer.start()
-			isRolling = true
+			isRolling = true;print(2)
 			motion.x += ROLLPUSH*$AnimatedSprite.scale.x
 			$Roll.play()
 

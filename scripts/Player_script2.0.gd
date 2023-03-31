@@ -212,6 +212,7 @@ func setMaxSpeed():
 #Stops player from getting hit or moving when dead
 func die():
 	isAlive = false
+	isAttacking = false
 	$Death.play()
 	$AnimatedSprite.play("Death") 
 	apply_gravity()

@@ -380,7 +380,7 @@ material = ExtResource( 13 )
 position = Vector2( 4, -2 )
 frames = SubResource( 30 )
 animation = "Roll"
-frame = 3
+frame = 9
 playing = true
 __meta__ = {
 "_edit_group_": true

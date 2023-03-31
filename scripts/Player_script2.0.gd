@@ -12,14 +12,14 @@ onready var blinker = $Blinker
 const red_duration = 0.15
 const UP = Vector2(0, -1)
 export var GRAVITY = 15*2
-export var MAXFALLSPEED = 200*2
+export var MAXFALLSPEED = 250*2
 export var MAXSPEED = 100*2
 export var SPRINTMOD = 2.0
 export var JUMPFORCE = 290*2
 export var ACCEL = 10*2
 export var ATTACKPUSH = 70
 export var ROLLPUSH = 250
-export (float) var max_health = 1000
+export (float) var max_health = 250
 export (float) var max_stamina = 100
 
 onready var health = max_health setget _set_health
@@ -87,7 +87,7 @@ func update_movement():
 				isTurning = true
 		
 #	// ATTACK MOTION //
-	if Input.is_action_just_pressed("attack") && stamina>20 && $StunTimer.is_stopped() && !isRolling:
+	if Input.is_action_just_pressed("attack") && stamina>20 && $StunTimer.is_stopped() && !isRolling && isAlive:
 		_set_stamina(stamina-20);$StaminaRegenBuffer.start()
 		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
 		isAttacking = true
@@ -95,7 +95,7 @@ func update_movement():
 		$Attack.play()
 
 #	// I FRAME ROLL //
-	if Input.is_action_just_pressed("right-click") && $StunTimer.is_stopped() && !isAttacking:
+	if Input.is_action_just_pressed("right-click") && $StunTimer.is_stopped() && !isAttacking && isAlive:
 		if stamina > 30 && !isRolling:
 			_set_stamina(stamina-35);$StaminaRegenBuffer.start()
 			isRolling = true

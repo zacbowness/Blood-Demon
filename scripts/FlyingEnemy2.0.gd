@@ -4,7 +4,7 @@ extends KinematicBody2D
 export var Accel = 300 
 export var MAX_SPEED = 200 
 
-
+const red_duration = 0.15
 var health = 100
 var speed = 0
 var weaponType = "Melee"
@@ -58,7 +58,7 @@ func _physics_process(delta):
 		DEAD:
 			pass
 			
-
+	print(get_collision_mask_bit(0))
 	velocity = move_and_slide(velocity)
 	
 func turnAround():
@@ -89,6 +89,15 @@ func hit():
 func end_of_hit():
 	$HitBox.monitoring = false  
 
+func take_damage(damage):
+	var sprite = get_node("Sprite")
+	health = (health - damage)
+	sprite.material.set_shader_param("red",true)
+	yield(get_tree().create_timer(red_duration),"timeout")
+	sprite.material.set_shader_param("red",false)
+	if (health <= 0):
+		death()
+
 func _on_PlayerDetector_body_exited(body):
 	inRange = false 
 
@@ -108,9 +117,9 @@ func death():
 	$AnimationPlayer.play("Death")
 	$Death.play()
 	$HitBox.monitoring = false
-	$EnemyHitBox.monitoring = false
 	$PlayerDetector.monitoring = false
-	set_collision_mask_bit(2, false)
+	set_collision_mask_bit(0, false)
+	set_collision_layer_bit(2, false)
 	$Timer.start()
 
 func _on_Timer_timeout():

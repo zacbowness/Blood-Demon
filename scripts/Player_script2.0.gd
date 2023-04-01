@@ -9,7 +9,7 @@ const invincibility_duration = 1.5
 onready var hurtbox = $PlayerHurtbox
 onready var blinker = $Blinker
 
-const red_duration = 0.15
+const BloodBall = preload("res://Scenes/BloodBall.tscn")
 const UP = Vector2(0, -1)
 export var GRAVITY = 15*2
 export var MAXFALLSPEED = 250*2
@@ -28,6 +28,7 @@ onready var stamina = max_stamina setget _set_stamina
 var isAlive = true
 var globalPosition = null
 var isAttacking = false
+var isRangeAttacking = false
 var isRolling = false
 var attackAlt = false
 var isSprinting = false
@@ -52,7 +53,7 @@ func _physics_process(delta):
 
 
 func update_movement():
-	controllable = (isAlive and !isAttacking and $StunTimer.is_stopped() and !isRolling)
+	controllable = (isAlive and !isAttacking and !isRangeAttacking and $StunTimer.is_stopped() and !isRolling)
 	direction = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 	if controllable:
 	#	// MOVE LEFT & RIGHT //
@@ -94,9 +95,20 @@ func update_movement():
 		isAttacking = true
 		attackAlt = !attackAlt
 		$Attack.play()
-
+		
+#	// RANGE ATTACK //
+	if Input.is_action_just_pressed("right-click") && !isTurning && $StunTimer.is_stopped() && !isRangeAttacking && !isAttacking && isAlive:
+		isRangeAttacking = true
+		var fireattack = BloodBall.instance()
+		if (facing_right == true):
+			fireattack.set_bloodball_direction(1)
+		else:
+			fireattack.set_bloodball_direction(-1)					
+		get_parent().add_child(fireattack)
+		fireattack.global_position = $BloodballPlacer.global_position
+		
 #	// I FRAME ROLL //
-	if Input.is_action_just_pressed("right-click") && $StunTimer.is_stopped() && !isAttacking && isAlive:
+	if Input.is_action_just_pressed("ctrl") && $StunTimer.is_stopped() && !isAttacking && isAlive:
 		if stamina > 30 && !isRolling:
 			_set_stamina(stamina-35);$StaminaRegenBuffer.start()
 			isRolling = true
@@ -152,6 +164,10 @@ func animate_sprite():
 		if not attackAlt:$AnimatedSprite.play("Attack")
 		else:$AnimatedSprite.play("Attack2")
 	
+	if isRangeAttacking:
+		$AnimatedSprite.speed_scale = 1
+		$AnimatedSprite.play("Range Attack")
+		
 #	// I FRAME ROLL //
 	if isRolling:
 		$AnimatedSprite.play("Roll")
@@ -170,6 +186,7 @@ func animate_sprite():
 			$Camera2D.offset_h = .55
 			$LightOccluder2D.scale.x = 1
 			$LightOccluder2D.position.x =0
+			$BloodballPlacer.position.x = 30
 		else:
 			$AnimatedSprite.scale.x = -1
 			$HitBox.position.x = 10
@@ -178,6 +195,7 @@ func animate_sprite():
 			$Camera2D.offset_h = -.55
 			$LightOccluder2D.scale.x = -1
 			$LightOccluder2D.position.x = 10
+			$BloodballPlacer.position.x = -25
 	else:motion.x = lerp(motion.x, 0, .05)
 	
 #	// ENABLE PHASE WHEN ROLLING //
@@ -285,22 +303,7 @@ func _on_Enemy_hit(damage, dir_right):
 
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):
-		var sprite = body.get_node("Sprite")
-		body.health = (body.health - playerDamage)
-		sprite.material.set_shader_param("red",true)
-		yield(get_tree().create_timer(red_duration),"timeout")
-		sprite.material.set_shader_param("red",false)
-		if (body.health <= 0):
-			body.death()
-	elif body in get_tree().get_nodes_in_group("FlyingEnemy"):
-		print(body)
-		var sprite = body.get_node("Sprite")
-		body.health = (body.health - playerDamage)
-		sprite.material.set_shader_param("red",true)
-		yield(get_tree().create_timer(red_duration),"timeout")
-		sprite.material.set_shader_param("red",false)
-		if (body.health <= 0):
-			body.death()
+		body.take_damage(playerDamage)
 
 func _on_PlayerHurtbox_area_entered(area):
 	if area in get_tree().get_nodes_in_group("Checkpoint"):
@@ -317,9 +320,12 @@ func _on_AnimatedSprite_animation_finished():
 #	// STOP ATTACK STATE //
 	if $AnimatedSprite.animation == "Attack" or $AnimatedSprite.animation == "Attack2":
 		isAttacking = false
+	if $AnimatedSprite.animation == "Range Attack":
+		isRangeAttacking = false
 	if $AnimatedSprite.animation == "Hit":
 		isAttacking = false
 		isRolling = false
+		isRangeAttacking = false
 	if $AnimatedSprite.animation == "Roll":
 		isRolling = false
 	if $AnimatedSprite.animation =="Turn Around":

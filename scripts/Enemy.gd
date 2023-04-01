@@ -1,6 +1,7 @@
 extends KinematicBody2D
 signal hit(damage, dir)
 
+const red_duration = 0.15
 export var is_moving_right = false 
 var initialDirection
 var gravity = 9.8
@@ -70,18 +71,24 @@ func _on_PlayerDetector_body_entered(body):
 		$AnimationPlayer.play("Attack")
 		inRange = true 
 
-	
-
 func hit():
 	$HitBox.monitoring = true 
 	$Attack.play()
-
 
 func end_of_hit():
 	$HitBox.monitoring = false  
 
 func _on_PlayerDetector_body_exited(body):
 	inRange = false 
+
+func take_damage(damage):
+	var sprite = get_node("Sprite")
+	health = (health - damage)
+	sprite.material.set_shader_param("red",true)
+	yield(get_tree().create_timer(red_duration),"timeout")
+	sprite.material.set_shader_param("red",false)
+	if (health <= 0):
+		death()
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if (anim_name == "Attack" && seeWall == false):

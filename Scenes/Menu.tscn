@@ -1,0 +1,466 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://assets/Fonts/TiltWarp-Regular-VariableFont_XROT,YROT.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/Fonts/RobotoCondensed-BoldItalic.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://scripts/Menu.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Main.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/Fonts/RobotoCondensed-Bold.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://assets/Sound Assets/Menu/MenuClick.mp3" type="AudioStream" id=6]
+[ext_resource path="res://assets/Junk Wastelands Files/layers/back.png" type="Texture" id=7]
+[ext_resource path="res://assets/Sound Assets/Menu/game-start-6104.mp3" type="AudioStream" id=8]
+[ext_resource path="res://assets/Junk Wastelands Files/layers/middle.png" type="Texture" id=9]
+[ext_resource path="res://assets/Junk Wastelands Files/layers/near.png" type="Texture" id=10]
+[ext_resource path="res://assets/Fonts/Lato/Lato-Bold.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://assets/Fonts/Lato/Lato-BoldItalic.ttf" type="DynamicFontData" id=12]
+[ext_resource path="res://assets/Background Music/4-BattleField4.mp3" type="AudioStream" id=13]
+
+[sub_resource type="DynamicFont" id=1]
+size = 120
+outline_color = Color( 0.0470588, 0.0431373, 0.0431373, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 50
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.501961, 0.0941176, 0.0941176, 0.490196 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.545098, 0.0431373, 0.0431373, 0.686275 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 0.392157 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="DynamicFont" id=7]
+size = 50
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 75
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 40
+font_data = ExtResource( 12 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.215686, 0.2, 0.2, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Menu" type="Node2D"]
+script = ExtResource( 3 )
+mainGameScene = ExtResource( 4 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_ignore_camera_zoom = true
+
+[node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.3, 0.3 )
+motion_mirroring = Vector2( 1024, 600 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Sky"]
+position = Vector2( 6.10352e-05, -9.15527e-05 )
+scale = Vector2( 7.11111, 2.53333 )
+texture = ExtResource( 7 )
+centered = false
+region_rect = Rect2( 2, 2, 2, 2 )
+
+[node name="Sky2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.5, 0.5 )
+motion_mirroring = Vector2( 1024, 600 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Sky2"]
+position = Vector2( 6.10352e-05, 0 )
+scale = Vector2( 3.04762, 2.5 )
+texture = ExtResource( 9 )
+centered = false
+
+[node name="Sky3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.8, 0.8 )
+motion_mirroring = Vector2( 1024, 600 )
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/Sky3"]
+position = Vector2( 0.00012207, 8 )
+scale = Vector2( 1.98437, 2.45 )
+texture = ExtResource( 10 )
+centered = false
+
+[node name="MainMenu" type="MarginContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_constants/margin_right = 125
+custom_constants/margin_top = 50
+custom_constants/margin_left = 125
+custom_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu"]
+margin_left = 125.0
+margin_top = 50.0
+margin_right = 899.0
+margin_bottom = 550.0
+
+[node name="Label" type="Label" parent="MainMenu/VBoxContainer"]
+margin_right = 774.0
+margin_bottom = 248.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_colors/font_color = Color( 0.647059, 0.0431373, 0.0431373, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 15
+custom_constants/shadow_offset_y = 8
+custom_fonts/font = SubResource( 1 )
+text = "Blood Demon"
+align = 1
+valign = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/VBoxContainer"]
+margin_top = 252.0
+margin_right = 774.0
+margin_bottom = 500.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+
+[node name="MarginContainer" type="MarginContainer" parent="MainMenu/VBoxContainer/VBoxContainer"]
+margin_right = 774.0
+margin_bottom = 69.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+
+[node name="NewGameButton" type="Button" parent="MainMenu/VBoxContainer/VBoxContainer/MarginContainer"]
+margin_left = 50.0
+margin_right = 724.0
+margin_bottom = 69.0
+focus_neighbour_top = NodePath("../../MarginContainer3/QuitButton")
+focus_neighbour_bottom = NodePath("../../MarginContainer2/ControlsButton")
+focus_mode = 1
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/normal = SubResource( 5 )
+text = "New Game"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MainMenu/VBoxContainer/VBoxContainer"]
+margin_top = 89.0
+margin_right = 774.0
+margin_bottom = 158.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+
+[node name="ControlsButton" type="Button" parent="MainMenu/VBoxContainer/VBoxContainer/MarginContainer2"]
+margin_left = 50.0
+margin_right = 724.0
+margin_bottom = 69.0
+focus_neighbour_top = NodePath("../../MarginContainer/NewGameButton")
+focus_neighbour_bottom = NodePath("../../MarginContainer3/QuitButton")
+focus_mode = 1
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/normal = SubResource( 5 )
+text = "Controls"
+
+[node name="MarginContainer3" type="MarginContainer" parent="MainMenu/VBoxContainer/VBoxContainer"]
+margin_top = 178.0
+margin_right = 774.0
+margin_bottom = 248.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 50
+custom_constants/margin_left = 50
+
+[node name="QuitButton" type="Button" parent="MainMenu/VBoxContainer/VBoxContainer/MarginContainer3"]
+margin_left = 50.0
+margin_right = 724.0
+margin_bottom = 70.0
+focus_neighbour_top = NodePath("../../MarginContainer2/ControlsButton")
+focus_neighbour_bottom = NodePath("../../MarginContainer/NewGameButton")
+focus_mode = 1
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/focus = SubResource( 6 )
+custom_styles/normal = SubResource( 5 )
+text = "Exit to Desktop"
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+
+[node name="ButtonClick" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+
+[node name="StartGame" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 8 )
+
+[node name="ControlsMenu" type="MarginContainer" parent="."]
+margin_top = 600.0
+margin_right = 1024.0
+margin_bottom = 1200.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 0
+custom_constants/margin_top = 0
+custom_constants/margin_left = 0
+custom_constants/margin_bottom = 0
+
+[node name="LeftColumn" type="MarginContainer" parent="ControlsMenu"]
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_constants/margin_right = 512
+custom_constants/margin_top = 100
+custom_constants/margin_bottom = 100
+
+[node name="Actions" type="VBoxContainer" parent="ControlsMenu/LeftColumn"]
+margin_top = 100.0
+margin_right = 512.0
+margin_bottom = 500.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+
+[node name="MarginContainer" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
+margin_right = 512.0
+margin_bottom = 61.0
+
+[node name="Label" type="Label" parent="ControlsMenu/LeftColumn/Actions/MarginContainer"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Movement"
+align = 1
+valign = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
+margin_top = 81.0
+margin_right = 512.0
+margin_bottom = 142.0
+
+[node name="Label" type="Label" parent="ControlsMenu/LeftColumn/Actions/MarginContainer2"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Jump"
+align = 1
+valign = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
+margin_top = 162.0
+margin_right = 512.0
+margin_bottom = 223.0
+
+[node name="Label" type="Label" parent="ControlsMenu/LeftColumn/Actions/MarginContainer3"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Sprint"
+align = 1
+valign = 1
+
+[node name="MarginContainer4" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
+margin_top = 243.0
+margin_right = 512.0
+margin_bottom = 304.0
+
+[node name="Label" type="Label" parent="ControlsMenu/LeftColumn/Actions/MarginContainer4"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Attack"
+align = 1
+valign = 1
+
+[node name="MarginContainer5" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
+margin_top = 324.0
+margin_right = 512.0
+margin_bottom = 385.0
+
+[node name="Label" type="Label" parent="ControlsMenu/LeftColumn/Actions/MarginContainer5"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Roll dodge"
+align = 1
+valign = 1
+
+[node name="RightColumn" type="MarginContainer" parent="ControlsMenu"]
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_constants/margin_top = 100
+custom_constants/margin_left = 512
+custom_constants/margin_bottom = 100
+
+[node name="Buttons" type="VBoxContainer" parent="ControlsMenu/RightColumn"]
+margin_left = 512.0
+margin_top = 100.0
+margin_right = 1024.0
+margin_bottom = 500.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+
+[node name="MarginContainer" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
+margin_right = 512.0
+margin_bottom = 61.0
+
+[node name="Label" type="Label" parent="ControlsMenu/RightColumn/Buttons/MarginContainer"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "a,d"
+align = 1
+valign = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
+margin_top = 81.0
+margin_right = 512.0
+margin_bottom = 142.0
+
+[node name="Label" type="Label" parent="ControlsMenu/RightColumn/Buttons/MarginContainer2"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Space"
+align = 1
+valign = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
+margin_top = 162.0
+margin_right = 512.0
+margin_bottom = 223.0
+
+[node name="Label" type="Label" parent="ControlsMenu/RightColumn/Buttons/MarginContainer3"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Shift"
+align = 1
+valign = 1
+
+[node name="MarginContainer4" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
+margin_top = 243.0
+margin_right = 512.0
+margin_bottom = 304.0
+
+[node name="Label" type="Label" parent="ControlsMenu/RightColumn/Buttons/MarginContainer4"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Left-click"
+align = 1
+valign = 1
+
+[node name="MarginContainer5" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
+margin_top = 324.0
+margin_right = 512.0
+margin_bottom = 385.0
+
+[node name="Label" type="Label" parent="ControlsMenu/RightColumn/Buttons/MarginContainer5"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Right-click"
+align = 1
+valign = 1
+
+[node name="Title" type="MarginContainer" parent="ControlsMenu"]
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_constants/margin_bottom = 500
+
+[node name="Label" type="Label" parent="ControlsMenu/Title"]
+margin_right = 1024.0
+margin_bottom = 100.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_colors/font_color = Color( 0.85098, 0.745098, 0.176471, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 8 )
+text = "Controls"
+align = 1
+
+[node name="BackButton" type="MarginContainer" parent="ControlsMenu"]
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_constants/margin_right = 300
+custom_constants/margin_top = 500
+custom_constants/margin_left = 300
+custom_constants/margin_bottom = 20
+
+[node name="Back" type="Button" parent="ControlsMenu/BackButton"]
+margin_left = 300.0
+margin_top = 500.0
+margin_right = 724.0
+margin_bottom = 580.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/font_color_focus = Color( 0.32549, 0.0431373, 0.0431373, 1 )
+custom_colors/font_color = Color( 0.32549, 0.0431373, 0.0431373, 1 )
+custom_colors/font_color_hover = Color( 0.717647, 0.105882, 0.105882, 1 )
+custom_colors/font_color_pressed = Color( 1, 0, 0, 1 )
+custom_fonts/font = SubResource( 9 )
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/focus = SubResource( 10 )
+custom_styles/normal = SubResource( 10 )
+text = "Back"
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="mouse_entered" from="MainMenu/VBoxContainer/VBoxContainer/MarginContainer/NewGameButton" to="." method="_on_NewGameButton_mouse_entered"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/VBoxContainer/MarginContainer/NewGameButton" to="." method="_on_NewGameButton_pressed"]
+[connection signal="mouse_entered" from="MainMenu/VBoxContainer/VBoxContainer/MarginContainer2/ControlsButton" to="." method="_on_ControlsButton_mouse_entered"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/VBoxContainer/MarginContainer2/ControlsButton" to="." method="_on_ControlsButton_pressed"]
+[connection signal="mouse_entered" from="MainMenu/VBoxContainer/VBoxContainer/MarginContainer3/QuitButton" to="." method="_on_QuitButton_mouse_entered"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/VBoxContainer/MarginContainer3/QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="ControlsMenu/BackButton/Back" to="." method="_on_Back_pressed"]

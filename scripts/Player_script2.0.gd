@@ -26,6 +26,7 @@ onready var health = max_health setget _set_health
 onready var stamina = max_stamina setget _set_stamina
 
 var isAlive = true
+var globalPosition = null
 var isAttacking = false
 var isRolling = false
 var attackAlt = false
@@ -284,6 +285,15 @@ func _on_Enemy_hit(damage, dir_right):
 
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):
+		var sprite = body.get_node("Sprite")
+		body.health = (body.health - playerDamage)
+		sprite.material.set_shader_param("red",true)
+		yield(get_tree().create_timer(red_duration),"timeout")
+		sprite.material.set_shader_param("red",false)
+		if (body.health <= 0):
+			body.death()
+	elif body in get_tree().get_nodes_in_group("FlyingEnemy"):
+		print(body)
 		var sprite = body.get_node("Sprite")
 		body.health = (body.health - playerDamage)
 		sprite.material.set_shader_param("red",true)

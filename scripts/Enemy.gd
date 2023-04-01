@@ -14,6 +14,7 @@ var isDead = false
 var seeWall = false 
 var health = 1000
 var weaponType
+var movementType
 
 const Fireball = preload("res://Scenes/FireBall.tscn")
 
@@ -27,16 +28,19 @@ func _ready():
 		speed = -50
 		weaponType = "Melee"
 		damage = 70
+		movementType = "Ground"
 	elif (get_node(".").name == "Skeleton"): 
 		health = 200
 		speed = -30
 		damage = 100
 		weaponType = "Melee"
+		movementType = "Ground"
 	elif (get_node(".").name == "FireWorm"): 
 		health = 100
 		speed = -30
 		damage = 100
 		weaponType = "Ranged"
+		movementType = "Ground"
 
 func _process(delta):
 	if (isDead == false):

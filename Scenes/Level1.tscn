@@ -856,19 +856,16 @@ position = Vector2( 1088, 1027 )
 position = Vector2( 2210, 990 )
 scale = Vector2( -1, 1 )
 speed = 105
-type = "ud"
 
 [node name="flyingEnemy2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 2490, 1086 )
 scale = Vector2( -1, 1 )
 speed = 105
-type = "ud"
 
 [node name="flyingEnemy3" parent="." instance=ExtResource( 4 )]
 position = Vector2( 2787, 1025 )
 scale = Vector2( -1, 1 )
 speed = 105
-type = "ud"
 
 [node name="HUD" parent="." instance=ExtResource( 5 )]
 

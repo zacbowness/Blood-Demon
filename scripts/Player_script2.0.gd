@@ -167,12 +167,16 @@ func animate_sprite():
 			$PlayerHurtbox.position.x = 0
 			$AttackArea/CollisionShape2D.position.x = 40
 			$Camera2D.offset_h = .55
+			$LightOccluder2D.scale.x = 1
+			$LightOccluder2D.position.x =0
 		else:
 			$AnimatedSprite.scale.x = -1
 			$HitBox.position.x = 10
 			$PlayerHurtbox.position.x = 10
 			$AttackArea/CollisionShape2D.position.x = -30
 			$Camera2D.offset_h = -.55
+			$LightOccluder2D.scale.x = -1
+			$LightOccluder2D.position.x = 10
 	else:motion.x = lerp(motion.x, 0, .05)
 	
 #	// ENABLE PHASE WHEN ROLLING //

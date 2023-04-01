@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=2]
+[gd_scene load_steps=92 format=2]
 
 [ext_resource path="res://assets/Character/sprites/_Idle.png" type="Texture" id=1]
 [ext_resource path="res://assets/Character/sprites/_Jump.png" type="Texture" id=2]
@@ -350,6 +350,9 @@ extents = Vector2( 18.5, 19.5 )
 [sub_resource type="RectangleShape2D" id=60]
 extents = Vector2( 9, 19 )
 
+[sub_resource type="OccluderPolygon2D" id=86]
+polygon = PoolVector2Array( -4, 2, 0, 0, 3, 2, 4, 8, 7, 13, 7, 25, 4, 34, 6, 36, 7, 38, 0, 38, -3, 38, -9, 38, -8, 36, -7, 34, -7, 25, -9, 23, -9, 13, -4, 8 )
+
 [node name="Player" type="KinematicBody2D"]
 material = SubResource( 47 )
 script = ExtResource( 6 )
@@ -379,7 +382,7 @@ __meta__ = {
 material = ExtResource( 13 )
 position = Vector2( 4, -2 )
 frames = SubResource( 30 )
-animation = "Roll"
+animation = "Idle"
 frame = 6
 playing = true
 __meta__ = {
@@ -432,6 +435,9 @@ stream = ExtResource( 17 )
 
 [node name="Roll" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 16 )
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource( 86 )
 
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
 [connection signal="body_entered" from="AttackArea" to="." method="_on_AttackArea_body_entered"]

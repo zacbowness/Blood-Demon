@@ -26,10 +26,10 @@ onready var health = max_health setget _set_health
 onready var stamina = max_stamina setget _set_stamina
 
 var isAlive = true
-var globalPosition = null
 var isAttacking = false
 var isRangeAttacking = false
 var isRolling = false
+var isCrouching = false
 var attackAlt = false
 var isSprinting = false
 var isMoving = false
@@ -50,7 +50,7 @@ func _physics_process(delta):
 	apply_gravity()
 	update_movement()
 	animate_sprite()
-
+	
 
 func update_movement():
 	controllable = (isAlive and !isAttacking and !isRangeAttacking and $StunTimer.is_stopped() and !isRolling)
@@ -70,7 +70,7 @@ func update_movement():
 			isMoving = false
 		
 	#	// SPRINTING //
-		if (Input.is_action_pressed("sprint") and isMoving):
+		if (Input.is_action_pressed("sprint") and isMoving) && !isCrouching:
 			_set_stamina(stamina - .8);$StaminaRegenBuffer.start()
 			if stamina > 0:isSprinting = true
 			else:isSprinting = false
@@ -78,15 +78,21 @@ func update_movement():
 			isSprinting = false
 	
 	#	// JUMPING //
-		if is_on_floor():
+		if is_on_floor() && !isCrouching:
 			if Input.is_action_pressed("jump"):
 				motion.y = -JUMPFORCE;isTurning=false
 				$Jump.play()
 		
 	#	// TURN AROUND //
 		if ((motion.x > 140 and direction <0) or (motion.x < -140 and direction >0)) && !isTurning:
-			if is_on_floor():
+			if is_on_floor() && !isCrouching:
 				isTurning = true
+		
+#		// CROUCHING //
+		if Input.is_action_pressed("down"):
+			isCrouching = true
+		else: isCrouching = false
+		
 		
 #	// ATTACK MOTION //
 	if Input.is_action_just_pressed("attack") && stamina>20 && $StunTimer.is_stopped() && !isRolling && isAlive:
@@ -133,13 +139,15 @@ func animate_sprite():
 #	// HANDLING ANIMATIONS //
 	if controllable:
 	#	// MOVE LEFT & RIGHT //
-		if isMoving && !isTurning:
-			$AnimatedSprite.play("Run")
-		elif !isTurning:
-			$AnimatedSprite.play("Idle")
+		if !isTurning && !isCrouching:
+			if isMoving:
+				$AnimatedSprite.play("Run")
+			else:
+				$AnimatedSprite.play("Idle")
 		
-	#	// JUMPING //	
-		if not is_on_floor():
+	#	// JUMPING //
+		print(isCrouching)
+		if !is_on_floor() && !isCrouching:
 			if motion.y < 0:
 				$AnimatedSprite.play("Jump")
 			elif motion.y > -55 and motion.y < 55:
@@ -158,13 +166,38 @@ func animate_sprite():
 			if direction == -1: facing_right = true;else:facing_right=false
 			$AnimatedSprite.play("Turn Around");$AnimatedSprite.speed_scale =1
 		
+		if isCrouching:
+			if isMoving:$AnimatedSprite.play("Crouch Walk")
+			else:$AnimatedSprite.play("Crouching")
+			if Input.is_action_just_pressed("down"):
+				$AnimatedSprite.play("Crouch Transi")
+			$HitBox.position.y = 26
+			$HitBox.shape.height = 11
+			$PlayerHurtbox/CollisionShape2D.position.y = 5
+			$PlayerHurtbox/CollisionShape2D.shape.extents.y = 13.5
+		else:
+			$HitBox.position.y = 21
+			$HitBox.shape.height = 22
+			$PlayerHurtbox/CollisionShape2D.position.y = 0
+			$PlayerHurtbox/CollisionShape2D.shape.extents.y = 19
+		if Input.is_action_just_released("down") && is_on_floor():
+			$AnimatedSprite.play("Crouch Transi");isCrouching = false
+		
 #	// ATTACK ANIM //
 	if isAttacking:
+		$HitBox.position.y = 21
+		$HitBox.shape.height = 22
+		$PlayerHurtbox/CollisionShape2D.position.y = 0
+		$PlayerHurtbox/CollisionShape2D.shape.extents.y = 19
 		$AnimatedSprite.speed_scale = 1
 		if not attackAlt:$AnimatedSprite.play("Attack")
 		else:$AnimatedSprite.play("Attack2")
 	
 	if isRangeAttacking:
+		$HitBox.position.y = 21
+		$HitBox.shape.height = 22
+		$PlayerHurtbox/CollisionShape2D.position.y = 0
+		$PlayerHurtbox/CollisionShape2D.shape.extents.y = 19
 		$AnimatedSprite.speed_scale = 1
 		$AnimatedSprite.play("Range Attack")
 		
@@ -174,28 +207,25 @@ func animate_sprite():
 		
 #	// FLIP SPRITE & HITBOXES //
 	if isAlive:
-		$HitBox.shape.radius = 8
-		$HitBox.shape.height = 22
-		$HitBox.rotation_degrees = 0
-		$HitBox.position.y = 19
 		if facing_right:
 			$AnimatedSprite.scale.x = 1
-			$HitBox.position.x = 0
-			$PlayerHurtbox.position.x = 0
-			$AttackArea/CollisionShape2D.position.x = 40
+			$AnimatedSprite.position.x = 5
+			$AttackArea/CollisionShape2D.position.x = 44.5
 			$Camera2D.offset_h = .55
 			$LightOccluder2D.scale.x = 1
-			$LightOccluder2D.position.x =0
-			$BloodballPlacer.position.x = 30
+			$BloodballPlacer.position.x = 33
 		else:
 			$AnimatedSprite.scale.x = -1
-			$HitBox.position.x = 10
-			$PlayerHurtbox.position.x = 10
-			$AttackArea/CollisionShape2D.position.x = -30
+			$AnimatedSprite.position.x = -5
+			$AttackArea/CollisionShape2D.position.x = -44.5
 			$Camera2D.offset_h = -.55
 			$LightOccluder2D.scale.x = -1
-			$LightOccluder2D.position.x = 10
-			$BloodballPlacer.position.x = -25
+			$BloodballPlacer.position.x = -33
+#		if !isCrouching:
+#			$HitBox.shape.radius = 8
+#			$HitBox.shape.height = 22
+#			$HitBox.rotation_degrees = 0
+#			$HitBox.position.y = 21
 	else:motion.x = lerp(motion.x, 0, .05)
 	
 #	// ENABLE PHASE WHEN ROLLING //
@@ -230,6 +260,8 @@ func setMaxSpeed():
 		return 400
 	elif isRolling:
 		return 270
+	elif isCrouching:
+		return 100
 	return 200
 
 #Stops player from getting hit or moving when dead
@@ -330,6 +362,7 @@ func _on_AnimatedSprite_animation_finished():
 		isRolling = false
 	if $AnimatedSprite.animation =="Turn Around":
 		isTurning = false
+#	if $AnimatedSprite.animation == ""
 
 func _on_SpawnTimer_timeout():
 	spawn()

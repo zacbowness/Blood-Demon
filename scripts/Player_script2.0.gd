@@ -98,13 +98,13 @@ func update_movement():
 	if Input.is_action_just_pressed("attack") && stamina>20 && $StunTimer.is_stopped() && !isRolling && isAlive:
 		_set_stamina(stamina-20);$StaminaRegenBuffer.start()
 		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
-		isAttacking = true
+		isAttacking = true;isCrouching = false
 		attackAlt = !attackAlt
 		$Attack.play()
 		
 #	// RANGE ATTACK //
 	if Input.is_action_just_pressed("right-click") && !isTurning && $StunTimer.is_stopped() && !isRangeAttacking && !isAttacking && isAlive:
-		isRangeAttacking = true
+		isRangeAttacking = true;isCrouching = false
 		var fireattack = BloodBall.instance()
 		if (facing_right == true):
 			fireattack.set_bloodball_direction(1)
@@ -146,7 +146,6 @@ func animate_sprite():
 				$AnimatedSprite.play("Idle")
 		
 	#	// JUMPING //
-		print(isCrouching)
 		if !is_on_floor() && !isCrouching:
 			if motion.y < 0:
 				$AnimatedSprite.play("Jump")
@@ -171,33 +170,16 @@ func animate_sprite():
 			else:$AnimatedSprite.play("Crouching")
 			if Input.is_action_just_pressed("down"):
 				$AnimatedSprite.play("Crouch Transi")
-			$HitBox.position.y = 26
-			$HitBox.shape.height = 11
-			$PlayerHurtbox/CollisionShape2D.position.y = 5
-			$PlayerHurtbox/CollisionShape2D.shape.extents.y = 13.5
-		else:
-			$HitBox.position.y = 21
-			$HitBox.shape.height = 22
-			$PlayerHurtbox/CollisionShape2D.position.y = 0
-			$PlayerHurtbox/CollisionShape2D.shape.extents.y = 19
 		if Input.is_action_just_released("down") && is_on_floor():
 			$AnimatedSprite.play("Crouch Transi");isCrouching = false
 		
 #	// ATTACK ANIM //
 	if isAttacking:
-		$HitBox.position.y = 21
-		$HitBox.shape.height = 22
-		$PlayerHurtbox/CollisionShape2D.position.y = 0
-		$PlayerHurtbox/CollisionShape2D.shape.extents.y = 19
 		$AnimatedSprite.speed_scale = 1
 		if not attackAlt:$AnimatedSprite.play("Attack")
 		else:$AnimatedSprite.play("Attack2")
 	
 	if isRangeAttacking:
-		$HitBox.position.y = 21
-		$HitBox.shape.height = 22
-		$PlayerHurtbox/CollisionShape2D.position.y = 0
-		$PlayerHurtbox/CollisionShape2D.shape.extents.y = 19
 		$AnimatedSprite.speed_scale = 1
 		$AnimatedSprite.play("Range Attack")
 		
@@ -207,6 +189,20 @@ func animate_sprite():
 		
 #	// FLIP SPRITE & HITBOXES //
 	if isAlive:
+		$HitBox.shape.radius = 8
+		$HitBox.shape.height = 22
+		$HitBox.rotation_degrees = 0
+		$HitBox.position.y = 21
+		if isCrouching:
+			$HitBox.position.y = 26
+			$HitBox.shape.height = 11
+			$PlayerHurtbox/CollisionShape2D.position.y = 5
+			$PlayerHurtbox/CollisionShape2D.shape.extents.y = 13.5
+		else:
+			$HitBox.position.y = 21
+			$HitBox.shape.height = 22
+			$PlayerHurtbox/CollisionShape2D.position.y = 0
+			$PlayerHurtbox/CollisionShape2D.shape.extents.y = 19
 		if facing_right:
 			$AnimatedSprite.scale.x = 1
 			$AnimatedSprite.position.x = 5

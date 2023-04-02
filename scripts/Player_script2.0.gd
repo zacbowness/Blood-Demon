@@ -47,6 +47,7 @@ func _ready():
 	spawnPosition = position
 
 func _physics_process(delta):
+	
 	apply_gravity()
 	update_movement()
 	animate_sprite()
@@ -95,7 +96,7 @@ func update_movement():
 		
 		
 #	// ATTACK MOTION //
-	if Input.is_action_just_pressed("attack") && stamina>20 && $StunTimer.is_stopped() && !isRolling && isAlive:
+	if Input.is_action_just_pressed("attack") && stamina>20 && $StunTimer.is_stopped() && !isRangeAttacking && !isRolling && isAlive:
 		_set_stamina(stamina-20);$StaminaRegenBuffer.start()
 		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
 		isAttacking = true;isCrouching = false
@@ -178,7 +179,7 @@ func animate_sprite():
 		$AnimatedSprite.speed_scale = 1
 		if not attackAlt:$AnimatedSprite.play("Attack")
 		else:$AnimatedSprite.play("Attack2")
-	
+		
 	if isRangeAttacking:
 		$AnimatedSprite.speed_scale = 1
 		$AnimatedSprite.play("Range Attack")

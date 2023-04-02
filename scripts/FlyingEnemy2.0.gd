@@ -58,7 +58,6 @@ func _physics_process(delta):
 		DEAD:
 			pass
 			
-	print(get_collision_mask_bit(0))
 	velocity = move_and_slide(velocity)
 	
 func turnAround():

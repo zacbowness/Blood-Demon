@@ -18,6 +18,7 @@ var weaponType
 var movementType
 
 const Fireball = preload("res://Scenes/FireBall.tscn")
+const Arrow = preload("res://Scenes/Arrow.tscn")
 
 func _ready():
 	$AnimationPlayer.play("Walk")
@@ -39,6 +40,18 @@ func _ready():
 	elif (get_node(".").name == "FireWorm"): 
 		health = 100
 		speed = -30
+		damage = 100
+		weaponType = "Ranged"
+		movementType = "Ground"
+	elif (get_node(".").name == "Knight"): 
+		health = 500
+		speed = -20
+		damage = 200
+		weaponType = "Melee"
+		movementType = "Ground"
+	elif (get_node(".").name == "ElfBow"): 
+		health = 100
+		speed = -40
 		damage = 100
 		weaponType = "Ranged"
 		movementType = "Ground"
@@ -127,12 +140,24 @@ func _on_WallDetector_body_exited(body):
 	seeWall = false 
 
 func Fireball():
-	$Attack.play()
-	var fireattack = Fireball.instance()
-	if (is_moving_right == true):
-		fireattack.set_fireball_direction(1)
-	else:
-		fireattack.set_fireball_direction(-1)					
-	get_parent().add_child(fireattack)
-	fireattack.global_position = $FireBallPlacer.global_position
+	if (get_node(".").name == "FireWorm"): 
+		$Attack.play()
+		var fireattack = Fireball.instance()
+		if (is_moving_right == true):
+			fireattack.set_fireball_direction(1)
+		else:
+			fireattack.set_fireball_direction(-1)					
+		get_parent().add_child(fireattack)
+		fireattack.global_position = $FireBallPlacer.global_position
+	elif (get_node(".").name == "ElfBow"): 	
+		$Attack.play()
+		var arrow = Arrow.instance()
+		if (is_moving_right == true):
+			arrow.set_fireball_direction(1)
+		else:
+			arrow.set_fireball_direction(-1)					
+		get_parent().add_child(arrow)
+		arrow.global_position = $FireBallPlacer.global_position
+	
+	
  

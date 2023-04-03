@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - Added spikes to the main game scene 
+- a torch that gives off light
 
 ## [0.4.0] - 2023-04-01
 

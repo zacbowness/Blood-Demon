@@ -1,7 +1,7 @@
 extends Area2D
 signal hit(damage, dir)
 
-const speed = 300
+const speed = 350
 var velocity = Vector2()
 var direction = 1
 var damage = 50

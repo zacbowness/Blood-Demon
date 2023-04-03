@@ -71,6 +71,7 @@ limit_bottom = 551
 
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 7 )
+frame = 4
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 whiten_material = SubResource( 7 )
@@ -98,10 +99,10 @@ position = Vector2( 418, 125 )
 position = Vector2( 619, 444 )
 
 [node name="ElfBow" parent="." instance=ExtResource( 10 )]
-position = Vector2( 308, 451 )
+position = Vector2( 504, 258 )
 
 [node name="ElfSpear" parent="." instance=ExtResource( 11 )]
-position = Vector2( 125, 264 )
+position = Vector2( 311, 452 )
 
 [editable path="Player"]
 [editable path="Player/PlayerHurtbox"]

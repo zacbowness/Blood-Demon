@@ -33,7 +33,7 @@ shader_param/red = false
 
 [sub_resource type="Animation" id=53]
 resource_name = "Attack"
-length = 0.55
+length = 1.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -41,7 +41,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5 ]
@@ -53,7 +53,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.3 ),
+"times": PoolRealArray( 0.8 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -120,7 +120,7 @@ extents = Vector2( 67, 10 )
 
 [node name="ElfBow" type="KinematicBody2D" groups=["Enemy"]]
 position = Vector2( 437, 305 )
-scale = Vector2( 1.5, 1.5 )
+scale = Vector2( 1.7, 1.7 )
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 2 )
@@ -140,7 +140,6 @@ material = SubResource( 58 )
 position = Vector2( 0, 1 )
 texture = ExtResource( 1 )
 hframes = 24
-frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 reset_on_save = false

@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Knight Enemy
  - Elf Ranger Enemy
  - Player stamina and stamina bar
+ - Player can i-frame roll, won't take damage while rolling
  - Player respawns at latest checkpoint
  - Ranged BloodBall attack for player
  - Player can crouch

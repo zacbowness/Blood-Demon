@@ -11,6 +11,7 @@ var is_moving_right = true
 
 func _ready():
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
+	$Light2D.texture_scale = .25
 
 func set_fireball_direction(dir):
 	direction = dir

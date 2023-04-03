@@ -194,6 +194,7 @@ func animate_sprite():
 		$HitBox.shape.height = 22
 		$HitBox.rotation_degrees = 0
 		$HitBox.position.y = 21
+		$HitBox.position.x = 0
 		if isCrouching:
 			$HitBox.position.y = 26
 			$HitBox.shape.height = 11

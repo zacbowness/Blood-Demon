@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/Fire Worm/Sprites/Fire Ball/spritesheet.png" type="Texture" id=1]
 [ext_resource path="res://scripts/FireBall.gd" type="Script" id=2]
+[ext_resource path="res://assets/Tile assets/light.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7.5, 6 )
@@ -34,6 +35,18 @@ tracks/1/keys = {
 "args": [  ],
 "method": "queue_free"
 } ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Light2D:texture_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.25, 0.01 ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -93,6 +106,14 @@ anims/Shoot = SubResource( 4 )
 texture = ExtResource( 1 )
 hframes = 13
 frame = 8
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 0, 1 )
+texture = ExtResource( 3 )
+texture_scale = 0.25
+color = Color( 0.917647, 0.533333, 0.0352941, 1 )
+energy = 1.41
+shadow_enabled = true
 
 [connection signal="body_entered" from="." to="." method="_on_Fireball_body_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

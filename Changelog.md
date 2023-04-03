@@ -9,19 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added spikes to the main game scene 
 
-## [0.5.0] - 2023-04-02
-
-### Added
-
-- Knight Enemy
-- Elf Ranger Enemy
-
 ## [0.4.0] - 2023-04-01
 
 ### Added
 
  - Main menu
  - An additional level
+ - Knight Enemy
+ - Elf Ranger Enemy
+ - Player stamina and stamina bar
+ - Player respawns at latest checkpoint
+ - Ranged BloodBall attack for player
+ - Player can crouch
 
 ## [0.3.0] - 2023-03-27
 

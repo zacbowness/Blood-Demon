@@ -1,5 +1,6 @@
 extends KinematicBody2D
 signal hit(damage, dir)
+signal noPoison
 
 const red_duration = 0.15
 export var is_moving_right = false 
@@ -23,6 +24,7 @@ const Arrow = preload("res://Scenes/Arrow.tscn")
 func _ready():
 	$AnimationPlayer.play("Walk")
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
+	connect("noPoison", get_tree().get_nodes_in_group("Player")[0], "Posion")
 	if !is_moving_right:
 		scale.x = -scale.x;
 	if (get_node(".").name == "Goblin"):
@@ -54,6 +56,12 @@ func _ready():
 		speed = -40
 		damage = 100
 		weaponType = "Ranged"
+		movementType = "Ground"
+	elif (get_node(".").name == "ElfSpear"): 
+		health = 200
+		speed = -40
+		damage = 50
+		weaponType = "Melee"
 		movementType = "Ground"
 
 func _process(delta):
@@ -127,10 +135,16 @@ func death():
 
 func _on_HitBox_body_entered(body):
 	emit_signal("hit", damage, is_moving_right)
-
+	if (get_node(".").name == "ElfSpear"): 
+		$Poision.start()
+		body.isPoisoned = true 
+		
 
 func _on_Timer_timeout():
 	queue_free()
+
+func _on_Poision_timeout():
+	emit_signal("noPoison")
 
 func _on_WallDetector_body_entered(body):
 	seeWall = true
@@ -161,3 +175,6 @@ func Fireball():
 	
 	
  
+
+
+

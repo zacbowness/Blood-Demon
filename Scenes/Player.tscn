@@ -464,6 +464,7 @@ material = ExtResource( 13 )
 position = Vector2( 5, 0 )
 frames = SubResource( 30 )
 animation = "Idle"
+frame = 7
 playing = true
 __meta__ = {
 "_edit_group_": true

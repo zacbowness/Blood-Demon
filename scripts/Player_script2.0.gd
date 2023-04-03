@@ -40,6 +40,8 @@ var controllable
 var direction
 var playerDamage = 100
 var spawnPosition = position
+var isPoisoned = false 
+var current_health
 
 func _ready():
 	connect("health_updated", get_parent().get_node("HUD"), "_on_Player_health_updated")
@@ -51,7 +53,6 @@ func _physics_process(delta):
 	apply_gravity()
 	update_movement()
 	animate_sprite()
-	
 
 func update_movement():
 	controllable = (isAlive and !isAttacking and !isRangeAttacking and $StunTimer.is_stopped() and !isRolling)
@@ -311,7 +312,7 @@ func takeDamage(damage):
 	$StunTimer.start()
 	$AnimatedSprite.play("Hit")
 	$TakeDamage.play()
-	var current_health = _set_health(health - damage)
+	current_health = _set_health(health - damage)
 	if current_health > clamp (0,0,max_health):
 		hurtbox.player_hit(true)
 		blinker.start_blinking(self,invincibility_duration)
@@ -364,3 +365,6 @@ func _on_AnimatedSprite_animation_finished():
 
 func _on_SpawnTimer_timeout():
 	spawn()
+
+func Posion():
+	isPoisoned = false 

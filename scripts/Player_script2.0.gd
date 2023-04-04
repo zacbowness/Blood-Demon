@@ -108,9 +108,10 @@ func update_movement():
 		$Attack.play()
 		
 #	// RANGE ATTACK //
-	if Input.is_action_just_pressed("right-click") && !isTurning && $StunTimer.is_stopped() && !isRangeAttacking && !isAttacking && isAlive:
+	if Input.is_action_just_pressed("right-click") && blood_gauge>20 && !isTurning && $StunTimer.is_stopped() && !isRangeAttacking && !isAttacking && isAlive:
 		isRangeAttacking = true;isCrouching = false
 		var fireattack = BloodBall.instance()
+		_set_blood(blood_gauge-20)
 		if (facing_right == true):
 			fireattack.set_bloodball_direction(1)
 		else:

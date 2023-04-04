@@ -45,3 +45,22 @@ value = 100.0
 texture_under = ExtResource( 6 )
 texture_over = ExtResource( 9 )
 texture_progress = ExtResource( 7 )
+
+[node name="BloodBar" type="Node2D" parent="."]
+position = Vector2( 764, 0 )
+scale = Vector2( 2, 2 )
+
+[node name="BloodBarUnder" type="TextureProgress" parent="BloodBar"]
+margin_right = 40.0
+margin_bottom = 40.0
+texture_under = ExtResource( 3 )
+texture_over = ExtResource( 1 )
+texture_progress = ExtResource( 5 )
+
+[node name="BloodBarOver" type="TextureProgress" parent="BloodBar"]
+margin_right = 40.0
+margin_bottom = 40.0
+value = 50.0
+texture_progress = ExtResource( 2 )
+
+[node name="UpdateTween" type="Tween" parent="BloodBar"]

@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/Huntress 2/Sprites/Character/ElfBowSheet.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=2]
 [ext_resource path="res://assets/Sound Assets/enemyDeath.wav" type="AudioStream" id=3]
 [ext_resource path="res://assets/Sound Assets/FireballSFX.wav" type="AudioStream" id=4]
+[ext_resource path="res://Scenes/Arrow.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=55]
 
@@ -33,7 +34,7 @@ shader_param/red = false
 
 [sub_resource type="Animation" id=53]
 resource_name = "Attack"
-length = 1.05
+length = 0.55
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -41,7 +42,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5 ]
@@ -53,7 +54,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.8 ),
+"times": PoolRealArray( 0.3 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -124,6 +125,10 @@ scale = Vector2( 1.7, 1.7 )
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 2 )
+speed = -40
+damage = 50
+health = 100
+Projectile = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -2 )

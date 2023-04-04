@@ -125,6 +125,9 @@ position = Vector2( 437, 305 )
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 2 )
+speed = -40
+damage = 50
+health = 200
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 4, -1 )

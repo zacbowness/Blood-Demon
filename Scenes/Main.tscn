@@ -71,7 +71,7 @@ limit_bottom = 551
 
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 7 )
-frame = 4
+frame = 7
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 whiten_material = SubResource( 7 )
@@ -84,11 +84,11 @@ __meta__ = {
 }
 
 [node name="Goblin" parent="." instance=ExtResource( 5 )]
-position = Vector2( 487, 440 )
+position = Vector2( 239, 434 )
 scale = Vector2( 1.5, 1.5 )
 
 [node name="FireWorm" parent="." instance=ExtResource( 7 )]
-position = Vector2( 227, 461 )
+position = Vector2( 522, 456 )
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]
 
@@ -99,10 +99,17 @@ position = Vector2( 418, 125 )
 position = Vector2( 619, 444 )
 
 [node name="ElfBow" parent="." instance=ExtResource( 10 )]
-position = Vector2( 504, 258 )
+position = Vector2( 75, 226 )
 
 [node name="ElfSpear" parent="." instance=ExtResource( 11 )]
-position = Vector2( 311, 452 )
+position = Vector2( 514, 430 )
+
+[node name="Goblin2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 370, 438 )
+scale = Vector2( 1.5, 1.5 )
+
+[node name="ElfBow2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 153, 244 )
 
 [editable path="Player"]
 [editable path="Player/PlayerHurtbox"]

@@ -7,19 +7,21 @@ export var is_moving_right = false
 var initialDirection
 var gravity = 9.8
 var velocity = Vector2(0,0)
-var speed;
+export (int) var  speed = 0;
 var isAttacking = false
 var animation = false
 var inRange = false 
-var damage = 100
+export (int) var damage = 100
 var isDead = false
 var seeWall = false 
-var health = 1000
+export (int) var health = 1000
 var weaponType
 var movementType
 
 const Fireball = preload("res://Scenes/FireBall.tscn")
 const Arrow = preload("res://Scenes/Arrow.tscn")
+export var Projectile : PackedScene
+
 
 func _ready():
 	$AnimationPlayer.play("Walk")
@@ -154,25 +156,15 @@ func _on_WallDetector_body_exited(body):
 	seeWall = false 
 
 func Fireball():
-	if (get_node(".").name == "FireWorm"): 
-		$Attack.play()
-		var fireattack = Fireball.instance()
-		if (is_moving_right == true):
-			fireattack.set_fireball_direction(1)
-		else:
-			fireattack.set_fireball_direction(-1)					
-		get_parent().add_child(fireattack)
-		fireattack.global_position = $FireBallPlacer.global_position
-	elif (get_node(".").name == "ElfBow"): 	
-		$Attack.play()
-		var arrow = Arrow.instance()
-		if (is_moving_right == true):
-			arrow.set_fireball_direction(1)
-		else:
-			arrow.set_fireball_direction(-1)					
-		get_parent().add_child(arrow)
-		arrow.global_position = $FireBallPlacer.global_position
-	
+	$Attack.play()
+	var Attack = Projectile.instance()
+	if (is_moving_right == true):
+		Attack.set_fireball_direction(1)
+	else:
+		Attack.set_fireball_direction(-1)					
+	get_parent().add_child(Attack)
+	Attack.global_position = $FireBallPlacer.global_position
+
 	
  
 

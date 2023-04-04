@@ -425,7 +425,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=45]
-extents = Vector2( 18.5, 19.5 )
+extents = Vector2( 27, 19.5 )
 
 [sub_resource type="RectangleShape2D" id=60]
 extents = Vector2( 9, 19 )
@@ -464,7 +464,7 @@ material = ExtResource( 13 )
 position = Vector2( 5, 0 )
 frames = SubResource( 30 )
 animation = "Idle"
-frame = 7
+frame = 6
 playing = true
 __meta__ = {
 "_edit_group_": true
@@ -476,7 +476,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2( 44.5, 19.5 )
+position = Vector2( 36, 19.5 )
 shape = SubResource( 45 )
 disabled = true
 

@@ -711,7 +711,7 @@ limit_bottom = 5000
 
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 12 )
-frame = 1
+frame = 8
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 whiten_material = SubResource( 12 )
@@ -751,7 +751,7 @@ scale = Vector2( 2, 2 )
 shadow_gradient_length = 0.8
 
 [node name="AnimatedSprite" parent="Torch2" index="1"]
-frame = 3
+frame = 2
 
 [node name="Torch4" parent="." instance=ExtResource( 11 )]
 modulate = Color( 0.623529, 0.623529, 0.623529, 1 )

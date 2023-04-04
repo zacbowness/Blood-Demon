@@ -121,11 +121,14 @@ extents = Vector2( 17, 18.25 )
 [sub_resource type="RectangleShape2D" id=23]
 extents = Vector2( 17, 18.25 )
 
-[node name="Enemy" type="KinematicBody2D" groups=["Enemy"]]
+[node name="Goblin" type="KinematicBody2D" groups=["Enemy"]]
 position = Vector2( 437, 305 )
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 2 )
+speed = -50
+damage = 70
+health = 100
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 8 )

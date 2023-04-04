@@ -21,9 +21,11 @@ export var ATTACKPUSH = 70
 export var ROLLPUSH = 250
 export (float) var max_health = 250
 export (float) var max_stamina = 100
+export (float) var max_blood = 100
 
 onready var health = max_health setget _set_health
 onready var stamina = max_stamina setget _set_stamina
+onready var blood_gauge = 0
 
 var isAlive = true
 var isAttacking = false
@@ -46,6 +48,7 @@ var current_health
 func _ready():
 	connect("health_updated", get_parent().get_node("HUD"), "_on_Player_health_updated")
 	connect("stamina_updated", get_parent().get_node("HUD"), "_on_Player_stamina_updated")
+	connect("blood_gauge_updated", get_parent().get_node("HUD"), "_on_Player_blood_gauge_updated")
 	spawnPosition = position
 
 func _physics_process(delta):
@@ -307,11 +310,19 @@ func _set_stamina(value):
 		emit_signal("stamina_updated", stamina)
 	return stamina
 
+func _set_blood(value):
+	var prev_blood = blood_gauge
+	blood_gauge = clamp (value,0, max_blood)
+	if blood_gauge != prev_blood:
+		emit_signal("blood_gauge_updated", blood_gauge)
+	return blood_gauge
+
 #Makes player invincible for certain amount of time
 func takeDamage(damage):
 	$StunTimer.start()
 	$AnimatedSprite.play("Hit")
 	$TakeDamage.play()
+	_set_blood(blood_gauge + damage*.2)
 	current_health = _set_health(health - damage)
 	if current_health > clamp (0,0,max_health):
 		hurtbox.player_hit(true)
@@ -335,6 +346,7 @@ func _on_Enemy_hit(damage, dir_right):
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):
 		body.take_damage(playerDamage)
+		_set_blood(blood_gauge + 10)
 		var PosX = body.position.x - position.x
 		if (body.is_moving_right == true and PosX > 0):
 			body.get_node("AnimationPlayer").play("TakeHit")

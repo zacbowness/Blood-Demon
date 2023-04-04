@@ -128,6 +128,7 @@ script = ExtResource( 2 )
 speed = -40
 damage = 50
 health = 200
+enemyType = "ElfSpear"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 4, -1 )

@@ -335,6 +335,16 @@ func _on_Enemy_hit(damage, dir_right):
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):
 		body.take_damage(playerDamage)
+		var PosX = body.position.x - position.x
+		if (body.is_moving_right == true and PosX > 0):
+			body.get_node("AnimationPlayer").play("TakeHit")
+			body.is_moving_right = false
+			body.scale.x = -body.scale.x
+		elif (body.is_moving_right == false and PosX < 0):
+			body.get_node("AnimationPlayer").play("TakeHit")
+			body.is_moving_right = true
+			body.scale.x = -body.scale.x
+		
 
 func _on_PlayerHurtbox_area_entered(area):
 	if area in get_tree().get_nodes_in_group("Checkpoint"):

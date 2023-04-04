@@ -17,6 +17,7 @@ var seeWall = false
 export (int) var health = 1000
 var weaponType
 var movementType
+export (String) var enemyType
 
 const Fireball = preload("res://Scenes/FireBall.tscn")
 const Arrow = preload("res://Scenes/Arrow.tscn")
@@ -120,6 +121,8 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		else:
 			isAttacking = false 
 			$AnimationPlayer.play("Walk")
+	elif (anim_name == "TakeHit"):
+		$AnimationPlayer.play("Walk")
 		
 func death():
 	isDead = true 
@@ -137,7 +140,7 @@ func death():
 
 func _on_HitBox_body_entered(body):
 	emit_signal("hit", damage, is_moving_right)
-	if (get_node(".").name == "ElfSpear"): 
+	if (enemyType == "ElfSpear"): 
 		$Poision.start()
 		body.isPoisoned = true 
 		

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scenes/Skeleton.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Scenes/Knight.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Scenes/ElfBow.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Scenes/ElfSpear.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Hero.tscn" type="PackedScene" id=12]
 
 [sub_resource type="ConvexPolygonShape2D" id=6]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -71,7 +72,7 @@ limit_bottom = 551
 
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 7 )
-frame = 7
+frame = 3
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 whiten_material = SubResource( 7 )
@@ -96,10 +97,10 @@ position = Vector2( 522, 456 )
 position = Vector2( 418, 125 )
 
 [node name="Knight" parent="." instance=ExtResource( 9 )]
-position = Vector2( 619, 444 )
+position = Vector2( 274, 438 )
 
 [node name="ElfBow" parent="." instance=ExtResource( 10 )]
-position = Vector2( 75, 226 )
+position = Vector2( 258, 445 )
 
 [node name="ElfSpear" parent="." instance=ExtResource( 11 )]
 position = Vector2( 514, 430 )
@@ -109,7 +110,10 @@ position = Vector2( 370, 438 )
 scale = Vector2( 1.5, 1.5 )
 
 [node name="ElfBow2" parent="." instance=ExtResource( 10 )]
-position = Vector2( 153, 244 )
+position = Vector2( 302, 446 )
+
+[node name="Hero" parent="." instance=ExtResource( 12 )]
+position = Vector2( 72, 246 )
 
 [editable path="Player"]
 [editable path="Player/PlayerHurtbox"]

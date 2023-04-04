@@ -425,7 +425,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=45]
-extents = Vector2( 27, 19.5 )
+extents = Vector2( 22.25, 19.5 )
 
 [sub_resource type="RectangleShape2D" id=60]
 extents = Vector2( 9, 19 )
@@ -439,6 +439,7 @@ collision_mask = 6
 script = ExtResource( 6 )
 
 [node name="HitBox" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 21 )
 shape = SubResource( 73 )
 __meta__ = {
@@ -446,6 +447,7 @@ __meta__ = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 position = Vector2( 6, 0 )
 current = true
 zoom = Vector2( 0.4, 0.4 )
@@ -471,6 +473,7 @@ __meta__ = {
 }
 
 [node name="AttackArea" type="Area2D" parent="." groups=["Sword"]]
+visible = false
 position = Vector2( 0, 1 )
 collision_layer = 0
 collision_mask = 4
@@ -481,6 +484,7 @@ shape = SubResource( 45 )
 disabled = true
 
 [node name="PlayerHurtbox" parent="." instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 0, 21 )
 collision_layer = 0
 whiten_material = ExtResource( 13 )
@@ -523,6 +527,7 @@ visible = false
 stream = ExtResource( 16 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
 position = Vector2( 0, 2 )
 occluder = SubResource( 86 )
 

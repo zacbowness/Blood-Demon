@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 signal health_updated(health)
 signal stamina_updated(stamina)
+signal blood_gauge_updated(blood)
 signal killed()
 signal hitEnemy()
 

@@ -10,11 +10,6 @@
 [ext_resource path="res://assets/Tile assets/desert-ruins.png" type="Texture" id=10]
 [ext_resource path="res://Scenes/Torch.tscn" type="PackedScene" id=11]
 
-[sub_resource type="ShaderMaterial" id=12]
-resource_local_to_scene = true
-shader = ExtResource( 8 )
-shader_param/whiten = false
-
 [sub_resource type="ConvexPolygonShape2D" id=10]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
@@ -692,29 +687,12 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 [sub_resource type="RectangleShape2D" id=17]
 extents = Vector2( 47, 48.5 )
 
+[sub_resource type="ShaderMaterial" id=12]
+resource_local_to_scene = true
+shader = ExtResource( 8 )
+shader_param/whiten = false
+
 [node name="Level1" type="Node2D"]
-
-[node name="Player" parent="." groups=["Player"] instance=ExtResource( 2 )]
-position = Vector2( 525, 4229 )
-scale = Vector2( 1.7, 1.7 )
-z_index = 1
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Camera2D" parent="Player" index="1"]
-position = Vector2( 5.88232, -0.000244141 )
-limit_left = 0
-limit_top = 0
-limit_right = 10000
-limit_bottom = 5000
-
-[node name="AnimatedSprite" parent="Player" index="2"]
-material = SubResource( 12 )
-frame = 5
-
-[node name="PlayerHurtbox" parent="Player" index="4"]
-whiten_material = SubResource( 12 )
 
 [node name="Ground3 (Foreground)" type="TileMap" parent="."]
 modulate = Color( 0.113725, 0.32549, 0.627451, 1 )
@@ -746,12 +724,6 @@ scale = Vector2( 2, 2 )
 modulate = Color( 0.623529, 0.623529, 0.623529, 1 )
 position = Vector2( 448, 4308 )
 scale = Vector2( 2, 2 )
-
-[node name="Light2D" parent="Torch2" index="0"]
-shadow_gradient_length = 0.8
-
-[node name="AnimatedSprite" parent="Torch2" index="1"]
-frame = 3
 
 [node name="Torch4" parent="." instance=ExtResource( 11 )]
 modulate = Color( 0.623529, 0.623529, 0.623529, 1 )
@@ -894,8 +866,6 @@ position = Vector2( 2564, 4273 )
 [node name="FlyingEnemy3" parent="." instance=ExtResource( 4 )]
 position = Vector2( 2886, 4271 )
 
-[node name="HUD" parent="." instance=ExtResource( 5 )]
-
 [node name="Checkpoint 1" type="Area2D" parent="." groups=["Checkpoint"]]
 position = Vector2( 1651, 4226 )
 
@@ -968,8 +938,30 @@ scale = Vector2( 0.2, 0.2 )
 position = Vector2( 4767, 2098 )
 scale = Vector2( 0.2, 0.2 )
 
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 525, 4229 )
+z_index = 1
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Camera2D" parent="Player" index="1"]
+position = Vector2( 5.88232, -0.000244141 )
+limit_left = 0
+limit_top = 0
+limit_right = 10000
+limit_bottom = 5000
+
+[node name="AnimatedSprite" parent="Player" index="2"]
+material = SubResource( 12 )
+frame = 2
+
+[node name="PlayerHurtbox" parent="Player" index="4"]
+whiten_material = SubResource( 12 )
+
+[node name="HUD" parent="." instance=ExtResource( 5 )]
+
 [editable path="Player"]
 [editable path="Player/PlayerHurtbox"]
 [editable path="Player/Blinker"]
-[editable path="Torch2"]
 [editable path="HUD"]

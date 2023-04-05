@@ -124,7 +124,7 @@ func update_movement():
 		fireattack.global_position = $BloodballPlacer.global_position
 		
 #	// I FRAME ROLL //
-	if Input.is_action_just_pressed("roll") && $StunTimer.is_stopped() && !isAttacking && isAlive:
+	if Input.is_action_just_pressed("roll") && isSprinting && $StunTimer.is_stopped() && !isAttacking && isAlive:
 		if stamina > 30 && !isRolling:
 			_set_stamina(stamina-35);$StaminaRegenBuffer.start()
 			isRolling = true
@@ -258,12 +258,10 @@ func animate_sprite():
 		z_index = 0
 
 func setMaxSpeed():
-	if isSprinting && isRolling:
-		return 450
+	if isRolling:
+		return 350
 	elif isSprinting:
 		return 400
-	elif isRolling:
-		return 270
 	elif isCrouching:
 		return 100
 	return 200

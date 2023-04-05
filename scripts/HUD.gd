@@ -24,7 +24,7 @@ func _on_Player_stamina_updated(stamina):
 	stamina_bar.value = stamina
 
 func _ready():
-	var player = get_tree().get_nodes_in_group("Player")[0]
+	var player = get_parent().get_node("Player")
 	health_bar_over.max_value = player.max_health
 	health_bar_over.value = player.max_health
 	health_bar_under.max_value = player.max_health
@@ -34,6 +34,7 @@ func _ready():
 	stamina_bar.value = player.max_stamina
 	
 	blood_bar_over.max_value = player.max_blood
+	print(player.blood_gauge)
 	blood_bar_over.value = player.blood_gauge
 	blood_bar_under.max_value = player.max_blood
 	blood_bar_under.value = player.blood_gauge

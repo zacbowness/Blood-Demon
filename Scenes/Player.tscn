@@ -467,7 +467,6 @@ material = ExtResource( 13 )
 position = Vector2( 5, 0 )
 frames = SubResource( 30 )
 animation = "Attack2"
-frame = 5
 playing = true
 __meta__ = {
 "_edit_group_": true
@@ -527,7 +526,6 @@ visible = false
 stream = ExtResource( 16 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-visible = false
 position = Vector2( 0, 2 )
 occluder = SubResource( 86 )
 

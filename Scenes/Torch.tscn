@@ -28,4 +28,5 @@ shadow_filter_smooth = 4.3
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
+frame = 3
 playing = true

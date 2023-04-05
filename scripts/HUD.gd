@@ -43,7 +43,7 @@ func _ready():
 var amplitude = 0
 var priority = 0
 
-func Stamina_bar_shake(duration = 0.1, frequency = 50, amplitude = 7, priority = 0):
+func Stamina_bar_shake(duration = 0.1, frequency = 100, amplitude = 4, priority = 0):
 	if priority >= self.priority:
 		self.priority = priority
 		self.amplitude = amplitude
@@ -56,7 +56,7 @@ func Stamina_bar_shake(duration = 0.1, frequency = 50, amplitude = 7, priority =
 		_new_shake()
 
 func _new_shake():
-	var rand = Vector2(13, 32)
+	var rand = $StaminaBar.position
 	rand.x += rand_range(-amplitude, amplitude)
 	rand.y += rand_range(-amplitude, amplitude)
 	
@@ -64,7 +64,7 @@ func _new_shake():
 	$StaminaBar/ShakeTween.start()
 
 func _reset():
-	$StaminaBar/ShakeTween.interpolate_property($StaminaBar, "position", $StaminaBar.position, Vector2(13, 32), $Frequency.wait_time, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$StaminaBar/ShakeTween.interpolate_property($StaminaBar, "position", $StaminaBar.position, Vector2(32, 44), $Frequency.wait_time, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$StaminaBar/ShakeTween.start()
 	
 	priority = 0

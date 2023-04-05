@@ -10,6 +10,7 @@ var speed = 0
 var weaponType = "Melee"
 var damage = 70
 var isDead = false 
+var enemyType = "FlyingEye"
 var iPos
 var inRange
 var is_moving_right

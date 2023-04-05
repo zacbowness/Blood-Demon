@@ -954,7 +954,6 @@ limit_bottom = 5000
 
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 12 )
-frame = 2
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 whiten_material = SubResource( 12 )

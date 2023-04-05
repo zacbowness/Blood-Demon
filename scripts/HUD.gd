@@ -8,7 +8,7 @@ onready var blood_bar_over = $BloodBar/BloodBarOver
 onready var update_tween2 = $BloodBar/UpdateTween
 onready var blood_bar_under = $BloodBar/BloodBarUnder
 
-onready var stamina_bar_over = $StaminaBar/StaminaBarOver
+onready var stamina_bar = $StaminaBar/StaminaBar
 
 func _on_Player_health_updated(health):
 	health_bar_over.value = health
@@ -21,7 +21,7 @@ func _on_Player_blood_gauge_updated(blood):
 	update_tween2.start()
 
 func _on_Player_stamina_updated(stamina):
-	stamina_bar_over.value = stamina
+	stamina_bar.value = stamina
 
 func _ready():
 	var player = get_tree().get_nodes_in_group("Player")[0]
@@ -30,10 +30,48 @@ func _ready():
 	health_bar_under.max_value = player.max_health
 	health_bar_under.value = player.max_health
 	
-	stamina_bar_over.max_value = player.max_stamina
-	stamina_bar_over.value = player.max_stamina
+	stamina_bar.max_value = player.max_stamina
+	stamina_bar.value = player.max_stamina
 	
 	blood_bar_over.max_value = player.max_blood
 	blood_bar_over.value = player.blood_gauge
 	blood_bar_under.max_value = player.max_blood
 	blood_bar_under.value = player.blood_gauge
+
+
+var amplitude = 0
+var priority = 0
+
+func Stamina_bar_shake(duration = 0.1, frequency = 50, amplitude = 7, priority = 0):
+	if priority >= self.priority:
+		self.priority = priority
+		self.amplitude = amplitude
+		
+		$Duration.wait_time = duration
+		$Frequency.wait_time = 1/ float(frequency)
+		$Duration.start()
+		$Frequency.start()
+		
+		_new_shake()
+
+func _new_shake():
+	var rand = Vector2(13, 32)
+	rand.x += rand_range(-amplitude, amplitude)
+	rand.y += rand_range(-amplitude, amplitude)
+	
+	$StaminaBar/ShakeTween.interpolate_property($StaminaBar, "position", $StaminaBar.position, rand, $Frequency.wait_time, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$StaminaBar/ShakeTween.start()
+
+func _reset():
+	$StaminaBar/ShakeTween.interpolate_property($StaminaBar, "position", $StaminaBar.position, Vector2(13, 32), $Frequency.wait_time, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	$StaminaBar/ShakeTween.start()
+	
+	priority = 0
+
+func _on_Frequency_timeout():
+	_new_shake()
+
+
+func _on_Duration_timeout():
+	_reset()
+	$Frequency.stop()

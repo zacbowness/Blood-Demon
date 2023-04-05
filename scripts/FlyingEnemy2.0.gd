@@ -91,11 +91,12 @@ func end_of_hit():
 func take_damage(damage):
 	var sprite = get_node("Sprite")
 	health = (health - damage)
+	if (health <= 0):
+		death()
 	sprite.material.set_shader_param("red",true)
 	yield(get_tree().create_timer(red_duration),"timeout")
 	sprite.material.set_shader_param("red",false)
-	if (health <= 0):
-		death()
+	
 
 func _on_PlayerDetector_body_exited(body):
 	inRange = false 

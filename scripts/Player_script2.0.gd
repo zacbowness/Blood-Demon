@@ -27,6 +27,7 @@ export (float) var max_blood = 100
 onready var health = max_health setget _set_health
 onready var stamina = max_stamina setget _set_stamina
 onready var blood_gauge = 0
+onready var HUD = get_parent().get_node("HUD")
 
 var isAlive = true
 var isAttacking = false
@@ -47,9 +48,9 @@ var isPoisoned = false
 var current_health
 
 func _ready():
-	connect("health_updated", get_parent().get_node("HUD"), "_on_Player_health_updated")
-	connect("stamina_updated", get_parent().get_node("HUD"), "_on_Player_stamina_updated")
-	connect("blood_gauge_updated", get_parent().get_node("HUD"), "_on_Player_blood_gauge_updated")
+	connect("health_updated", HUD, "_on_Player_health_updated")
+	connect("stamina_updated", HUD, "_on_Player_stamina_updated")
+	connect("blood_gauge_updated", HUD, "_on_Player_blood_gauge_updated")
 	spawnPosition = position
 
 func _physics_process(delta):
@@ -101,13 +102,15 @@ func update_movement():
 		
 		
 #	// ATTACK MOTION //
-	if Input.is_action_just_pressed("attack") && stamina>20 && $StunTimer.is_stopped() && !isRangeAttacking && !isRolling && isAlive:
-		_set_stamina(stamina-20);$StaminaRegenBuffer.start()
-		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
-		isAttacking = true;isCrouching = false
-		attackAlt = !attackAlt
-		$Attack.play()
-		
+	if Input.is_action_just_pressed("attack") && $StunTimer.is_stopped() && !isRangeAttacking && !isRolling && isAlive:
+		if stamina>20:
+			_set_stamina(stamina-20);$StaminaRegenBuffer.start()
+			motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
+			isAttacking = true;isCrouching = false
+			attackAlt = !attackAlt
+			$Attack.play()
+		else:
+			HUD.Stamina_bar_shake()
 #	// RANGE ATTACK //
 	if Input.is_action_just_pressed("right-click") && blood_gauge>20 && !isTurning && $StunTimer.is_stopped() && !isRangeAttacking && !isAttacking && isAlive:
 		isRangeAttacking = true;isCrouching = false
@@ -121,12 +124,14 @@ func update_movement():
 		fireattack.global_position = $BloodballPlacer.global_position
 		
 #	// I FRAME ROLL //
-	if Input.is_action_just_pressed("ctrl") && $StunTimer.is_stopped() && !isAttacking && isAlive:
+	if Input.is_action_just_pressed("roll") && $StunTimer.is_stopped() && !isAttacking && isAlive:
 		if stamina > 30 && !isRolling:
 			_set_stamina(stamina-35);$StaminaRegenBuffer.start()
 			isRolling = true
 			motion.x += ROLLPUSH*$AnimatedSprite.scale.x
 			$Roll.play()
+		else:
+			HUD.Stamina_bar_shake()
 
 	
 #	// REGEN STAMINA //
@@ -214,22 +219,17 @@ func animate_sprite():
 		if facing_right:
 			$AnimatedSprite.scale.x = 1
 			$AnimatedSprite.position.x = 5
-			$AttackArea/CollisionShape2D.position.x = 44.5
+			$AttackArea/CollisionShape2D.position.x = 36
 			$Camera2D.offset_h = .55
 			$LightOccluder2D.scale.x = 1
 			$BloodballPlacer.position.x = 33
 		else:
 			$AnimatedSprite.scale.x = -1
 			$AnimatedSprite.position.x = -5
-			$AttackArea/CollisionShape2D.position.x = -44.5
+			$AttackArea/CollisionShape2D.position.x = -36
 			$Camera2D.offset_h = -.55
 			$LightOccluder2D.scale.x = -1
 			$BloodballPlacer.position.x = -33
-#		if !isCrouching:
-#			$HitBox.shape.radius = 8
-#			$HitBox.shape.height = 22
-#			$HitBox.rotation_degrees = 0
-#			$HitBox.position.y = 21
 	else:motion.x = lerp(motion.x, 0, .05)
 	
 #	// ENABLE PHASE WHEN ROLLING //

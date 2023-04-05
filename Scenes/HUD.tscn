@@ -35,16 +35,17 @@ texture_progress = ExtResource( 2 )
 [node name="UpdateTween" type="Tween" parent="Node2D"]
 
 [node name="StaminaBar" type="Node2D" parent="."]
-position = Vector2( 13, 31 )
+position = Vector2( 13, 32 )
 scale = Vector2( 1.8, 1 )
 
-[node name="StaminaBarOver" type="TextureProgress" parent="StaminaBar"]
-margin_right = 40.0
+[node name="StaminaBar" type="TextureProgress" parent="StaminaBar"]
 margin_bottom = 40.0
 value = 100.0
 texture_under = ExtResource( 6 )
 texture_over = ExtResource( 9 )
 texture_progress = ExtResource( 7 )
+
+[node name="ShakeTween" type="Tween" parent="StaminaBar"]
 
 [node name="BloodBar" type="Node2D" parent="."]
 position = Vector2( 764, 0 )
@@ -60,7 +61,13 @@ texture_progress = ExtResource( 5 )
 [node name="BloodBarOver" type="TextureProgress" parent="BloodBar"]
 margin_right = 40.0
 margin_bottom = 40.0
-value = 50.0
 texture_progress = ExtResource( 2 )
 
 [node name="UpdateTween" type="Tween" parent="BloodBar"]
+
+[node name="Frequency" type="Timer" parent="."]
+
+[node name="Duration" type="Timer" parent="."]
+
+[connection signal="timeout" from="Frequency" to="." method="_on_Frequency_timeout"]
+[connection signal="timeout" from="Duration" to="." method="_on_Duration_timeout"]

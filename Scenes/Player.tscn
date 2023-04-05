@@ -433,8 +433,9 @@ extents = Vector2( 9, 19 )
 [sub_resource type="OccluderPolygon2D" id=86]
 polygon = PoolVector2Array( -3, 15, -2, 13, 0, 10, 2, 9, 3, 12, 3, 17, 4, 23, 5, 33, 5, 36, 6, 37, 7, 38, 0, 38, -3, 38, -9, 38, -8, 36, -7, 34, -6, 28, -5, 23, -5, 20 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["Player"]]
 material = SubResource( 47 )
+scale = Vector2( 1.7, 1.7 )
 collision_mask = 6
 script = ExtResource( 6 )
 
@@ -465,15 +466,14 @@ __meta__ = {
 material = ExtResource( 13 )
 position = Vector2( 5, 0 )
 frames = SubResource( 30 )
-animation = "Idle"
-frame = 6
+animation = "Attack2"
+frame = 5
 playing = true
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="AttackArea" type="Area2D" parent="." groups=["Sword"]]
-visible = false
 position = Vector2( 0, 1 )
 collision_layer = 0
 collision_mask = 4

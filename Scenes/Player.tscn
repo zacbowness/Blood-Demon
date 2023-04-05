@@ -440,7 +440,6 @@ collision_mask = 6
 script = ExtResource( 6 )
 
 [node name="HitBox" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2( 0, 21 )
 shape = SubResource( 73 )
 __meta__ = {
@@ -448,7 +447,6 @@ __meta__ = {
 }
 
 [node name="Camera2D" type="Camera2D" parent="."]
-visible = false
 position = Vector2( 6, 0 )
 current = true
 zoom = Vector2( 0.4, 0.4 )
@@ -466,7 +464,8 @@ __meta__ = {
 material = ExtResource( 13 )
 position = Vector2( 5, 0 )
 frames = SubResource( 30 )
-animation = "Attack2"
+animation = "Death"
+frame = 9
 playing = true
 __meta__ = {
 "_edit_group_": true
@@ -483,7 +482,6 @@ shape = SubResource( 45 )
 disabled = true
 
 [node name="PlayerHurtbox" parent="." instance=ExtResource( 12 )]
-visible = false
 position = Vector2( 0, 21 )
 collision_layer = 0
 whiten_material = ExtResource( 13 )

@@ -18,7 +18,7 @@ export var MAXSPEED = 100*2
 export var SPRINTMOD = 2.0
 export var JUMPFORCE = 290*2
 export var ACCEL = 10*2
-export var ATTACKPUSH = 70
+export var ATTACKPUSH = 30
 export var ROLLPUSH = 250
 export (float) var max_health = 250
 export (float) var max_stamina = 100
@@ -124,7 +124,7 @@ func update_movement():
 		fireattack.global_position = $BloodballPlacer.global_position
 		
 #	// I FRAME ROLL //
-	if Input.is_action_just_pressed("roll") && isSprinting && $StunTimer.is_stopped() && !isAttacking && isAlive:
+	if Input.is_action_just_pressed("roll") && isMoving && $StunTimer.is_stopped() && !isAttacking && isAlive:
 		if stamina > 30 && !isRolling:
 			_set_stamina(stamina-35);$StaminaRegenBuffer.start()
 			isRolling = true
@@ -274,14 +274,6 @@ func die():
 	$AnimatedSprite.play("Death") 
 	apply_gravity()
 	$PlayerHurtbox/CollisionShape2D.disabled = true
-	if facing_right:
-		$HitBox.position.x = -23
-	else:
-		$HitBox.position.x = 30
-	$HitBox.position.y = 32
-	$HitBox.shape.radius = 6
-	$HitBox.shape.height = 30
-	$HitBox.rotation_degrees = 90
 	$SpawnTimer.start()
 
 func spawn():

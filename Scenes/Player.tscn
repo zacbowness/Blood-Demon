@@ -425,7 +425,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=45]
-extents = Vector2( 22.25, 19.5 )
+extents = Vector2( 18.5, 19.5 )
 
 [sub_resource type="RectangleShape2D" id=60]
 extents = Vector2( 9, 19 )
@@ -449,7 +449,7 @@ __meta__ = {
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 6, 0 )
 current = true
-zoom = Vector2( 0.4, 0.4 )
+zoom = Vector2( 0.6, 0.6 )
 limit_smoothed = true
 smoothing_enabled = true
 smoothing_speed = 8.0
@@ -461,11 +461,12 @@ __meta__ = {
 }
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+modulate = Color( 0.568627, 0.4, 0.352941, 1 )
 material = ExtResource( 13 )
 position = Vector2( 5, 0 )
 frames = SubResource( 30 )
-animation = "Death"
-frame = 9
+animation = "Idle"
+frame = 8
 playing = true
 __meta__ = {
 "_edit_group_": true
@@ -477,7 +478,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2( 36, 19.5 )
+position = Vector2( 44.5, 19.5 )
 shape = SubResource( 45 )
 disabled = true
 

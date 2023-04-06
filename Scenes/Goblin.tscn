@@ -4,32 +4,12 @@
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=2]
 [ext_resource path="res://assets/Sound Assets/EnemySwordAttack.wav" type="AudioStream" id=3]
 [ext_resource path="res://assets/Sound Assets/enemyDeath.wav" type="AudioStream" id=4]
+[ext_resource path="res://HitColours/red_material.tres" type="Material" id=5]
 
 [sub_resource type="CapsuleShape2D" id=54]
 
 [sub_resource type="RectangleShape2D" id=25]
 extents = Vector2( 15.875, 18.25 )
-
-[sub_resource type="Shader" id=56]
-code = "shader_type canvas_item;
-
-uniform bool red = false;
-
-void fragment() {
-	vec4 texture_colour = texture(TEXTURE, UV);
-	if (red) {
-		vec3 Red = vec3 (1,0,0);
-		vec3 reddened_texture_rgb = mix(texture_colour.rgb, Red, 0.6);
-		COLOR = vec4(reddened_texture_rgb, texture_colour.a);
-	} else{
-		COLOR = texture_colour
-	}
-	
-}"
-
-[sub_resource type="ShaderMaterial" id=57]
-shader = SubResource( 56 )
-shader_param/red = false
 
 [sub_resource type="Animation" id=53]
 resource_name = "Attack"
@@ -81,6 +61,23 @@ tracks/0/keys = {
 "values": [ 8, 9, 10, 11 ]
 }
 
+[sub_resource type="Animation" id=56]
+resource_name = "Idle"
+length = 0.3
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 12, 13, 14, 15 ]
+}
+
 [sub_resource type="Animation" id=51]
 length = 0.001
 tracks/0/type = "value"
@@ -121,15 +118,13 @@ extents = Vector2( 17, 18.25 )
 
 [node name="Goblin" type="KinematicBody2D" groups=["Enemy"]]
 position = Vector2( 437, 305 )
+scale = Vector2( 1.5, 1.5 )
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 2 )
-speed = -50
-damage = 70
-health = 200
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -3, 7 )
+position = Vector2( 0, 8 )
 shape = SubResource( 54 )
 
 [node name="EnemyHitBox" type="Area2D" parent="."]
@@ -139,15 +134,17 @@ position = Vector2( -0.125, 8.25 )
 shape = SubResource( 25 )
 
 [node name="Sprite" type="Sprite" parent="."]
-material = SubResource( 57 )
+material = ExtResource( 5 )
 texture = ExtResource( 1 )
 hframes = 28
-frame = 7
+frame = 14
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 reset_on_save = false
+playback_speed = 0.0
 anims/Attack = SubResource( 53 )
 anims/Death = SubResource( 55 )
+anims/Idle = SubResource( 56 )
 anims/RESET = SubResource( 51 )
 anims/Walk = SubResource( 52 )
 

@@ -2,7 +2,6 @@ extends KinematicBody2D
 
 signal health_updated(health)
 signal stamina_updated(stamina)
-signal blood_gauge_updated(blood)
 signal killed()
 signal hitEnemy()
 
@@ -18,16 +17,13 @@ export var MAXSPEED = 100*2
 export var SPRINTMOD = 2.0
 export var JUMPFORCE = 290*2
 export var ACCEL = 10*2
-export var ATTACKPUSH = 30
+export var ATTACKPUSH = 70
 export var ROLLPUSH = 250
 export (float) var max_health = 250
 export (float) var max_stamina = 100
-export (float) var max_blood = 100
 
 onready var health = max_health setget _set_health
 onready var stamina = max_stamina setget _set_stamina
-onready var blood_gauge = 0
-onready var HUD = get_parent().get_node("HUD")
 
 var isAlive = true
 var isAttacking = false
@@ -48,9 +44,8 @@ var isPoisoned = false
 var current_health
 
 func _ready():
-	connect("health_updated", HUD, "_on_Player_health_updated")
-	connect("stamina_updated", HUD, "_on_Player_stamina_updated")
-	connect("blood_gauge_updated", HUD, "_on_Player_blood_gauge_updated")
+	connect("health_updated", get_parent().get_node("HUD"), "_on_Player_health_updated")
+	connect("stamina_updated", get_parent().get_node("HUD"), "_on_Player_stamina_updated")
 	spawnPosition = position
 
 func _physics_process(delta):
@@ -102,20 +97,17 @@ func update_movement():
 		
 		
 #	// ATTACK MOTION //
-	if Input.is_action_just_pressed("attack") && $StunTimer.is_stopped() && !isRangeAttacking && !isRolling && isAlive:
-		if stamina>20:
-			_set_stamina(stamina-20);$StaminaRegenBuffer.start()
-			motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
-			isAttacking = true;isCrouching = false
-			attackAlt = !attackAlt
-			$Attack.play()
-		else:
-			HUD.Stamina_bar_shake()
+	if Input.is_action_just_pressed("attack") && stamina>20 && $StunTimer.is_stopped() && !isRangeAttacking && !isRolling && isAlive:
+		_set_stamina(stamina-20);$StaminaRegenBuffer.start()
+		motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
+		isAttacking = true;isCrouching = false
+		attackAlt = !attackAlt
+		$Attack.play()
+		
 #	// RANGE ATTACK //
-	if Input.is_action_just_pressed("right-click") && blood_gauge>20 && !isTurning && $StunTimer.is_stopped() && !isRangeAttacking && !isAttacking && isAlive:
+	if Input.is_action_just_pressed("right-click") && !isTurning && $StunTimer.is_stopped() && !isRangeAttacking && !isAttacking && isAlive:
 		isRangeAttacking = true;isCrouching = false
 		var fireattack = BloodBall.instance()
-		_set_blood(blood_gauge-20)
 		if (facing_right == true):
 			fireattack.set_bloodball_direction(1)
 		else:
@@ -124,14 +116,12 @@ func update_movement():
 		fireattack.global_position = $BloodballPlacer.global_position
 		
 #	// I FRAME ROLL //
-	if Input.is_action_just_pressed("roll") && isMoving && $StunTimer.is_stopped() && !isAttacking && isAlive:
+	if Input.is_action_just_pressed("ctrl") && $StunTimer.is_stopped() && !isAttacking && isAlive:
 		if stamina > 30 && !isRolling:
 			_set_stamina(stamina-35);$StaminaRegenBuffer.start()
 			isRolling = true
 			motion.x += ROLLPUSH*$AnimatedSprite.scale.x
 			$Roll.play()
-		else:
-			HUD.Stamina_bar_shake()
 
 	
 #	// REGEN STAMINA //
@@ -141,6 +131,11 @@ func update_movement():
 	MAXSPEED = setMaxSpeed()
 	motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)
 	motion = move_and_slide(motion, UP)
+	
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision.collider.has_method("collide_with"):
+			collision.collider.collide_with(collision, self)
 
 func apply_gravity():
 	motion.y += GRAVITY
@@ -219,17 +214,22 @@ func animate_sprite():
 		if facing_right:
 			$AnimatedSprite.scale.x = 1
 			$AnimatedSprite.position.x = 5
-			$AttackArea/CollisionShape2D.position.x = 36
+			$AttackArea/CollisionShape2D.position.x = 44.5
 			$Camera2D.offset_h = .55
 			$LightOccluder2D.scale.x = 1
 			$BloodballPlacer.position.x = 33
 		else:
 			$AnimatedSprite.scale.x = -1
 			$AnimatedSprite.position.x = -5
-			$AttackArea/CollisionShape2D.position.x = -36
+			$AttackArea/CollisionShape2D.position.x = -44.5
 			$Camera2D.offset_h = -.55
 			$LightOccluder2D.scale.x = -1
 			$BloodballPlacer.position.x = -33
+#		if !isCrouching:
+#			$HitBox.shape.radius = 8
+#			$HitBox.shape.height = 22
+#			$HitBox.rotation_degrees = 0
+#			$HitBox.position.y = 21
 	else:motion.x = lerp(motion.x, 0, .05)
 	
 #	// ENABLE PHASE WHEN ROLLING //
@@ -258,10 +258,12 @@ func animate_sprite():
 		z_index = 0
 
 func setMaxSpeed():
-	if isRolling:
-		return 350
+	if isSprinting && isRolling:
+		return 450
 	elif isSprinting:
 		return 400
+	elif isRolling:
+		return 270
 	elif isCrouching:
 		return 100
 	return 200
@@ -274,6 +276,14 @@ func die():
 	$AnimatedSprite.play("Death") 
 	apply_gravity()
 	$PlayerHurtbox/CollisionShape2D.disabled = true
+	if facing_right:
+		$HitBox.position.x = -23
+	else:
+		$HitBox.position.x = 30
+	$HitBox.position.y = 32
+	$HitBox.shape.radius = 6
+	$HitBox.shape.height = 30
+	$HitBox.rotation_degrees = 90
 	$SpawnTimer.start()
 
 func spawn():
@@ -302,19 +312,11 @@ func _set_stamina(value):
 		emit_signal("stamina_updated", stamina)
 	return stamina
 
-func _set_blood(value):
-	var prev_blood = blood_gauge
-	blood_gauge = clamp (value,0, max_blood)
-	if blood_gauge != prev_blood:
-		emit_signal("blood_gauge_updated", blood_gauge)
-	return blood_gauge
-
 #Makes player invincible for certain amount of time
 func takeDamage(damage):
 	$StunTimer.start()
 	$AnimatedSprite.play("Hit")
 	$TakeDamage.play()
-	_set_blood(blood_gauge + damage*.2)
 	current_health = _set_health(health - damage)
 	if current_health > clamp (0,0,max_health):
 		hurtbox.player_hit(true)
@@ -338,18 +340,6 @@ func _on_Enemy_hit(damage, dir_right):
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):
 		body.take_damage(playerDamage)
-		_set_blood(blood_gauge + 10)
-		var PosX = body.position.x - position.x
-		if (body.enemyType == "Demon" ||body.enemyType == "Hero"):
-			if (body.is_moving_right == true and PosX > 0):
-				body.get_node("AnimationPlayer").play("TakeHit")
-				body.is_moving_right = false
-				body.scale.x = -body.scale.x
-			elif (body.is_moving_right == false and PosX < 0):
-				body.get_node("AnimationPlayer").play("TakeHit")
-				body.is_moving_right = true
-				body.scale.x = -body.scale.x
-		
 
 func _on_PlayerHurtbox_area_entered(area):
 	if area in get_tree().get_nodes_in_group("Checkpoint"):
@@ -360,7 +350,7 @@ func _on_PlayerHurtbox_area_entered(area):
 			takeDamage(body.damage)
 			apply_knockback(position.x > body.position.x)
 	if body in get_tree().get_nodes_in_group("Trap"):
-		takeDamage(1000)
+		takeDamage(body.damage)
 
 func _on_AnimatedSprite_animation_finished():
 #	// STOP ATTACK STATE //

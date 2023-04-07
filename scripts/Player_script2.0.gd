@@ -43,6 +43,7 @@ var motion = Vector2()
 var controllable
 var direction
 var playerDamage = 100
+var underSomething
 var spawnPosition = position
 var isPoisoned = false 
 var current_health
@@ -97,9 +98,15 @@ func update_movement():
 		
 #		// CROUCHING //
 		if Input.is_action_pressed("down"):
-			isCrouching = true
-		else: isCrouching = false
+			isCrouching = true;
+			$RayCast2D.enabled = true
+		elif not underSomething: 
+			isCrouching = false;
+			$RayCast2D.enabled = false
 		
+		if $RayCast2D.is_colliding():
+			underSomething = true
+		else:underSomething = false
 		
 #	// ATTACK MOTION //
 	if Input.is_action_just_pressed("attack") && $StunTimer.is_stopped() && !isRangeAttacking && !isRolling && isAlive:
@@ -183,7 +190,7 @@ func animate_sprite():
 			if Input.is_action_just_pressed("down"):
 				$AnimatedSprite.play("Crouch Transi")
 		if Input.is_action_just_released("down") && is_on_floor():
-			$AnimatedSprite.play("Crouch Transi");isCrouching = false
+			$AnimatedSprite.play("Crouch Transi")
 		
 #	// ATTACK ANIM //
 	if isAttacking:
@@ -349,7 +356,7 @@ func _on_AttackArea_body_entered(body):
 				body.get_node("AnimationPlayer").play("TakeHit")
 				body.is_moving_right = true
 				body.scale.x = -body.scale.x
-		
+
 
 func _on_PlayerHurtbox_area_entered(area):
 	if area in get_tree().get_nodes_in_group("Checkpoint"):

@@ -7,6 +7,8 @@ export var is_moving_right = false
 var initialDirection
 var gravity = 9.8
 var velocity = Vector2(0,0)
+var knockback = 0
+export (int) var knockback_Amount = 200
 export (int) var  speed = 0;
 var isAttacking = false
 var animation = false
@@ -30,58 +32,23 @@ func _ready():
 	connect("noPoison", get_tree().get_nodes_in_group("Player")[0], "Posion")
 	if !is_moving_right:
 		scale.x = -scale.x;
-	if (get_node(".").name == "Goblin"):
-		health = 100
-		speed = -50
-		weaponType = "Melee"
-		damage = 70
-		movementType = "Ground"
-	elif (get_node(".").name == "Skeleton"): 
-		health = 200
-		speed = -30
-		damage = 100
-		weaponType = "Melee"
-		movementType = "Ground"
-	elif (get_node(".").name == "FireWorm"): 
-		health = 100
-		speed = -30
-		damage = 100
-		weaponType = "Ranged"
-		movementType = "Ground"
-	elif (get_node(".").name == "Knight"): 
-		health = 500
-		speed = -20
-		damage = 200
-		weaponType = "Melee"
-		movementType = "Ground"
-	elif (get_node(".").name == "ElfBow"): 
-		health = 100
-		speed = -40
-		damage = 100
-		weaponType = "Ranged"
-		movementType = "Ground"
-	elif (get_node(".").name == "ElfSpear"): 
-		health = 200
-		speed = -40
-		damage = 50
-		weaponType = "Melee"
-		movementType = "Ground"
 
 func _process(delta):
 	if (isDead == false):
-		if (isAttacking != true && inRange == false && $AnimationPlayer.current_animation != "Attack"):
-			move_character()
-			detect_turn_around()
-		if ($AnimationPlayer.current_animation == "Attack"):
-			return	
-
+		move_character()
+		detect_turn_around()
+		
 		if is_on_wall():
 			is_moving_right = !is_moving_right
 			scale.x = -scale.x
 
 
 func move_character():
-	velocity.x = -speed if is_moving_right else speed
+	knockback = lerp(knockback, 0, .09)
+	if (!isAttacking && !inRange && $AnimationPlayer.current_animation != "Attack"):
+		velocity.x = -speed if is_moving_right else speed
+	else: velocity.x = 0
+	velocity.x += knockback
 	velocity.y += gravity
 	velocity = move_and_slide(velocity, Vector2.UP)
 
@@ -105,9 +72,13 @@ func end_of_hit():
 func _on_PlayerDetector_body_exited(body):
 	inRange = false 
 
-func take_damage(damage):
+func take_damage(damage, dir):
 	var sprite = get_node("Sprite")
 	health = (health - damage)
+	if dir:
+		knockback += knockback_Amount
+	else:
+		knockback -= knockback_Amount
 	sprite.material.set_shader_param("red",true)
 	yield(get_tree().create_timer(red_duration),"timeout")
 	sprite.material.set_shader_param("red",false)

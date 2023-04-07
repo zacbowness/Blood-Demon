@@ -89,7 +89,7 @@ func hit():
 func end_of_hit():
 	$HitBox.monitoring = false  
 
-func take_damage(damage):
+func take_damage(damage, dir):
 	var sprite = get_node("Sprite")
 	health = (health - damage)
 	if (health <= 0):

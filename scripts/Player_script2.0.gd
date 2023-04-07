@@ -26,7 +26,7 @@ export (float) var max_blood = 100
 
 onready var health = max_health setget _set_health
 onready var stamina = max_stamina setget _set_stamina
-onready var blood_gauge = 0
+onready var blood_gauge = 100
 onready var HUD = get_parent().get_node("HUD")
 
 var isAlive = true
@@ -344,7 +344,7 @@ func _on_Enemy_hit(damage, dir_right):
 
 func _on_AttackArea_body_entered(body):
 	if body in get_tree().get_nodes_in_group("Enemy"):
-		body.take_damage(playerDamage)
+		body.take_damage(playerDamage, facing_right)
 		_set_blood(blood_gauge + 10)
 		var PosX = body.position.x - position.x
 		if (body.enemyType == "Hero"):

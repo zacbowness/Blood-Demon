@@ -347,7 +347,7 @@ func _on_AttackArea_body_entered(body):
 		body.take_damage(playerDamage)
 		_set_blood(blood_gauge + 10)
 		var PosX = body.position.x - position.x
-		if (body.enemyType == "Demon" ||body.enemyType == "Hero"):
+		if (body.enemyType == "Hero"):
 			if (body.is_moving_right == true and PosX > 0):
 				body.get_node("AnimationPlayer").play("TakeHit")
 				body.is_moving_right = false

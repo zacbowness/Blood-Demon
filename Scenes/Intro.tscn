@@ -1,0 +1,212 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://scripts/Intro.gd" type="Script" id=1]
+[ext_resource path="res://assets/Fonts/Georgia Regular font.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Scenes/Level1.tscn" type="PackedScene" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 17
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Continue"
+length = 2.024
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:bbcode_text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "[center]Now go and MAKE THE WORLD BLEED!!!!![/center]
+" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.4, 1.7, 1.9 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "continue_to_game"
+} ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Intro"
+length = 34.26
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.6, 1, 2.4, 3.1, 3.6, 4.1, 5.7, 6.4, 7, 7.3, 8.8, 9.3, 9.8, 10.3, 12.1, 12.9, 13.8, 14.2, 15.4, 15.9, 17, 17.3, 19.5, 19.8, 20.9, 21.3, 23, 23.5, 24.5, 24.9, 26.6, 26.9, 27.5, 27.9, 30.3, 30.8, 31.4, 32.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:bbcode_text")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3.5, 6.9, 9.8, 13.7, 16.9, 20.9, 24.4, 27.4, 31.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "[center] Ha! You Died", "[center] Just another dead body in a pile of corpses.", "[center] Murdered by the one they call a hero.", "[center] For what? To steal the shoes off your feet.[/center]
+[center]HAHAHAHAHAHA.", "[center] Hilarious is it not?[/center]
+", "[center] But that doesn't mean death is the end for you. [/center]
+", "[center] You could become something more, something powerful.  [/center]
+", "[center]  Become my warrior and lay a path of blood and corpses wherever you go.[/center]
+", "[center] I'll lend you my power to harness the blood within yourself and your victims.[/center]
+", "[center]Do you accept my offer?
+[/center]
+" ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 33.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "_show_Buttons"
+} ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Quit"
+length = 1.523
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:bbcode_text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "[center]Then fuck off [/center]
+" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.3, 1.1, 1.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "quit"
+} ]
+}
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[node name="Intro" type="Node2D"]
+script = ExtResource( 1 )
+mainGameScene = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 0.812
+margin_left = 6.0
+margin_top = 248.0
+margin_right = 492.0
+margin_bottom = 440.0
+rect_scale = Vector2( 2.1, 2.1 )
+custom_colors/default_color = Color( 0.909804, 0.152941, 0.152941, 1 )
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Now go and MAKE THE WORLD BLEED!!!!![/center]
+"
+text = "Now go and MAKE THE WORLD BLEED!!!!!
+"
+scroll_active = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RichTextLabel"]
+playback_speed = 0.7
+anims/Continue = SubResource( 3 )
+anims/Intro = SubResource( 2 )
+anims/Quit = SubResource( 4 )
+
+[node name="YesButton" type="Button" parent="."]
+margin_left = 295.0
+margin_top = 415.0
+margin_right = 329.0
+margin_bottom = 435.0
+rect_scale = Vector2( 2, 2 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.909804, 0.152941, 0.152941, 1 )
+custom_styles/focus = SubResource( 5 )
+disabled = true
+text = "YES"
+flat = true
+
+[node name="NoButton" type="Button" parent="."]
+margin_left = 655.0
+margin_top = 409.0
+margin_right = 689.0
+margin_bottom = 429.0
+rect_scale = Vector2( 2, 2 )
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0.909804, 0.152941, 0.152941, 1 )
+custom_styles/focus = SubResource( 6 )
+disabled = true
+text = "NO"
+flat = true
+
+[connection signal="pressed" from="YesButton" to="." method="_on_YesButton_pressed"]
+[connection signal="pressed" from="NoButton" to="." method="_on_NoButton_pressed"]

@@ -356,6 +356,7 @@ func _on_AttackArea_body_entered(body):
 				body.get_node("AnimationPlayer").play("TakeHit")
 				body.is_moving_right = true
 				body.scale.x = -body.scale.x
+		
 
 
 func _on_PlayerHurtbox_area_entered(area):

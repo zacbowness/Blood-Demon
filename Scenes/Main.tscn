@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/DemonBoss.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/Tile assets/brick wall.png" type="Texture" id=3]
+[ext_resource path="res://Scenes/Knight.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/FlyEye.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/Hero.tscn" type="PackedScene" id=12]
@@ -45,17 +46,24 @@ format = 1
 tile_data = PoolIntArray( -524300, 4, 0, -524299, 4, 0, -524298, 4, 0, -524297, 4, 0, -524296, 4, 0, -524295, 4, 0, -524294, 4, 0, -524293, 4, 0, -524292, 4, 0, -524291, 4, 0, -524290, 4, 0, -524289, 4, 0, -589824, 4, 0, -589823, 4, 0, -589822, 4, 0, -589821, 4, 0, -589820, 4, 0, -589819, 4, 0, -589818, 4, 0, -589817, 4, 0, -589816, 4, 0, -589815, 4, 0, -589814, 4, 0, -589813, 4, 0, -458764, 4, 0, -524277, 4, 0, -393228, 4, 0, -393227, 4, 0, -393226, 4, 0, -393225, 4, 0, -393224, 4, 0, -393223, 4, 0, -393222, 4, 0, -393221, 4, 0, -393220, 4, 0, -393219, 4, 0, -393218, 4, 0, -393217, 4, 0, -458752, 4, 0, -458751, 4, 0, -458750, 4, 0, -458749, 4, 0, -458748, 4, 0, -458747, 4, 0, -458746, 4, 0, -458745, 4, 0, -458744, 4, 0, -458743, 4, 0, -458742, 4, 0, -458741, 4, 0, -327692, 4, 0, -262156, 4, 0, -196620, 4, 0, -131084, 4, 0, -196597, 4, 0, -65548, 4, 0, -131061, 4, 0, -12, 4, 0, -65525, 4, 0, 65524, 4, 0, 65525, 4, 0, 65526, 4, 0, 65527, 4, 0, 65528, 4, 0, 65529, 4, 0, 65530, 4, 0, 65531, 4, 0, 65532, 4, 0, 65533, 4, 0, 65534, 4, 0, 65535, 4, 0, 0, 4, 0, 1, 4, 0, 2, 4, 0, 3, 4, 0, 4, 4, 0, 5, 4, 0, 6, 4, 0, 7, 4, 0, 8, 4, 0, 9, 4, 0, 10, 4, 0, 11, 4, 0, 131060, 4, 0, 65547, 4, 0, 196596, 4, 0, 131083, 4, 0, 262132, 4, 0, 196619, 4, 0, 327668, 4, 0, 262153, 4, 0, 262154, 4, 0, 262155, 4, 0, 393204, 4, 0, 327689, 4, 0, 327690, 4, 0, 327691, 4, 0, 458740, 4, 0, 458741, 4, 0, 458742, 4, 0, 458743, 4, 0, 458746, 4, 0, 458747, 4, 0, 458748, 4, 0, 458749, 4, 0, 458750, 4, 0, 458751, 4, 0, 393218, 4, 0, 393219, 4, 0, 393220, 4, 0, 393223, 4, 0, 393224, 4, 0, 393225, 4, 0, 393226, 4, 0, 393227, 4, 0, 524279, 4, 0, 524282, 4, 0, 524287, 4, 0, 458754, 4, 0, 458756, 4, 0, 458759, 4, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 390, 216 )
+position = Vector2( 309, 400 )
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]
 
 [node name="Enemy" parent="." instance=ExtResource( 8 )]
-position = Vector2( 365, 456 )
+position = Vector2( 626, 181 )
 
 [node name="Hero" parent="." instance=ExtResource( 12 )]
-position = Vector2( 242, 448 )
+position = Vector2( 500, 149 )
 
 [node name="Demon" parent="." instance=ExtResource( 1 )]
-position = Vector2( 155, 168 )
+position = Vector2( 134, 121 )
+
+[node name="Knight2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 475, 438 )
+
+[node name="Knight" parent="." instance=ExtResource( 4 )]
+position = Vector2( 626, 427 )
+enemyType = "KnightBoss"
 
 [editable path="HUD"]

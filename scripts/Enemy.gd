@@ -20,6 +20,7 @@ export (int) var health = 1000
 var weaponType
 var movementType
 export (String) var enemyType
+onready var player = get_node("/root/Main/Player")
 
 const Fireball = preload("res://Scenes/FireBall.tscn")
 const Arrow = preload("res://Scenes/Arrow.tscn")
@@ -41,6 +42,16 @@ func _process(delta):
 		if is_on_wall():
 			is_moving_right = !is_moving_right
 			scale.x = -scale.x
+			
+	if (enemyType == "KnightBoss" && isAttacking == false):
+		if player:
+			var PosX = player.position.x - position.x
+			if (is_moving_right == true and PosX < 0):
+				is_moving_right = false
+				scale.x = -scale.x
+			elif (is_moving_right == false and PosX > 0):
+				is_moving_right = true
+				scale.x = -scale.x
 
 
 func move_character():
@@ -60,6 +71,7 @@ func detect_turn_around():
 func _on_PlayerDetector_body_entered(body):
 	if (seeWall == false ):
 		$AnimationPlayer.play("Attack")
+		isAttacking = true
 		inRange = true 
 
 func hit():

@@ -11,6 +11,7 @@ export (int) var  speed = 0;
 var isAttacking = false
 var animation = false
 var inRange = false 
+var amountHit = 0
 export (int) var damage = 100
 var isDead = false
 var seeWall = false 
@@ -22,6 +23,7 @@ var attackCounter = 0
 enum {
 	IDLE,
 	ATTACK,
+	DAMAGED,
 	CHASE,
 	DEAD
 }
@@ -44,11 +46,13 @@ func _process(delta):
 		IDLE:
 			pass
 		ATTACK:
+			isAttacking = true 
 			$AnimationPlayer.play("Attack")
 		CHASE:
 			$AnimationPlayer.play("Walk")
 			move_character()
 			detect_turn_around()
+			$PlayerDetector.monitoring = true
 			if is_on_wall():
 				is_moving_right = !is_moving_right
 				scale.x = -scale.x	
@@ -62,21 +66,10 @@ func _process(delta):
 					scale.x = -scale.x
 		DEAD:
 			pass
+		DAMAGED:
+			$AnimationPlayer.play("TakeHit")
+			$PlayerDetector.monitoring = false
 	
-
-#func _process(delta):
-#	if (isDead == false):
-#		if (isAttacking != true && inRange == false && $AnimationPlayer.current_animation != "Attack"):
-#			move_character()
-#			detect_turn_around()
-#		if ($AnimationPlayer.current_animation == "Attack"):
-##			return	
-#
-#		if is_on_wall():
-#			is_moving_right = !is_moving_right
-#			scale.x = -scale.x
-
-
 func move_character():
 	velocity.x = -speed if is_moving_right else speed
 	velocity.y += gravity
@@ -94,9 +87,12 @@ func _on_PlayerDetector_body_entered(body):
 
 func hit():
 	$HitBox.monitoring = true 
-	if (attackCounter == 3):
+	if (attackCounter != 3):
+		$Attack.play()
+	else:
 		Fireball()
-		attackCounter = 0
+		$Fireball.play()
+		attackCounter = 0		
 
 func end_of_hit():
 	$HitBox.monitoring = false  
@@ -111,8 +107,12 @@ func take_damage(damage, dir):
 	sprite.material.set_shader_param("red",true)
 	yield(get_tree().create_timer(red_duration),"timeout")
 	sprite.material.set_shader_param("red",false)
+	if (isAttacking == true):
+		amountHit = amountHit + 1
 	if (health <= 0):
 		death()
+	elif (amountHit == 3):
+		state = DAMAGED
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if (anim_name == "Attack" && seeWall == false):
@@ -121,9 +121,10 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 		else:
 			state = CHASE
 	elif (anim_name == "TakeHit"):
-		$AnimationPlayer.play("Walk")
+		state = CHASE 
 		
 func death():
+	state = DEAD
 	isDead = true 
 	speed = 0
 	z_index = -1
@@ -167,7 +168,8 @@ func Fireball():
 	get_parent().add_child(Attack)
 	Attack.global_position = $FireBallPlacer.global_position
 
-
+func attackStart():
+	amountHit = 0
 	
  
 

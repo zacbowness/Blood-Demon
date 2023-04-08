@@ -105,7 +105,7 @@ func end_of_hit():
 func _on_PlayerDetector_body_exited(body):
 	inRange = false 
 
-func take_damage(damage):
+func take_damage(damage, dir):
 	var sprite = get_node("Sprite")
 	health = (health - damage)
 	sprite.material.set_shader_param("red",true)

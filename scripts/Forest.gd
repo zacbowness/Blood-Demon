@@ -25,6 +25,8 @@ func _process(delta):
 	if death_count == enemy_count and timer_finished == true and boss_spawn == false:
 		var boss = knight.instance()
 		boss.position = $FinalArea/BossPosition.position
+		boss.enemyType = "KnightBoss"
+		boss.player = get_node("/root/Forest/Player")
 		add_child(boss)
 		boss_spawn = true
 		

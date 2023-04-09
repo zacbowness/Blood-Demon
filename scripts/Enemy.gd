@@ -21,7 +21,7 @@ export (int) var health = 1000
 var weaponType
 var movementType
 export (String) var enemyType
-onready var player = get_node("/root/Main/Player")
+onready var player = get_tree().get_nodes_in_group("Player")[0]
 
 const Fireball = preload("res://Scenes/FireBall.tscn")
 const Arrow = preload("res://Scenes/Arrow.tscn")
@@ -50,10 +50,7 @@ func _process(delta):
 		if is_on_wall():
 			is_moving_right = !is_moving_right
 			scale.x = -scale.x
-			
-	change_to_idle()
-	change_to_walk()
-			
+					
 	if (enemyType == "KnightBoss" && isAttacking == false):
 		if player:
 			var PosX = player.position.x - position.x
@@ -63,6 +60,9 @@ func _process(delta):
 			elif (is_moving_right == false and PosX > 0):
 				is_moving_right = true
 				scale.x = -scale.x
+				
+	change_to_idle()
+	change_to_walk()
 
 func move_character():
 	knockback = lerp(knockback, 0, .09)

@@ -64,6 +64,5 @@ position = Vector2( 475, 438 )
 
 [node name="Knight" parent="." instance=ExtResource( 4 )]
 position = Vector2( 626, 427 )
-enemyType = "KnightBoss"
 
 [editable path="HUD"]

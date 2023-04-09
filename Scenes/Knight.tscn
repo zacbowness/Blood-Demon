@@ -130,7 +130,7 @@ script = ExtResource( 2 )
 is_moving_right = true
 speed = -20
 health = 500
-enemyType = "Knight"
+enemyType = "KnightBoss"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 4, -1 )

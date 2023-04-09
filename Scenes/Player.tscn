@@ -449,7 +449,7 @@ __meta__ = {
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 6, 0 )
 current = true
-zoom = Vector2( 0.4, 0.4 )
+zoom = Vector2( 0.6, 0.6 )
 limit_smoothed = true
 smoothing_enabled = true
 smoothing_speed = 8.0

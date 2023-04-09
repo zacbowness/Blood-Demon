@@ -25,6 +25,11 @@ onready var player = get_node("/root/Main/Player")
 const Fireball = preload("res://Scenes/FireBall.tscn")
 const Arrow = preload("res://Scenes/Arrow.tscn")
 export var Projectile : PackedScene
+var floor_now = false #not used right now
+var ElfBow_death_count;#not used right now
+var ElfSpear_death_count;#not used right now
+var airSpawn = false;
+var saved_speed;
 
 
 func _ready():
@@ -43,6 +48,9 @@ func _process(delta):
 			is_moving_right = !is_moving_right
 			scale.x = -scale.x
 			
+	change_to_idle()
+	change_to_walk()
+			
 	if (enemyType == "KnightBoss" && isAttacking == false):
 		if player:
 			var PosX = player.position.x - position.x
@@ -52,7 +60,6 @@ func _process(delta):
 			elif (is_moving_right == false and PosX > 0):
 				is_moving_right = true
 				scale.x = -scale.x
-
 
 func move_character():
 	knockback = lerp(knockback, 0, .09)
@@ -126,7 +133,6 @@ func _on_HitBox_body_entered(body):
 	if (enemyType == "ElfSpear"): 
 		$Poision.start()
 		body.isPoisoned = true 
-		
 
 func _on_Timer_timeout():
 	queue_free()
@@ -136,7 +142,6 @@ func _on_Poision_timeout():
 
 func _on_WallDetector_body_entered(body):
 	seeWall = true
-
 
 func _on_WallDetector_body_exited(body):
 	seeWall = false 
@@ -151,7 +156,18 @@ func Fireball():
 	get_parent().add_child(Attack)
 	Attack.global_position = $FireBallPlacer.global_position
 
-	
+func change_to_idle():
+	if	not is_on_floor():
+		$AnimationPlayer.playback_speed = 0 
+		#$AnimationPlayer.play("Idle")
+		
+func change_to_walk():
+	if is_on_floor():
+		$AnimationPlayer.playback_speed = 1
+		#$AnimationPlayer.play("Walk")
+		if airSpawn == true:
+			speed = saved_speed 
+		#floor_now == true
  
 
 

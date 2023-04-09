@@ -1,34 +1,41 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/Tile assets/spikesRed.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Spikes.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 0.5, 0 )
+extents = Vector2( 0, 0 )
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 71.0
-height = 62.0
+radius = 7.0
+height = 2.0
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 8, 2.5 )
 
 [node name="Spikes" type="KinematicBody2D" groups=["Trap"]]
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 142, -76 )
-scale = Vector2( 11.6, 12 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 3, 16, 17 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 47.5, -9 )
+position = Vector2( 47, -9 )
 shape = SubResource( 1 )
 disabled = true
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="spikeHitbox" type="CollisionShape2D" parent="Area2D"]
-position = Vector2( 141, -56 )
 shape = SubResource( 2 )
 
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2( 0, 6 )
+
+[node name="spikeHitbox" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource( 3 )
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_Area2D_body_entered"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/success-1-6297.mp3-51bb865fbeb6e141e04baff89fee3f25.mp3str"
+
+[deps]
+
+source_file="res://assets/Sound Assets/Forest/success-1-6297.mp3"
+dest_files=[ "res://.import/success-1-6297.mp3-51bb865fbeb6e141e04baff89fee3f25.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -148,6 +148,11 @@ func update_movement():
 	MAXSPEED = setMaxSpeed()
 	motion.x = clamp(motion.x, -MAXSPEED, MAXSPEED)
 	motion = move_and_slide(motion, UP)
+	
+	for i in get_slide_count():
+		var collision = get_slide_collision(i)
+		if collision.collider.has_method("collide_with"):
+			collision.collider.collide_with(collision, self)
 
 func apply_gravity():
 	motion.y += GRAVITY

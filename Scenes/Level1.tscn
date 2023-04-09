@@ -1113,108 +1113,112 @@ position = Vector2( 6230, 2120 )
 [node name="Spikes" type="Node" parent="."]
 
 [node name="Spikes" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 5114, 2099 )
-scale = Vector2( 0.2, 0.2 )
+position = Vector2( 5093, 2086 )
+scale = Vector2( 2, 2 )
+
+[node name="Spikes4" parent="Spikes" instance=ExtResource( 3 )]
+position = Vector2( 4407, 4325 )
+scale = Vector2( 2, 2 )
 
 [node name="Spikes2" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 4946, 2099 )
-scale = Vector2( 0.2, 0.2 )
+position = Vector2( 4947, 2087 )
+scale = Vector2( 2, 2 )
 
 [node name="Spikes3" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 4767, 2098 )
-scale = Vector2( 0.2, 0.2 )
+position = Vector2( 4797, 2086 )
+scale = Vector2( 2, 2 )
 
 [node name="Spikes8" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 7183, 2824 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 7239, 2782 )
+scale = Vector2( 4, 4.25 )
 
 [node name="Spikes9" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 6338, 2314 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 6392, 2242 )
+scale = Vector2( 2, 2.25 )
 
 [node name="Spikes10" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 6606, 2261 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 6662, 2222 )
+scale = Vector2( 4, 4.25 )
 
 [node name="Spikes11" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 5903, 2077 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 5960, 2005 )
+scale = Vector2( 4, 4.25 )
 
 [node name="Spikes12" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 6029, 2177 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 6103, 2088 )
+scale = Vector2( 2, 2.25 )
 
 [node name="Spikes13" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 7487, 2890 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 7545, 2850 )
+scale = Vector2( 4, 4.25 )
 
 [node name="Spikes14" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 7647, 2896 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 7704, 2848 )
+scale = Vector2( 4, 4.25 )
 
 [node name="Spikes15" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 7788, 2914 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 7846, 2869 )
+scale = Vector2( 4, 4.25 )
 
 [node name="Spikes16" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 8136, 3002 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 8192, 2957 )
+scale = Vector2( 3, 3.125 )
 
 [node name="Spikes17" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 8182, 3007 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 8240, 2957 )
+scale = Vector2( 3, 3.125 )
 
 [node name="Spikes18" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 8848, 3110 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 8904, 3058 )
+scale = Vector2( 4, 4.25 )
 
 [node name="Spikes19" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 8916, 3490 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 8977, 3445 )
+scale = Vector2( 4, 4.25 )
 
 [node name="Spikes22" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 7618, 3597 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 7672, 3523 )
+scale = Vector2( 2, 2.25 )
 
 [node name="Spikes23" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 6036, 3650 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 6089, 3613 )
+scale = Vector2( 4, 4.25 )
 
 [node name="Spikes24" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 4782, 4353 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 4833, 4316 )
+scale = Vector2( 3, 3.125 )
 
 [node name="Spikes25" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 4833, 4405 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 4877, 4316 )
+scale = Vector2( 3, 3.125 )
 
 [node name="Spikes26" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 3861, 4401 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 3913, 4352 )
+scale = Vector2( 4, 4.25 )
 
 [node name="Spikes27" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 3633, 4395 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 3679, 4419 )
+scale = Vector2( 3, 3.125 )
 
 [node name="Spikes28" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 3667, 4472 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 3728, 4419 )
+scale = Vector2( 3, 3.125 )
 
 [node name="Spikes29" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 3407, 4491 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 3464, 4452 )
+scale = Vector2( 4, 4.25 )
 
 [node name="Spikes30" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 3247, 4567 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 3304, 4529 )
+scale = Vector2( 4, 4.5 )
 
 [node name="Spikes20" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 8102, 3417 )
-scale = Vector2( 0.4, 0.4 )
+position = Vector2( 8162, 3350 )
+scale = Vector2( 3, 3.125 )
 
 [node name="Spikes21" parent="Spikes" instance=ExtResource( 3 )]
-position = Vector2( 8151, 3426 )
-scale = Vector2( 0.5, 0.5 )
+position = Vector2( 8212, 3350 )
+scale = Vector2( 3, 3.125 )
 
 [node name="Enemy" parent="." instance=ExtResource( 13 )]
 position = Vector2( 5191, 2049 )

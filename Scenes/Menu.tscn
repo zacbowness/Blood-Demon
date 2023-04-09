@@ -238,18 +238,18 @@ custom_constants/margin_bottom = 0
 
 [node name="LeftColumn" type="MarginContainer" parent="ControlsMenu"]
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 617.0
 custom_constants/margin_right = 512
-custom_constants/margin_top = 100
+custom_constants/margin_top = 60
 custom_constants/margin_bottom = 100
 
 [node name="Actions" type="VBoxContainer" parent="ControlsMenu/LeftColumn"]
-margin_top = 100.0
+margin_top = 60.0
 margin_right = 512.0
-margin_bottom = 500.0
+margin_bottom = 517.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 20
+custom_constants/separation = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
 margin_right = 512.0
@@ -266,9 +266,9 @@ align = 1
 valign = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
-margin_top = 81.0
+margin_top = 66.0
 margin_right = 512.0
-margin_bottom = 142.0
+margin_bottom = 127.0
 
 [node name="Label" type="Label" parent="ControlsMenu/LeftColumn/Actions/MarginContainer2"]
 margin_right = 512.0
@@ -281,9 +281,9 @@ align = 1
 valign = 1
 
 [node name="MarginContainer3" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
-margin_top = 162.0
+margin_top = 132.0
 margin_right = 512.0
-margin_bottom = 223.0
+margin_bottom = 193.0
 
 [node name="Label" type="Label" parent="ControlsMenu/LeftColumn/Actions/MarginContainer3"]
 margin_right = 512.0
@@ -291,14 +291,14 @@ margin_bottom = 61.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_fonts/font = SubResource( 7 )
-text = "Sprint"
+text = "Crouch"
 align = 1
 valign = 1
 
 [node name="MarginContainer4" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
-margin_top = 243.0
+margin_top = 198.0
 margin_right = 512.0
-margin_bottom = 304.0
+margin_bottom = 259.0
 
 [node name="Label" type="Label" parent="ControlsMenu/LeftColumn/Actions/MarginContainer4"]
 margin_right = 512.0
@@ -311,9 +311,9 @@ align = 1
 valign = 1
 
 [node name="MarginContainer5" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
-margin_top = 324.0
+margin_top = 264.0
 margin_right = 512.0
-margin_bottom = 385.0
+margin_bottom = 325.0
 
 [node name="Label" type="Label" parent="ControlsMenu/LeftColumn/Actions/MarginContainer5"]
 margin_right = 512.0
@@ -325,21 +325,51 @@ text = "Roll dodge"
 align = 1
 valign = 1
 
+[node name="MarginContainer6" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
+margin_top = 330.0
+margin_right = 512.0
+margin_bottom = 391.0
+
+[node name="Label" type="Label" parent="ControlsMenu/LeftColumn/Actions/MarginContainer6"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Sprint"
+align = 1
+valign = 1
+
+[node name="MarginContainer7" type="MarginContainer" parent="ControlsMenu/LeftColumn/Actions"]
+margin_top = 396.0
+margin_right = 512.0
+margin_bottom = 457.0
+
+[node name="Label" type="Label" parent="ControlsMenu/LeftColumn/Actions/MarginContainer7"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Bloodball"
+align = 1
+valign = 1
+
 [node name="RightColumn" type="MarginContainer" parent="ControlsMenu"]
 margin_right = 1024.0
-margin_bottom = 600.0
-custom_constants/margin_top = 100
+margin_bottom = 617.0
+custom_constants/margin_top = 60
 custom_constants/margin_left = 512
 custom_constants/margin_bottom = 100
 
 [node name="Buttons" type="VBoxContainer" parent="ControlsMenu/RightColumn"]
 margin_left = 512.0
-margin_top = 100.0
+margin_top = 60.0
 margin_right = 1024.0
-margin_bottom = 500.0
+margin_bottom = 517.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 20
+custom_constants/separation = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
 margin_right = 512.0
@@ -356,9 +386,9 @@ align = 1
 valign = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
-margin_top = 81.0
+margin_top = 66.0
 margin_right = 512.0
-margin_bottom = 142.0
+margin_bottom = 127.0
 
 [node name="Label" type="Label" parent="ControlsMenu/RightColumn/Buttons/MarginContainer2"]
 margin_right = 512.0
@@ -366,14 +396,14 @@ margin_bottom = 61.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_fonts/font = SubResource( 7 )
-text = "Space"
+text = "w"
 align = 1
 valign = 1
 
 [node name="MarginContainer3" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
-margin_top = 162.0
+margin_top = 132.0
 margin_right = 512.0
-margin_bottom = 223.0
+margin_bottom = 193.0
 
 [node name="Label" type="Label" parent="ControlsMenu/RightColumn/Buttons/MarginContainer3"]
 margin_right = 512.0
@@ -381,14 +411,14 @@ margin_bottom = 61.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_fonts/font = SubResource( 7 )
-text = "Shift"
+text = "s"
 align = 1
 valign = 1
 
 [node name="MarginContainer4" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
-margin_top = 243.0
+margin_top = 198.0
 margin_right = 512.0
-margin_bottom = 304.0
+margin_bottom = 259.0
 
 [node name="Label" type="Label" parent="ControlsMenu/RightColumn/Buttons/MarginContainer4"]
 margin_right = 512.0
@@ -401,11 +431,41 @@ align = 1
 valign = 1
 
 [node name="MarginContainer5" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
-margin_top = 324.0
+margin_top = 264.0
 margin_right = 512.0
-margin_bottom = 385.0
+margin_bottom = 325.0
 
 [node name="Label" type="Label" parent="ControlsMenu/RightColumn/Buttons/MarginContainer5"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Space"
+align = 1
+valign = 1
+
+[node name="MarginContainer6" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
+margin_top = 330.0
+margin_right = 512.0
+margin_bottom = 391.0
+
+[node name="Label" type="Label" parent="ControlsMenu/RightColumn/Buttons/MarginContainer6"]
+margin_right = 512.0
+margin_bottom = 61.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+custom_fonts/font = SubResource( 7 )
+text = "Shift"
+align = 1
+valign = 1
+
+[node name="MarginContainer7" type="MarginContainer" parent="ControlsMenu/RightColumn/Buttons"]
+margin_top = 396.0
+margin_right = 512.0
+margin_bottom = 457.0
+
+[node name="Label" type="Label" parent="ControlsMenu/RightColumn/Buttons/MarginContainer7"]
 margin_right = 512.0
 margin_bottom = 61.0
 size_flags_horizontal = 3
@@ -417,12 +477,11 @@ valign = 1
 
 [node name="Title" type="MarginContainer" parent="ControlsMenu"]
 margin_right = 1024.0
-margin_bottom = 600.0
-custom_constants/margin_bottom = 500
+margin_bottom = 617.0
 
 [node name="Label" type="Label" parent="ControlsMenu/Title"]
 margin_right = 1024.0
-margin_bottom = 100.0
+margin_bottom = 617.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_colors/font_color = Color( 0.85098, 0.745098, 0.176471, 1 )
@@ -433,17 +492,17 @@ align = 1
 
 [node name="BackButton" type="MarginContainer" parent="ControlsMenu"]
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 617.0
 custom_constants/margin_right = 300
-custom_constants/margin_top = 500
+custom_constants/margin_top = 520
 custom_constants/margin_left = 300
-custom_constants/margin_bottom = 20
+custom_constants/margin_bottom = 25
 
 [node name="Back" type="Button" parent="ControlsMenu/BackButton"]
 margin_left = 300.0
-margin_top = 500.0
+margin_top = 520.0
 margin_right = 724.0
-margin_bottom = 580.0
+margin_bottom = 592.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_colors/font_color_focus = Color( 0.32549, 0.0431373, 0.0431373, 1 )

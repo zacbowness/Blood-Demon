@@ -1,10 +1,9 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/Huntress 2/Sprites/Character/ElfBowSheet.png" type="Texture" id=1]
 [ext_resource path="res://scripts/Enemy.gd" type="Script" id=2]
 [ext_resource path="res://assets/Sound Assets/enemyDeath.wav" type="AudioStream" id=3]
 [ext_resource path="res://assets/Sound Assets/FireballSFX.wav" type="AudioStream" id=4]
-[ext_resource path="res://Scenes/Arrow.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=55]
 
@@ -125,10 +124,6 @@ scale = Vector2( 1.7, 1.7 )
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 2 )
-speed = -40
-damage = 50
-health = 100
-Projectile = ExtResource( 5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -2 )
@@ -200,6 +195,7 @@ stream = ExtResource( 3 )
 position = Vector2( 0, 1 )
 stream = ExtResource( 4 )
 
+[connection signal="deadCount" from="." to="." method="_on_ElfBow_deadCount"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_HitBox_body_entered"]
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_PlayerDetector_body_entered"]

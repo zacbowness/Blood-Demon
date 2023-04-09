@@ -19,14 +19,16 @@ animations = [ {
 [node name="Light2D" type="Light2D" parent="."]
 position = Vector2( 0, -6 )
 texture = ExtResource( 5 )
-texture_scale = 0.62
-energy = 0.77
+texture_scale = 2.0
+color = Color( 0.596078, 0.403922, 0, 1 )
+energy = 1.1
 range_height = 6.9
 shadow_enabled = true
 shadow_gradient_length = 5.5
+shadow_filter = 5
 shadow_filter_smooth = 4.3
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-frame = 3
+frame = 1
 playing = true

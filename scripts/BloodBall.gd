@@ -34,13 +34,4 @@ func _on_BloodBall_body_entered(body):
 	$AnimationPlayer.play("Explode")
 	set_physics_process(false)
 	if body in get_tree().get_nodes_in_group("Enemy"):
-		body.take_damage(damage, is_moving_right)
-		var PosX = body.position.x - position.x
-		if (body.is_moving_right == true and PosX > 0):
-			body.get_node("AnimationPlayer").play("TakeHit")
-			body.is_moving_right = false
-			body.scale.x = -body.scale.x
-		elif (body.is_moving_right == false and PosX < 0):
-			body.get_node("AnimationPlayer").play("TakeHit")
-			body.is_moving_right = true
-			body.scale.x = -body.scale.x
+		body.take_damage(damage)

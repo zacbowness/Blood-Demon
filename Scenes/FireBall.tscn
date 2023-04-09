@@ -81,7 +81,7 @@ tracks/0/keys = {
 }
 
 [node name="Fireball" type="Area2D" groups=["Enemy"]]
-position = Vector2( 273, 155 )
+position = Vector2( 249, 144 )
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 2 )

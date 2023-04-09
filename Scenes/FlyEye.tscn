@@ -173,6 +173,7 @@ stream = ExtResource( 3 )
 stream = ExtResource( 4 )
 
 [node name="PlayerDetectionZone" parent="." instance=ExtResource( 5 )]
+visible = false
 position = Vector2( 5, 4 )
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

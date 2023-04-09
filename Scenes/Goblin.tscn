@@ -28,6 +28,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id=57]
+resource_local_to_scene = true
 shader = SubResource( 56 )
 shader_param/red = false
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=2]
+[gd_scene load_steps=117 format=2]
 
 [ext_resource path="res://assets/Tile assets/brick wall.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=2]
@@ -14,6 +14,9 @@
 [ext_resource path="res://Scenes/Knight.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Scenes/FireWorm.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Scenes/DemonBoss.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/Transition.tscn" type="PackedScene" id=15]
+[ext_resource path="res://assets/Fonts/Georgia Regular font.ttf" type="DynamicFontData" id=16]
+[ext_resource path="res://Scenes/Level1.gd" type="Script" id=17]
 
 [sub_resource type="ConvexPolygonShape2D" id=10]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -697,7 +700,12 @@ resource_local_to_scene = true
 shader = ExtResource( 8 )
 shader_param/whiten = false
 
-[node name="Level1" type="Node2D"]
+[sub_resource type="DynamicFont" id=112]
+size = 70
+font_data = ExtResource( 16 )
+
+[node name="Level1" type="Node2D" groups=["Levels"]]
+script = ExtResource( 17 )
 
 [node name="Ground3 (Foreground)" type="TileMap" parent="."]
 modulate = Color( 0.113725, 0.32549, 0.627451, 1 )
@@ -763,7 +771,7 @@ position = Vector2( 5, 4 )
 shape = SubResource( 17 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 545, 4268 )
+position = Vector2( 743, 87.9999 )
 z_index = 1
 __meta__ = {
 "_edit_group_": true
@@ -914,6 +922,7 @@ scale = Vector2( 2, 2 )
 [node name="Text Boxes" type="Node" parent="."]
 
 [node name="Label" type="Label" parent="Text Boxes"]
+visible = false
 margin_left = 525.0
 margin_top = 4251.0
 margin_right = 664.0
@@ -924,6 +933,7 @@ text = "Use A,D  to Move
 Use W to Jump"
 
 [node name="Label2" type="Label" parent="Text Boxes"]
+visible = false
 margin_left = 825.0
 margin_top = 4210.0
 margin_right = 1032.0
@@ -933,6 +943,7 @@ text = "Use Left Click to Attack Enemies
 align = 1
 
 [node name="Label4" type="Label" parent="Text Boxes"]
+visible = false
 margin_left = 3699.0
 margin_top = 4199.0
 margin_right = 3951.0
@@ -942,6 +953,7 @@ and their attacks"
 align = 1
 
 [node name="Label5" type="Label" parent="Text Boxes"]
+visible = false
 margin_left = 6103.0
 margin_top = 3435.0
 margin_right = 6355.0
@@ -951,6 +963,7 @@ text = "Press Right Click for Projectile Attacks
 align = 1
 
 [node name="Label10" type="Label" parent="Text Boxes"]
+visible = false
 margin_left = 6822.0
 margin_top = 3307.0
 margin_right = 7074.0
@@ -960,6 +973,7 @@ text = "Press S to crouch
 align = 1
 
 [node name="Label9" type="Label" parent="Text Boxes"]
+visible = false
 margin_left = 5054.0
 margin_top = 4178.0
 margin_right = 5310.0
@@ -969,6 +983,7 @@ increases your Blood (Red Bar)"
 align = 1
 
 [node name="Label8" type="Label" parent="Text Boxes"]
+visible = false
 margin_left = 9406.0
 margin_top = 2981.0
 margin_right = 9658.0
@@ -977,6 +992,7 @@ text = "Holding sprint while you
 jump makes you jump farther"
 
 [node name="Label6" type="Label" parent="Text Boxes"]
+visible = false
 margin_left = 5168.0
 margin_top = 1955.0
 margin_right = 5420.0
@@ -984,6 +1000,7 @@ margin_bottom = 2007.0
 text = "Red spikes will reduce health to zero"
 
 [node name="Label7" type="Label" parent="Text Boxes"]
+visible = false
 margin_left = 3126.0
 margin_top = 1800.0
 margin_right = 3378.0
@@ -991,6 +1008,7 @@ margin_bottom = 1852.0
 text = "INSERT BOSS IN ROOM (LEVEL END)"
 
 [node name="Label3" type="Label" parent="Text Boxes"]
+visible = false
 margin_left = 1896.0
 margin_top = 4296.0
 margin_right = 2044.0
@@ -998,6 +1016,18 @@ margin_bottom = 4310.0
 text = "Hold Left Shift to Sprint
 (Uses Stamina)"
 align = 1
+
+[node name="GoodJob" type="Label" parent="Text Boxes"]
+visible = false
+margin_left = 2704.0
+margin_top = 2115.0
+margin_right = 3024.0
+margin_bottom = 2196.0
+custom_colors/font_color = Color( 0.0235294, 0.529412, 0.0666667, 1 )
+custom_fonts/font = SubResource( 112 )
+text = "Good Job!"
+align = 1
+valign = 1
 
 [node name="Enemies" type="Node" parent="."]
 
@@ -1243,6 +1273,8 @@ position = Vector2( 5926, 3681 )
 
 [node name="Enemy8" parent="." instance=ExtResource( 13 )]
 position = Vector2( 4310, 4285 )
+
+[node name="Transition" parent="." instance=ExtResource( 15 )]
 
 [editable path="Player"]
 [editable path="Player/PlayerHurtbox"]

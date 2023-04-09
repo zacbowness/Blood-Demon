@@ -1,4 +1,5 @@
 signal hit(damage, dir)
+signal deathCount
 extends KinematicBody2D
 
 export var Accel = 300 
@@ -29,6 +30,7 @@ onready var playerDetectionZone = $PlayerDetectionZone
 func _ready():
 	iPos = position
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
+	connect("deathCount", get_tree().get_nodes_in_group("Levels")[0], "_death_count")
 
 func _physics_process(delta):
 	match state:
@@ -122,6 +124,7 @@ func death():
 	set_collision_mask_bit(0, false)
 	set_collision_layer_bit(2, false)
 	$Timer.start()
+	emit_signal("deathCount")
 
 func _on_Timer_timeout():
 	queue_free()

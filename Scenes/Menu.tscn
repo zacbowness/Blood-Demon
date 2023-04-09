@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/Fonts/TiltWarp-Regular-VariableFont_XROT,YROT.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/Fonts/RobotoCondensed-BoldItalic.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://scripts/Menu.gd" type="Script" id=3]
-[ext_resource path="res://Scenes/Main.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Intro.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/Fonts/RobotoCondensed-Bold.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://assets/Sound Assets/Menu/MenuClick.mp3" type="AudioStream" id=6]
 [ext_resource path="res://assets/Junk Wastelands Files/layers/back.png" type="Texture" id=7]

@@ -1,6 +1,7 @@
 extends KinematicBody2D
 signal hit(damage, dir)
 signal noPoison
+signal deathCount
 
 const red_duration = 0.15
 export var is_moving_right = false 
@@ -30,12 +31,14 @@ var ElfBow_death_count;#not used right now
 var ElfSpear_death_count;#not used right now
 var airSpawn = false;
 var saved_speed;
+var emmited_signal = false
 
 
 func _ready():
 	$AnimationPlayer.play("Walk")
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
 	connect("noPoison", get_tree().get_nodes_in_group("Player")[0], "Posion")
+	connect("deathCount", get_tree().get_nodes_in_group("Levels")[0], "_death_count")
 	if !is_moving_right:
 		scale.x = -scale.x;
 
@@ -127,6 +130,9 @@ func death():
 	$PlayerDetector.monitoring = false
 	set_collision_mask_bit(3, false)
 	$Timer.start()
+	if emmited_signal == false:
+		emit_signal("deathCount")
+		emmited_signal = true
 
 func _on_HitBox_body_entered(body):
 	emit_signal("hit", damage, is_moving_right)
@@ -159,15 +165,15 @@ func Fireball():
 func change_to_idle():
 	if	not is_on_floor():
 		$AnimationPlayer.playback_speed = 0 
-		#$AnimationPlayer.play("Idle")
+		#$AnimationPlayer.play("Idle") may not be functional 
 		
 func change_to_walk():
 	if is_on_floor():
 		$AnimationPlayer.playback_speed = 1
-		#$AnimationPlayer.play("Walk")
+		#$AnimationPlayer.play("Walk") may not be needed
 		if airSpawn == true:
 			speed = saved_speed 
-		#floor_now == true
+		#floor_now == true may not be needed 
  
 
 

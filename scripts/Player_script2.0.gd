@@ -5,7 +5,6 @@ signal stamina_updated(stamina)
 signal blood_gauge_updated(blood)
 signal killed()
 signal hitEnemy()
-signal spawn()
 
 const invincibility_duration = 1.5
 onready var hurtbox = $PlayerHurtbox
@@ -53,8 +52,6 @@ func _ready():
 	connect("health_updated", HUD, "_on_Player_health_updated")
 	connect("stamina_updated", HUD, "_on_Player_stamina_updated")
 	connect("blood_gauge_updated", HUD, "_on_Player_blood_gauge_updated")
-	for enemy in get_tree().get_nodes_in_group("Enemy"):
-		connect("spawn", enemy, "_Spawn")
 	spawnPosition = position
 
 func _physics_process(delta):
@@ -218,7 +215,7 @@ func animate_sprite():
 			else:
 				z_index = 0
 		#	// AIRBORN //
-		elif !is_on_floor() && !isCrouching:
+		elif !is_on_floor():
 			isTurning = false
 			if motion.y < 0:
 				$AnimatedSprite.play("Jump")
@@ -282,7 +279,6 @@ func spawn():
 #	va = load(get_tree().current_scene.filename)
 #	va.
 #	get_tree().change_scene_to(va)
-	emit_signal("spawn")
 	position = spawnPosition
 	isAlive = true;facing_right = true
 	_set_health(max_health)

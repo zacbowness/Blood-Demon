@@ -208,5 +208,15 @@ disabled = true
 text = "NO"
 flat = true
 
+[node name="SkipButton" type="Button" parent="."]
+margin_left = 971.0
+margin_top = 566.0
+margin_right = 1009.0
+margin_bottom = 586.0
+custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
+text = "Skip"
+flat = true
+
 [connection signal="pressed" from="YesButton" to="." method="_on_YesButton_pressed"]
 [connection signal="pressed" from="NoButton" to="." method="_on_NoButton_pressed"]
+[connection signal="pressed" from="SkipButton" to="." method="_on_SkipButton_pressed"]

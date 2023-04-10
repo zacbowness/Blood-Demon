@@ -24,3 +24,6 @@ func quit():
 
 func continue_to_game():
 	get_tree().change_scene(mainGameScene.resource_path)
+
+func _on_SkipButton_pressed():
+	continue_to_game()

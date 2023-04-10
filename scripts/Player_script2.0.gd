@@ -268,12 +268,10 @@ func die():
 	isAlive = false
 	isAttacking = false
 	$Death.play()
-	$AnimatedSprite.play("Death") 
+	$AnimatedSprite.play("Death")
 	apply_gravity()
 	$PlayerHurtbox/CollisionShape2D.disabled = true
 	$SpawnTimer.start()
-
-
 
 func spawn():
 #	va = load(get_tree().current_scene.filename)

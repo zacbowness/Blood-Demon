@@ -33,12 +33,12 @@ var airSpawn = false;
 var saved_speed;
 var emmited_signal = false
 
-
 func _ready():
 	$AnimationPlayer.play("Walk")
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
 	connect("noPoison", get_tree().get_nodes_in_group("Player")[0], "Posion")
-	connect("deathCount", get_tree().get_nodes_in_group("Levels")[0], "_death_count")
+	if get_tree().get_nodes_in_group("Levels").size() > 0:
+		connect("deathCount", get_tree().get_nodes_in_group("Levels")[0], "_death_count")
 	if !is_moving_right:
 		scale.x = -scale.x;
 
@@ -133,6 +133,8 @@ func death():
 	if emmited_signal == false:
 		emit_signal("deathCount")
 		emmited_signal = true
+	if enemyType == "KnightBoss":
+		get_parent().boss_Dead()
 
 func _on_HitBox_body_entered(body):
 	emit_signal("hit", damage, is_moving_right)
@@ -174,7 +176,3 @@ func change_to_walk():
 		if airSpawn == true:
 			speed = saved_speed 
 		#floor_now == true may not be needed 
- 
-
-
-

@@ -30,7 +30,8 @@ onready var playerDetectionZone = $PlayerDetectionZone
 func _ready():
 	iPos = position
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
-	connect("deathCount", get_tree().get_nodes_in_group("Levels")[0], "_death_count")
+	if get_tree().get_nodes_in_group("Levels").size() > 0:
+		connect("deathCount", get_tree().get_nodes_in_group("Levels")[0], "_death_count")
 
 func _physics_process(delta):
 	match state:

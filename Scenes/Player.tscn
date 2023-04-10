@@ -386,7 +386,7 @@ animations = [ {
 "frames": [ SubResource( 5 ), SubResource( 6 ) ],
 "loop": false,
 "name": "Fall_transition",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [ SubResource( 72 ) ],
 "loop": false,
@@ -438,6 +438,7 @@ material = SubResource( 47 )
 scale = Vector2( 1.7, 1.7 )
 collision_mask = 6
 script = ExtResource( 6 )
+max_health = 50.0
 
 [node name="HitBox" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 21 )
@@ -453,8 +454,6 @@ zoom = Vector2( 0.6, 0.6 )
 limit_smoothed = true
 smoothing_enabled = true
 smoothing_speed = 8.0
-offset_h = 0.55
-offset_v = 0.03
 editor_draw_limits = true
 __meta__ = {
 "_edit_group_": true

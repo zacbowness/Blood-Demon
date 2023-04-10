@@ -5,20 +5,21 @@ signal stamina_updated(stamina)
 signal blood_gauge_updated(blood)
 signal killed()
 signal hitEnemy()
+signal spawn()
 
 const invincibility_duration = 1.5
 onready var hurtbox = $PlayerHurtbox
 onready var blinker = $Blinker
 
+var va : PackedScene 
 const BloodBall = preload("res://Scenes/BloodBall.tscn")
 const UP = Vector2(0, -1)
 export var GRAVITY = 15*2
-export var MAXFALLSPEED = 250*2
+export var MAXFALLSPEED = 800
 export var MAXSPEED = 100*2
 export var SPRINTMOD = 2.0
 export var JUMPFORCE = 290*2
 export var ACCEL = 10*2
-export var ATTACKPUSH = 30
 export var ROLLPUSH = 250
 export (float) var max_health = 250
 export (float) var max_stamina = 100
@@ -42,9 +43,9 @@ var isTurning = false
 var motion = Vector2()
 var controllable
 var direction
-var playerDamage = 100
+var playerDamage = 1000
 var underSomething
-var spawnPosition = position
+var spawnPosition
 var isPoisoned = false 
 var current_health
 
@@ -52,10 +53,11 @@ func _ready():
 	connect("health_updated", HUD, "_on_Player_health_updated")
 	connect("stamina_updated", HUD, "_on_Player_stamina_updated")
 	connect("blood_gauge_updated", HUD, "_on_Player_blood_gauge_updated")
+	for enemy in get_tree().get_nodes_in_group("Enemy"):
+		connect("spawn", enemy, "_Spawn")
 	spawnPosition = position
 
 func _physics_process(delta):
-	
 	apply_gravity()
 	update_movement()
 	animate_sprite()
@@ -112,14 +114,13 @@ func update_movement():
 	if Input.is_action_just_pressed("attack") && $StunTimer.is_stopped() && !isRangeAttacking && !isRolling && isAlive:
 		if stamina>20:
 			_set_stamina(stamina-20);$StaminaRegenBuffer.start()
-			motion.x += ATTACKPUSH*$AnimatedSprite.scale.x
 			isAttacking = true;isCrouching = false
 			attackAlt = !attackAlt
 			$Attack.play()
 		else:
 			HUD.Stamina_bar_shake()
 #	// RANGE ATTACK //
-	if Input.is_action_just_pressed("right-click") && blood_gauge>20 && !isTurning && $StunTimer.is_stopped() && !isRangeAttacking && !isAttacking && isAlive:
+	if Input.is_action_just_pressed("right-click") && blood_gauge>20 && !isTurning && !isRolling && $StunTimer.is_stopped() && !isRangeAttacking && !isAttacking && isAlive:
 		isRangeAttacking = true;isCrouching = false
 		var fireattack = BloodBall.instance()
 		_set_blood(blood_gauge-20)
@@ -131,16 +132,15 @@ func update_movement():
 		fireattack.global_position = $BloodballPlacer.global_position
 		
 #	// I FRAME ROLL //
-	if Input.is_action_just_pressed("roll") && isMoving && $StunTimer.is_stopped() && !isAttacking && isAlive:
+	if Input.is_action_just_pressed("roll") && $StunTimer.is_stopped() && !isAttacking && isAlive:
 		if stamina > 30 && !isRolling:
 			_set_stamina(stamina-35);$StaminaRegenBuffer.start()
-			isRolling = true
+			isRolling = true;isRangeAttacking = false
 			motion.x += ROLLPUSH*$AnimatedSprite.scale.x
 			$Roll.play()
 		else:
 			HUD.Stamina_bar_shake()
-
-	
+			
 #	// REGEN STAMINA //
 	if $StaminaRegenBuffer.is_stopped():_set_stamina(stamina+.75)
 	
@@ -161,113 +161,101 @@ func apply_gravity():
 
 func animate_sprite():
 #	// HANDLING ANIMATIONS //
-	if controllable:
-	#	// MOVE LEFT & RIGHT //
-		if !isTurning && !isCrouching:
-			if isMoving:
-				$AnimatedSprite.play("Run")
+	if isAlive && $StunTimer.is_stopped():
+		$HitBox.shape.radius = 8
+		$HitBox.shape.height = 22
+		$HitBox.rotation_degrees = 0
+		$HitBox.position.y = 21
+		$HitBox.position.x = 0
+		set_collision_mask_bit(2, true)
+		set_collision_layer_bit(0, true)
+		$PlayerHurtbox.set_collision_mask_bit(2, true)
+		$HitBox.position.y = 21
+		$HitBox.shape.height = 22
+		$PlayerHurtbox/CollisionShape2D.position.y = 0
+		$PlayerHurtbox/CollisionShape2D.shape.extents.y = 19
+		$AnimatedSprite.speed_scale = 1
+		#	// I FRAME ROLL //
+		if isRolling:
+			$AnimatedSprite.play("Roll")
+			$AnimatedSprite.speed_scale = 1
+			#	// ENABLE PHASE WHEN ROLLING //
+			set_collision_mask_bit(2, false)
+			set_collision_layer_bit(0, false)
+			$PlayerHurtbox.set_collision_mask_bit(2, false)
+		# // CROUCHING //
+		elif isCrouching:
+			if isMoving:$AnimatedSprite.play("Crouch Walk")
+			else:$AnimatedSprite.play("Crouching")
+			if Input.is_action_just_pressed("down"):
+				$AnimatedSprite.play("Crouch Transi")
+			if Input.is_action_just_released("down") && is_on_floor():
+				$AnimatedSprite.play("Crouch Transi")
+			$HitBox.position.y = 26
+			$HitBox.shape.height = 11
+			$PlayerHurtbox/CollisionShape2D.position.y = 5
+			$PlayerHurtbox/CollisionShape2D.shape.extents.y = 13.5
+		# // RANGE ATTACK //
+		elif isRangeAttacking:
+			$AnimatedSprite.speed_scale = 1
+			$AnimatedSprite.play("Range Attack")
+		#	// ATTACK ANIM //
+		elif isAttacking:
+			$AnimatedSprite.speed_scale = 1
+			if not attackAlt:$AnimatedSprite.play("Attack")
+			else:$AnimatedSprite.play("Attack2")
+			#	// ATTACK AREA ENABLING //
+			if ($AnimatedSprite.animation == "Attack"):
+				if $AnimatedSprite.frame == 1 or $AnimatedSprite.frame == 2:
+					$AttackArea/CollisionShape2D.disabled = false
+					z_index = 1
+				else:$AttackArea/CollisionShape2D.disabled = true
+			elif $AnimatedSprite.animation == "Attack2":
+				if $AnimatedSprite.frame == 2:
+					$AttackArea/CollisionShape2D.disabled = false
+					z_index = 1
+				else:$AttackArea/CollisionShape2D.disabled = true
 			else:
-				$AnimatedSprite.play("Idle")
-		
-	#	// JUMPING //
-		if !is_on_floor() && !isCrouching:
+				z_index = 0
+		#	// AIRBORN //
+		elif !is_on_floor() && !isCrouching:
+			isTurning = false
 			if motion.y < 0:
 				$AnimatedSprite.play("Jump")
 			elif motion.y > -55 and motion.y < 55:
 				$AnimatedSprite.play("Fall_transition")
 			else:
 				$AnimatedSprite.play("Fall")
-		
-	#	// SPRINTING //
-		if isSprinting:
-			$AnimatedSprite.speed_scale = abs(motion.x/200)
-		else:
-			$AnimatedSprite.speed_scale = 1
-
-	#	// TURN AROUND ANIM //
-		if isTurning:
+		#	// TURN AROUND ANIM //
+		elif isTurning:
 			if direction == -1: facing_right = true;else:facing_right=false
 			$AnimatedSprite.play("Turn Around");$AnimatedSprite.speed_scale =1
-		
-		if isCrouching:
-			if isMoving:$AnimatedSprite.play("Crouch Walk")
-			else:$AnimatedSprite.play("Crouching")
-			if Input.is_action_just_pressed("down"):
-				$AnimatedSprite.play("Crouch Transi")
-		if Input.is_action_just_released("down") && is_on_floor():
-			$AnimatedSprite.play("Crouch Transi")
-		
-#	// ATTACK ANIM //
-	if isAttacking:
-		$AnimatedSprite.speed_scale = 1
-		if not attackAlt:$AnimatedSprite.play("Attack")
-		else:$AnimatedSprite.play("Attack2")
-		
-	if isRangeAttacking:
-		$AnimatedSprite.speed_scale = 1
-		$AnimatedSprite.play("Range Attack")
-		
-#	// I FRAME ROLL //
-	if isRolling:
-		$AnimatedSprite.play("Roll")
-		
-#	// FLIP SPRITE & HITBOXES //
-	if isAlive:
-		$HitBox.shape.radius = 8
-		$HitBox.shape.height = 22
-		$HitBox.rotation_degrees = 0
-		$HitBox.position.y = 21
-		$HitBox.position.x = 0
-		if isCrouching:
-			$HitBox.position.y = 26
-			$HitBox.shape.height = 11
-			$PlayerHurtbox/CollisionShape2D.position.y = 5
-			$PlayerHurtbox/CollisionShape2D.shape.extents.y = 13.5
+		#	// SPRINTING //
+		elif isSprinting:
+			$AnimatedSprite.speed_scale = abs(motion.x/200)
+		elif isMoving:
+			$AnimatedSprite.play("Run")
 		else:
-			$HitBox.position.y = 21
-			$HitBox.shape.height = 22
-			$PlayerHurtbox/CollisionShape2D.position.y = 0
-			$PlayerHurtbox/CollisionShape2D.shape.extents.y = 19
+			$AnimatedSprite.play("Idle")
+			
+		#	// FLIP SPRITE & HITBOXES //
 		if facing_right:
 			$AnimatedSprite.scale.x = 1
 			$AnimatedSprite.position.x = 5
 			$AttackArea/CollisionShape2D.position.x = 36
-			$Camera2D.offset_h = .55
 			$LightOccluder2D.scale.x = 1
 			$BloodballPlacer.position.x = 33
 		else:
 			$AnimatedSprite.scale.x = -1
 			$AnimatedSprite.position.x = -5
 			$AttackArea/CollisionShape2D.position.x = -36
-			$Camera2D.offset_h = -.55
 			$LightOccluder2D.scale.x = -1
 			$BloodballPlacer.position.x = -33
-	else:motion.x = lerp(motion.x, 0, .05)
+	elif !isAlive:
+		motion.x = lerp(motion.x, 0, .05);
+		$AnimatedSprite.play("Death")
+	else:$AnimatedSprite.play("Hit")
 	
-#	// ENABLE PHASE WHEN ROLLING //
-	if isRolling:
-		$AnimatedSprite.speed_scale = 1
-		set_collision_mask_bit(2, false)
-		set_collision_layer_bit(0, false)
-		$PlayerHurtbox.set_collision_mask_bit(2, false)
-	else:
-		set_collision_mask_bit(2, true)
-		set_collision_layer_bit(0, true)
-		$PlayerHurtbox.set_collision_mask_bit(2, true)
-	
-#	// ATTACK AREA ENABLING //
-	if ($AnimatedSprite.animation == "Attack"):
-		if $AnimatedSprite.frame == 1 or $AnimatedSprite.frame == 2:
-			$AttackArea/CollisionShape2D.disabled = false
-			z_index = 1
-		else:$AttackArea/CollisionShape2D.disabled = true
-	elif $AnimatedSprite.animation == "Attack2":
-		if $AnimatedSprite.frame == 2:
-			$AttackArea/CollisionShape2D.disabled = false
-			z_index = 1
-		else:$AttackArea/CollisionShape2D.disabled = true
-	else:
-		z_index = 0
 
 func setMaxSpeed():
 	if isRolling:
@@ -288,12 +276,18 @@ func die():
 	$PlayerHurtbox/CollisionShape2D.disabled = true
 	$SpawnTimer.start()
 
+
+
 func spawn():
+#	va = load(get_tree().current_scene.filename)
+#	va.
+#	get_tree().change_scene_to(va)
+	emit_signal("spawn")
 	position = spawnPosition
 	isAlive = true;facing_right = true
 	_set_health(max_health)
 	blinker.start_blinking(self,invincibility_duration)
-	hurtbox.start_invincibility(invincibility_duration)	
+	hurtbox.start_invincibility(invincibility_duration)
 
 #Updates the players health
 func _set_health(value):
@@ -324,7 +318,6 @@ func _set_blood(value):
 #Makes player invincible for certain amount of time
 func takeDamage(damage):
 	$StunTimer.start()
-	$AnimatedSprite.play("Hit")
 	$TakeDamage.play()
 	_set_blood(blood_gauge + damage*.2)
 	current_health = _set_health(health - damage)
@@ -362,7 +355,6 @@ func _on_AttackArea_body_entered(body):
 				body.is_moving_right = true
 				body.scale.x = -body.scale.x
 		
-
 
 func _on_PlayerHurtbox_area_entered(area):
 	if area in get_tree().get_nodes_in_group("Checkpoint"):

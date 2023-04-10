@@ -19,6 +19,7 @@ func _ready():
 	$Player/AudioStreamPlayer.play()
 	$Enemies/ElfBow2.airSpawn = false
 	$Enemies/ElfBow2.speed = 0
+	$Transition/CanvasOverlay/Overlay.color.a = 0
 	pass
 
 func _process(delta):
@@ -29,7 +30,6 @@ func _process(delta):
 		boss.player = get_node("/root/Forest/Player")
 		add_child(boss)
 		boss_spawn = true
-		
 	secret_path()
 	
 #Spawning two goblins when entering a certain area
@@ -170,4 +170,8 @@ func _on_SpawnTimer4_timeout():
 	final_Spawn_ElfBow()
 	
 func boss_Dead():
-	pass
+	$Transition/AnimationPlayer.play("Fade_in")
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "Fade_in":
+		get_tree().change_scene(mainGameScene.resource_path)

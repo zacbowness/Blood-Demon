@@ -34,7 +34,6 @@ func _ready():
 	stamina_bar.value = player.max_stamina
 	
 	blood_bar_over.max_value = player.max_blood
-	print(player.blood_gauge)
 	blood_bar_over.value = player.blood_gauge
 	blood_bar_under.max_value = player.max_blood
 	blood_bar_under.value = player.blood_gauge

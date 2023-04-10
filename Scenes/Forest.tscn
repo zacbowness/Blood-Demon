@@ -1363,7 +1363,7 @@ format = 1
 tile_data = PoolIntArray( -130696, 0, 0, -130694, 0, 0, -130692, 0, 0, -130690, 0, 0, -130688, 0, 0, -130686, 0, 0, -130684, 0, 0, -130682, 0, 0, -130680, 0, 0, -130678, 0, 0, -130676, 0, 0, -130674, 0, 0, -130672, 0, 0, -130670, 0, 0, -130666, 0, 0, -130664, 0, 0, -130662, 0, 0, -130660, 0, 0, -130658, 0, 0, -130656, 0, 0, -130654, 0, 0, -130652, 0, 0, -130650, 0, 0, -130648, 0, 0, -130646, 0, 0, -130644, 0, 0, -130642, 0, 0, -130640, 0, 0, -130638, 0, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 354, -73 )
+position = Vector2( 6317, -235 )
 
 [node name="Success" type="AudioStreamPlayer2D" parent="Player"]
 position = Vector2( -201.765, 41.1765 )
@@ -1847,3 +1847,6 @@ shape = SubResource( 229 )
 [connection signal="timeout" from="FinalArea/SpawnTimer4" to="." method="_on_SpawnTimer4_timeout"]
 [connection signal="timeout" from="FinalArea/SurvivalTimer" to="." method="_on_SurvivalTimer_timeout"]
 [connection signal="area_entered" from="Area2D5" to="." method="_on_Area2D5_area_entered"]
+[connection signal="animation_finished" from="Transition/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+
+[editable path="Transition"]

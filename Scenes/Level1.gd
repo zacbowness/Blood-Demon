@@ -3,7 +3,7 @@ extends Node2D
 var death_count = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$Transition/AnimationPlayer.play("Fade_out")
 
 func _process(delta):
 	if $Enemies/Demon.isDead:

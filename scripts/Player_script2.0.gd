@@ -81,8 +81,10 @@ func update_movement():
 			isMoving = false
 		
 	#	// SPRINTING //
-		if (Input.is_action_pressed("sprint") and isMoving) && !isCrouching:
-			_set_stamina(stamina - .8);$StaminaRegenBuffer.start()
+		if (Input.is_action_pressed("sprint")) && !isCrouching:
+			if isMoving:
+				_set_stamina(stamina - .8);
+				$StaminaRegenBuffer.start()
 			if stamina > 0:isSprinting = true
 			else:isSprinting = false
 		else:
@@ -232,8 +234,9 @@ func animate_sprite():
 			if direction == -1: facing_right = true;else:facing_right=false
 			$AnimatedSprite.play("Turn Around");$AnimatedSprite.speed_scale =1
 		#	// SPRINTING //
-		elif isSprinting:
+		elif isSprinting && isMoving:
 			$AnimatedSprite.speed_scale = abs(motion.x/200)
+			$AnimatedSprite.play("Run")
 		elif isMoving:
 			$AnimatedSprite.play("Run")
 		else:

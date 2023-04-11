@@ -225,7 +225,7 @@ func _on_Player_respawn():
 #Currently this function does nothing but Zac is working on it
 func _on_Area2D6_area_entered(area):
 	var player_position 
-	set_process_unhandled_input(false)
+	$Player.set_process_unhandled_input(false)
 	while player_Position.x < Vector2(7352, 326).x:
 		player_Position.x += 10*2
 		$Player/AnimatedSprite.play("Run")

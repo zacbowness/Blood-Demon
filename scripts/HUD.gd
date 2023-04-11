@@ -10,6 +10,10 @@ onready var blood_bar_under = $BloodBar/BloodBarUnder
 
 onready var stamina_bar = $StaminaBar/StaminaBar
 
+onready var Boss_health_bar_over = $BossHealthBar/HealthBarOver
+onready var update_tween3 = $BossHealthBar/UpdateTween
+onready var Boss_health_bar_under = $BossHealthBar/HealthBarUnder
+
 func _on_Player_health_updated(health):
 	health_bar_over.value = health
 	update_tween.interpolate_property(health_bar_under, "value", health_bar_under.value, health, 0.9, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
@@ -22,9 +26,16 @@ func _on_Player_blood_gauge_updated(blood):
 
 func _on_Player_stamina_updated(stamina):
 	stamina_bar.value = stamina
+	
+func _on_Boss_health_updated(health):
+	Boss_health_bar_over.value = health
+	update_tween3.interpolate_property(Boss_health_bar_under, "value", Boss_health_bar_under.value, health, 0.9, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
+	update_tween3.start()
 
 func _ready():
 	var player = get_parent().get_node("Player")
+	var boss = get_parent().get_node("Enemies/Demon")
+	
 	health_bar_over.max_value = player.max_health
 	health_bar_over.value = player.max_health
 	health_bar_under.max_value = player.max_health
@@ -37,8 +48,20 @@ func _ready():
 	blood_bar_over.value = player.blood_gauge
 	blood_bar_under.max_value = player.max_blood
 	blood_bar_under.value = player.blood_gauge
+#
+	if boss != null:
+		Boss_health_bar_over.max_value = boss.health
+		Boss_health_bar_over.value = boss.health
+		Boss_health_bar_under.max_value = boss.health
+		Boss_health_bar_under.value = boss.health
 
-
+func _process(delta):
+	print(40/blood_bar_over.value)
+	blood_bar_over.modulate.g = 40/blood_bar_over.value
+	blood_bar_over.modulate.b = 40/blood_bar_over.value
+	
+	blood_bar_over.modulate.g = clamp(blood_bar_over.modulate.g, 0, 1)
+	blood_bar_over.modulate.b = clamp(blood_bar_over.modulate.b, 0, 1)
 var amplitude = 0
 var priority = 0
 
@@ -70,7 +93,6 @@ func _reset():
 
 func _on_Frequency_timeout():
 	_new_shake()
-
 
 func _on_Duration_timeout():
 	_reset()

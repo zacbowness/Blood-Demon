@@ -42,6 +42,10 @@ func _ready():
 		connect("specialEnemyDeath", get_tree().get_nodes_in_group("Levels")[0], "secret_path")
 	if !is_moving_right:
 		scale.x = -scale.x;
+	if has_node("HealthBar"):
+		$HealthBar.max_value = health
+		$HealthBar.value = health
+
 
 func _process(delta):
 	if (isDead == false):
@@ -105,6 +109,8 @@ func take_damage(damage, dir):
 	sprite.material.set_shader_param("red",true)
 	yield(get_tree().create_timer(red_duration),"timeout")
 	sprite.material.set_shader_param("red",false)
+	if has_node("HealthBar"):
+		$HealthBar.value = health
 	if (health <= 0):
 		death()
 

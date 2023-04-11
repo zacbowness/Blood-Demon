@@ -85,7 +85,7 @@ motion_mirroring = Vector2( 1024, 600 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/Sky"]
 position = Vector2( 6.10352e-05, -9.15527e-05 )
-scale = Vector2( 7.11111, 2.53333 )
+scale = Vector2( 7.11111, 2.5 )
 texture = ExtResource( 7 )
 centered = false
 region_rect = Rect2( 2, 2, 2, 2 )
@@ -106,7 +106,7 @@ motion_mirroring = Vector2( 1024, 600 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/Sky3"]
 position = Vector2( 0.00012207, 8 )
-scale = Vector2( 1.98437, 2.45 )
+scale = Vector2( 2, 2.46667 )
 texture = ExtResource( 10 )
 centered = false
 

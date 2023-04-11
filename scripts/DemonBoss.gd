@@ -32,7 +32,7 @@ var state = CHASE
 
 export var Projectile : PackedScene
 
-onready var player = get_node("/root/Main/Player")
+onready var player = get_tree().get_nodes_in_group("Player")[0]
 
 func _ready():
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")

@@ -35,11 +35,4 @@ func _on_BloodBall_body_entered(body):
 	set_physics_process(false)
 	if body in get_tree().get_nodes_in_group("Enemy"):
 		body.take_damage(damage, is_moving_right)
-	##	if (body.is_moving_right == true and PosX > 0):
-	##		body.get_node("AnimationPlayer").play("TakeHit")
-	##		body.is_moving_right = false
-	##		body.scale.x = -body.scale.x
-	##	elif (body.is_moving_right == false and PosX < 0):
-	#		body.get_node("AnimationPlayer").play("TakeHit")
-	#		body.is_moving_right = true
-	#		body.scale.x = -body.scale.x
+

@@ -130,6 +130,7 @@ script = ExtResource( 2 )
 speed = -50
 damage = 70
 health = 200
+enemyType = "Goblin"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 8 )

@@ -2,6 +2,7 @@ extends KinematicBody2D
 signal hit(damage, dir)
 signal noPoison
 signal deathCount
+signal specialEnemyDeath
 
 const red_duration = 0.15
 export var is_moving_right = false 
@@ -26,12 +27,10 @@ onready var player = get_tree().get_nodes_in_group("Player")[0]
 const Fireball = preload("res://Scenes/FireBall.tscn")
 const Arrow = preload("res://Scenes/Arrow.tscn")
 export var Projectile : PackedScene
-var floor_now = false #not used right now
-var ElfBow_death_count;#not used right now
-var ElfSpear_death_count;#not used right now
 var airSpawn = false;
 var saved_speed;
 var emmited_signal = false
+var special_enemyType;
 
 func _ready():
 	$AnimationPlayer.play("Walk")
@@ -39,6 +38,8 @@ func _ready():
 	connect("noPoison", get_tree().get_nodes_in_group("Player")[0], "Posion")
 	if get_tree().get_nodes_in_group("Levels").size() > 0:
 		connect("deathCount", get_tree().get_nodes_in_group("Levels")[0], "_death_count")
+	if get_tree().get_nodes_in_group("Levels").size() > 0:
+		connect("specialEnemyDeath", get_tree().get_nodes_in_group("Levels")[0], "secret_path")
 	if !is_moving_right:
 		scale.x = -scale.x;
 
@@ -135,6 +136,8 @@ func death():
 		emmited_signal = true
 	if enemyType == "KnightBoss":
 		get_parent().boss_Dead()
+	if special_enemyType == true:
+		emit_signal("specialEnemyDeath")
 
 func _on_HitBox_body_entered(body):
 	emit_signal("hit", damage, is_moving_right)
@@ -175,4 +178,3 @@ func change_to_walk():
 		#$AnimationPlayer.play("Walk") may not be needed
 		if airSpawn == true:
 			speed = saved_speed 
-		#floor_now == true may not be needed 

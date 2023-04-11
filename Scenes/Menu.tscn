@@ -381,7 +381,7 @@ margin_bottom = 61.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_fonts/font = SubResource( 7 )
-text = "a,d"
+text = "A , D"
 align = 1
 valign = 1
 
@@ -396,7 +396,7 @@ margin_bottom = 61.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_fonts/font = SubResource( 7 )
-text = "w"
+text = "W"
 align = 1
 valign = 1
 
@@ -411,7 +411,7 @@ margin_bottom = 61.0
 size_flags_horizontal = 3
 size_flags_vertical = 7
 custom_fonts/font = SubResource( 7 )
-text = "s"
+text = "S"
 align = 1
 valign = 1
 

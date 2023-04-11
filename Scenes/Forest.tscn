@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=59 format=2]
 
 [ext_resource path="res://assets/oak_woods_v1.0/oak_woods_tileset.png" type="Texture" id=1]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=2]
@@ -1220,6 +1220,9 @@ font_data = ExtResource( 30 )
 [sub_resource type="RectangleShape2D" id=229]
 extents = Vector2( 476, 14 )
 
+[sub_resource type="RectangleShape2D" id=230]
+extents = Vector2( 47, 48.5 )
+
 [node name="Forest" type="Node2D" groups=["Levels"]]
 script = ExtResource( 10 )
 mainGameScene = ExtResource( 32 )
@@ -1280,6 +1283,7 @@ format = 1
 tile_data = PoolIntArray( 59, 0, 0, 65595, 0, 0, 131231, 0, 0, 196767, 0, 0, 262303, 0, 0, 2228320, 0, 0, 3407960, 0, 0, 3407961, 0, 0, 3407962, 0, 0, 3407963, 0, 0, 3407964, 0, 0, 3407965, 0, 0, 3407966, 0, 0, 3407967, 0, 0, 3407968, 0, 0, 3407969, 0, 0, 3407970, 0, 0, 3407971, 0, 0, 3407972, 0, 0 )
 
 [node name="All Tiles OneWay" type="TileMap" parent="Tiles"]
+z_index = -2
 tile_set = SubResource( 154 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -1310,6 +1314,7 @@ shape = SubResource( 215 )
 one_way_collision = true
 
 [node name="silver OneWay" type="TileMap" parent="Tiles"]
+z_index = -2
 tile_set = SubResource( 213 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -1335,6 +1340,7 @@ shape = SubResource( 219 )
 one_way_collision = true
 
 [node name="Gold OneWay" type="TileMap" parent="Tiles"]
+z_index = -2
 tile_set = SubResource( 216 )
 cell_size = Vector2( 24, 24 )
 format = 1
@@ -1363,7 +1369,7 @@ format = 1
 tile_data = PoolIntArray( -130696, 0, 0, -130694, 0, 0, -130692, 0, 0, -130690, 0, 0, -130688, 0, 0, -130686, 0, 0, -130684, 0, 0, -130682, 0, 0, -130680, 0, 0, -130678, 0, 0, -130676, 0, 0, -130674, 0, 0, -130672, 0, 0, -130670, 0, 0, -130666, 0, 0, -130664, 0, 0, -130662, 0, 0, -130660, 0, 0, -130658, 0, 0, -130656, 0, 0, -130654, 0, 0, -130652, 0, 0, -130650, 0, 0, -130648, 0, 0, -130646, 0, 0, -130644, 0, 0, -130642, 0, 0, -130640, 0, 0, -130638, 0, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 6317, -235 )
+position = Vector2( 2350, -178 )
 
 [node name="Success" type="AudioStreamPlayer2D" parent="Player"]
 position = Vector2( -201.765, 41.1765 )
@@ -1461,7 +1467,7 @@ texture = ExtResource( 14 )
 centered = false
 
 [node name="ParallaxLayer11" type="ParallaxLayer" parent="ParallaxBackground2"]
-motion_scale = Vector2( 0.9, 0.9 )
+motion_scale = Vector2( 0.9, 1 )
 motion_mirroring = Vector2( 928, 0 )
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground2/ParallaxLayer11"]
@@ -1834,6 +1840,29 @@ position = Vector2( 181, 3 )
 shape = SubResource( 229 )
 
 [node name="Transition" parent="." instance=ExtResource( 31 )]
+
+[node name="Checkpoints" type="Node2D" parent="."]
+
+[node name="Checkpoint 1" type="Area2D" parent="Checkpoints" groups=["Checkpoint"]]
+position = Vector2( 2336, -175 )
+
+[node name="Checkpoint Area" type="CollisionShape2D" parent="Checkpoints/Checkpoint 1"]
+position = Vector2( 0, -1 )
+shape = SubResource( 230 )
+
+[node name="Checkpoint 2" type="Area2D" parent="Checkpoints" groups=["Checkpoint"]]
+position = Vector2( 3831, 283 )
+
+[node name="Checkpoint Area" type="CollisionShape2D" parent="Checkpoints/Checkpoint 2"]
+position = Vector2( 0, -1 )
+shape = SubResource( 230 )
+
+[node name="Checkpoint 3" type="Area2D" parent="Checkpoints" groups=["Checkpoint"]]
+position = Vector2( 6112, -103 )
+
+[node name="Checkpoint Area" type="CollisionShape2D" parent="Checkpoints/Checkpoint 3"]
+position = Vector2( 0, -1 )
+shape = SubResource( 230 )
 
 [connection signal="timeout" from="PoisonTimer" to="." method="_on_Timer_timeout"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

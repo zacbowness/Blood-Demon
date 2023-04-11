@@ -5,6 +5,8 @@ signal stamina_updated(stamina)
 signal blood_gauge_updated(blood)
 signal killed()
 signal hitEnemy()
+signal respawn
+signal respawn_enemies
 
 const invincibility_duration = 1.5
 onready var hurtbox = $PlayerHurtbox
@@ -52,6 +54,8 @@ func _ready():
 	connect("health_updated", HUD, "_on_Player_health_updated")
 	connect("stamina_updated", HUD, "_on_Player_stamina_updated")
 	connect("blood_gauge_updated", HUD, "_on_Player_blood_gauge_updated")
+	if get_tree().get_nodes_in_group("Levels").size() > 0:
+		connect("respawn_enemies", get_tree().get_nodes_in_group("Levels")[0], "reset_enemies")
 	spawnPosition = position
 
 func _physics_process(delta):
@@ -274,14 +278,16 @@ func die():
 	$SpawnTimer.start()
 
 func spawn():
-#	va = load(get_tree().current_scene.filename)
-#	va.
-#	get_tree().change_scene_to(va)
+	emit_signal("respawn")
 	position = spawnPosition
 	isAlive = true;facing_right = true
 	_set_health(max_health)
 	blinker.start_blinking(self,invincibility_duration)
 	hurtbox.start_invincibility(invincibility_duration)
+	emit_signal("respawn_enemies")
+#	va = load(get_tree().current_scene.filename)
+#	va.
+#	get_tree().change_scene_to(va)
 
 #Updates the players health
 func _set_health(value):

@@ -49,6 +49,7 @@ var underSomething
 var spawnPosition
 var isPoisoned = false 
 var current_health
+var inCinematic = false
 
 func _ready():
 	connect("health_updated", HUD, "_on_Player_health_updated")
@@ -59,9 +60,10 @@ func _ready():
 	spawnPosition = position
 
 func _physics_process(delta):
-	apply_gravity()
-	update_movement()
-	animate_sprite()
+	if !inCinematic:
+		apply_gravity()
+		update_movement()
+		animate_sprite()
 
 func update_movement():
 	controllable = (isAlive and !isAttacking and !isRangeAttacking and $StunTimer.is_stopped() and !isRolling)
@@ -277,7 +279,7 @@ func die():
 	$Death.play()
 	$AnimatedSprite.play("Death")
 	apply_gravity()
-	$PlayerHurtbox/CollisionShape2D.disabled = true
+	$PlayerHurtbox/CollisionShape2D.set_deferred("disabled", true)
 	$SpawnTimer.start()
 
 func spawn():

@@ -36,6 +36,3 @@ position = Vector2( 0, 6 )
 
 [node name="spikeHitbox" type="CollisionShape2D" parent="Area2D2"]
 shape = SubResource( 3 )
-
-[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
-[connection signal="body_entered" from="Area2D2" to="." method="_on_Area2D_body_entered"]

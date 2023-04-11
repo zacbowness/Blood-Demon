@@ -224,12 +224,8 @@ func _on_Player_respawn():
 	$FloorBlockade.visible = true
 	$FloorBlockade/StaticBody2D/CollisionShape2D.set_deferred("disabled",false)
 
-#Currently this function does nothing but Zac is working on it
 func _on_Area2D6_area_entered(area):
-	var player_position 
-	$Player.set_process_unhandled_input(false)
-	while player_Position.x < Vector2(7352, 326).x:
-		player_Position.x += 10*2
-		$Player/AnimatedSprite.play("Run")
-		$Player.facing_right = true
-		$Player.isMoving = true
+	$AnimationPlayer.playback_speed = int((($Player.position.x-7042)/59.2))+1
+	$AnimationPlayer.get_animation("toCastle").track_set_key_value(0, 0, Vector2($Player.position.x, 291))
+	$AnimationPlayer.play("toCastle")
+	$Player.inCinematic = true

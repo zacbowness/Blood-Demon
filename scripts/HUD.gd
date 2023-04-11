@@ -56,7 +56,6 @@ func _ready():
 		Boss_health_bar_under.value = boss.health
 
 func _process(delta):
-	print(40/blood_bar_over.value)
 	blood_bar_over.modulate.g = 40/blood_bar_over.value
 	blood_bar_over.modulate.b = 40/blood_bar_over.value
 	

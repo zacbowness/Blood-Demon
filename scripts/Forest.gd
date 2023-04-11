@@ -212,6 +212,8 @@ func reset_enemies():
 
 func _on_Player_respawn():
 	get_tree().call_group("Enemy", "queue_free")
+	death_count = 0
+	enemy_count = 0
 	$Area2D/CollisionShape2D.set_deferred("disabled",false)
 	$Area2D2/CollisionShape2D.set_deferred("disabled",false)
 	$Area2D3/CollisionShape2D.set_deferred("disabled",false)

@@ -44,7 +44,7 @@ var isTurning = false
 var motion = Vector2()
 var controllable
 var direction
-var playerDamage = 100
+export var playerDamage = 100
 var underSomething
 var spawnPosition
 var isPoisoned = false 

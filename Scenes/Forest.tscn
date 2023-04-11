@@ -1615,7 +1615,7 @@ format = 1
 tile_data = PoolIntArray( 1049034, 0, 0, 1049036, 0, 0, 1114570, 0, 0, 1114572, 0, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 3567, -165 )
+position = Vector2( 6477, -160 )
 
 [node name="Success" type="AudioStreamPlayer2D" parent="Player"]
 position = Vector2( -201.765, 41.1765 )
@@ -1924,23 +1924,6 @@ collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FloorBlockade/StaticBody2D"]
 position = Vector2( 0.25, -0.75 )
-shape = SubResource( 161 )
-
-[node name="TallBlockade" type="Sprite" parent="."]
-visible = false
-position = Vector2( 5947, 93 )
-scale = Vector2( 5, 10 )
-z_index = 1
-texture = ExtResource( 9 )
-
-[node name="StaticBody2D" type="StaticBody2D" parent="TallBlockade"]
-visible = false
-collision_layer = 2
-collision_mask = 5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TallBlockade/StaticBody2D"]
-visible = false
-position = Vector2( -0.256348, -0.0500031 )
 shape = SubResource( 161 )
 
 [node name="TallBlockade2" type="Sprite" parent="."]

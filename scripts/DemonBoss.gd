@@ -1,5 +1,6 @@
 extends KinematicBody2D
 signal hit(damage, dir)
+signal Boss_health_updated(health)
 signal noPoison
 
 const red_duration = 0.15
@@ -37,6 +38,7 @@ onready var player = get_tree().get_nodes_in_group("Player")[0]
 func _ready():
 	connect("hit", get_tree().get_nodes_in_group("Player")[0], "_on_Enemy_hit")
 	connect("noPoison", get_tree().get_nodes_in_group("Player")[0], "Posion")
+	connect("Boss_health_updated", get_parent().get_node("HUD"), "_on_Boss_health_updated")
 	if !is_moving_right:
 		scale.x = -scale.x;
 
@@ -104,6 +106,7 @@ func _on_PlayerDetector_body_exited(body):
 func take_damage(damage, dir):
 	var sprite = get_node("Sprite")
 	health = (health - damage)
+	emit_signal("Boss_health_updated", health)
 	sprite.material.set_shader_param("red",true)
 	yield(get_tree().create_timer(red_duration),"timeout")
 	sprite.material.set_shader_param("red",false)

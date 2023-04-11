@@ -34,7 +34,7 @@ func _on_Boss_health_updated(health):
 
 func _ready():
 	var player = get_parent().get_node("Player")
-	var boss = get_parent().get_node("Enemies/Demon")
+	var boss = get_parent().get_node("Demon")
 	
 	health_bar_over.max_value = player.max_health
 	health_bar_over.value = player.max_health
@@ -54,6 +54,7 @@ func _ready():
 		Boss_health_bar_over.value = boss.health
 		Boss_health_bar_under.max_value = boss.health
 		Boss_health_bar_under.value = boss.health
+		$BossHealthBar/AnimationPlayer.get_animation("showBossHealthBar").track_set_key_value(2, 2, Boss_health_bar_under.max_value)
 
 func _process(delta):
 	blood_bar_over.modulate.g = 40/blood_bar_over.value

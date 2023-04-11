@@ -7,8 +7,9 @@ var ElfSpear = preload("res://Scenes/ElfSpear.tscn")
 var ElfBow = preload("res://Scenes/ElfBow.tscn")
 var flyingEye = preload("res://Scenes/FlyEye.tscn")
 var knight = preload("res://Scenes/Knight.tscn")
-var motion = Vector2()
 onready var posion_timer = $PoisonTimer
+onready var castle_Position = $CastleEntrance
+onready var player_Position = $Player.position
 var death_count = 0
 var enemy_count = 0
 var timer_finished = false
@@ -26,6 +27,7 @@ func _ready():
 		enemy_movement.append(body.is_moving_right)
 
 func _process(delta):
+	player_Position = position
 	if death_count == enemy_count and timer_finished == true and boss_spawn == false:
 		var boss = knight.instance()
 		boss.position = $FinalArea/BossPosition.position
@@ -103,7 +105,6 @@ func _death_count():
 	death_count = death_count + 1
 	
 func enemy_numbers():
-	get_tree().change_scene(mainGameScene.resource_path) #remove this later
 	enemy_count = enemy_count + 1
 
 func _on_Area2D5_area_entered(area):
@@ -175,7 +176,9 @@ func _on_SurvivalTimer_timeout():
 	timer_finished = true
 	
 func boss_Dead():
-	$Transition/AnimationPlayer.play("Fade_in")
+	$TallBlockade2.visible = false
+	$TallBlockade2/StaticBody2D/CollisionShape2D.set_deferred("disabled", true)
+	#$Transition/AnimationPlayer.play("Fade_in")
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "Fade_in":
@@ -198,6 +201,11 @@ func adding_enemies(location,enemy,moving_right):
 	add_child(enemy_spawn)
 
 func reset_enemies():
+	$FinalArea/SpawnTimer.stop()
+	$FinalArea/SpawnTimer2.stop()
+	$FinalArea/SpawnTimer3.stop()
+	$FinalArea/SpawnTimer4.stop()
+	$FinalArea/SurvivalTimer.stop()
 	for i in enemy_type.size():
 		adding_enemies(enemy_positions[i],enemy_type[i],enemy_movement[i])
 
@@ -213,3 +221,13 @@ func _on_Player_respawn():
 	$Blockade.visible = true
 	$FloorBlockade.visible = true
 	$FloorBlockade/StaticBody2D/CollisionShape2D.set_deferred("disabled",false)
+
+#Currently this function does nothing but Zac is working on it
+func _on_Area2D6_area_entered(area):
+	var player_position 
+	set_process_unhandled_input(false)
+	while player_Position.x < Vector2(7352, 326).x:
+		player_Position.x += 10*2
+		$Player/AnimatedSprite.play("Run")
+		$Player.facing_right = true
+		$Player.isMoving = true

@@ -44,7 +44,7 @@ var isTurning = false
 var motion = Vector2()
 var controllable
 var direction
-var playerDamage = 1000
+var playerDamage = 100
 var underSomething
 var spawnPosition
 var isPoisoned = false 
@@ -54,8 +54,8 @@ func _ready():
 	connect("health_updated", HUD, "_on_Player_health_updated")
 	connect("stamina_updated", HUD, "_on_Player_stamina_updated")
 	connect("blood_gauge_updated", HUD, "_on_Player_blood_gauge_updated")
-	if get_tree().get_nodes_in_group("Levels").size() > 0:
-		connect("respawn_enemies", get_tree().get_nodes_in_group("Levels")[0], "reset_enemies")
+	#if get_tree().get_nodes_in_group("Levels").size() > 0:
+	connect("respawn_enemies", get_tree().get_nodes_in_group("Levels")[0], "reset_enemies")
 	spawnPosition = position
 
 func _physics_process(delta):

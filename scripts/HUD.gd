@@ -57,11 +57,11 @@ func _ready():
 		$BossHealthBar/AnimationPlayer.get_animation("showBossHealthBar").track_set_key_value(2, 2, Boss_health_bar_under.max_value)
 
 func _process(delta):
-	blood_bar_over.modulate.g = 40/blood_bar_over.value
-	blood_bar_over.modulate.b = 40/blood_bar_over.value
+	blood_bar_over.modulate.g = clamp(40/blood_bar_over.value, 0, 1)
+	blood_bar_over.modulate.b = clamp(40/blood_bar_over.value, 0, 1)
+	blood_bar_under.modulate.g = clamp(40/blood_bar_over.value, 0, 1)
+	blood_bar_under.modulate.b = clamp(40/blood_bar_over.value, 0, 1)
 	
-	blood_bar_over.modulate.g = clamp(blood_bar_over.modulate.g, 0, 1)
-	blood_bar_over.modulate.b = clamp(blood_bar_over.modulate.b, 0, 1)
 var amplitude = 0
 var priority = 0
 

@@ -459,6 +459,7 @@ __meta__ = {
 }
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+light_mask = 2
 material = ExtResource( 13 )
 position = Vector2( 5, 0 )
 frames = SubResource( 30 )

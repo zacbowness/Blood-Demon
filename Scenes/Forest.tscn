@@ -1664,6 +1664,7 @@ position = Vector2( 348, -81 )
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 235 )
 animation = "Run"
+frame = 7
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 whiten_material = SubResource( 235 )

@@ -7,11 +7,11 @@
 [ext_resource path="res://assets/Pixel Health Bar/Health/DarkerHealth.png" type="Texture" id=5]
 [ext_resource path="res://assets/Stamina Bar/stamina_under.png" type="Texture" id=6]
 [ext_resource path="res://assets/Stamina Bar/stamina.png" type="Texture" id=7]
-[ext_resource path="res://assets/Tile assets/light.png" type="Texture" id=8]
 [ext_resource path="res://assets/Stamina Bar/bar_2.0.png" type="Texture" id=9]
 [ext_resource path="res://assets/Stamina Bar/stamina2.0.png" type="Texture" id=10]
 [ext_resource path="res://assets/Stamina Bar/stamina_darker.png" type="Texture" id=11]
 [ext_resource path="res://assets/Pixel Health Bar/Health/health under.png" type="Texture" id=12]
+[ext_resource path="res://assets/boss bar outline.png" type="Texture" id=13]
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 4 )
@@ -27,9 +27,6 @@ value = 50.0
 texture_under = ExtResource( 12 )
 texture_over = ExtResource( 1 )
 texture_progress = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
 [node name="HealthBarOver" type="TextureProgress" parent="Node2D"]
 margin_right = 40.0
@@ -65,27 +62,44 @@ texture_over = ExtResource( 1 )
 texture_progress = ExtResource( 5 )
 
 [node name="BloodBarOver" type="TextureProgress" parent="BloodBar"]
+modulate = Color( 1, 0.423529, 1, 1 )
 light_mask = 2
 margin_right = 40.0
 margin_bottom = 40.0
 value = 50.0
 texture_progress = ExtResource( 2 )
 
-[node name="Light2D" type="Light2D" parent="BloodBar"]
-light_mask = 2
-position = Vector2( 64.8, 10.4 )
-texture = ExtResource( 8 )
-texture_scale = 0.24
-energy = 3.1
-range_height = -768.0
-range_item_cull_mask = 2
-shadow_item_cull_mask = 2
-
 [node name="UpdateTween" type="Tween" parent="BloodBar"]
 
 [node name="Frequency" type="Timer" parent="."]
 
 [node name="Duration" type="Timer" parent="."]
+
+[node name="BossHealthBar" type="Node2D" parent="."]
+position = Vector2( 262, 530 )
+scale = Vector2( 4, 3 )
+
+[node name="HealthBarUnder" type="TextureProgress" parent="BossHealthBar"]
+margin_right = 40.0
+margin_bottom = 40.0
+max_value = 1000.0
+value = 750.0
+texture_under = ExtResource( 3 )
+texture_over = ExtResource( 13 )
+texture_progress = ExtResource( 5 )
+tint_under = Color( 0.352941, 0, 0, 1 )
+tint_over = Color( 0.6, 0, 0, 1 )
+tint_progress = Color( 0.447059, 0, 0, 1 )
+
+[node name="HealthBarOver" type="TextureProgress" parent="BossHealthBar"]
+margin_right = 40.0
+margin_bottom = 40.0
+max_value = 1000.0
+value = 500.0
+texture_progress = ExtResource( 2 )
+tint_progress = Color( 1, 0.537255, 0, 1 )
+
+[node name="UpdateTween" type="Tween" parent="BossHealthBar"]
 
 [connection signal="timeout" from="Frequency" to="." method="_on_Frequency_timeout"]
 [connection signal="timeout" from="Duration" to="." method="_on_Duration_timeout"]

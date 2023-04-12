@@ -7,8 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Added spikes to the main game scene 
-- a torch that gives off light
+## [1.0.0] - 2023-04-12
+
+### Added
+
+ - Added final area for demon boss
+ - Respawning for player
+ - Hero boss
+ - Knight boss
+ - Intro and outro dialogue
+ - Skelly the skeleton NPC and dialogue
+ - Music for all levels
+ - Transitional cutscene from the forest level to the Castle level
+ - Level transitions
+ - Aesthetic upgrades
+ - Enemy knockback
+ - Demon boss that tracks the player
+ - Healthbars for all bosses
+
+ ### Fixed
+ - Demon boss getting stuck in corner
+ - Enemies no longer turn around when hit with bloodball
+ - Traps killing player in one hit in the forest level
 
 ## [0.4.0] - 2023-04-01
 

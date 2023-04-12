@@ -14,7 +14,7 @@ var enemy_type = []
 var enemy_movement = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$AudioStreamPlayer.play()
+	$Player/AudioStreamPlayer.play()
 	$Transition/AnimationPlayer.play("Fade_out")
 	for body in get_tree().get_nodes_in_group("Enemy"):
 		enemy_positions.append(body.position)

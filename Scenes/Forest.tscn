@@ -1626,7 +1626,7 @@ z_index = -2
 tile_set = SubResource( 233 )
 cell_size = Vector2( 16, 16 )
 format = 1
-tile_data = PoolIntArray( 1049034, 0, 0, 1049036, 0, 0, 1114570, 0, 0, 1114572, 0, 0 )
+tile_data = PoolIntArray( 1114570, 0, 0, 1114572, 0, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 354, -69 )
@@ -1637,7 +1637,7 @@ __meta__ = {
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 235 )
 animation = "Run"
-frame = 9
+frame = 8
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 whiten_material = SubResource( 235 )
@@ -1658,6 +1658,8 @@ offset = Vector2( 0, -600 )
 transform = Transform2D( 1, 0, 0, 1, 0, -600 )
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="ForestBackground"]
+position = Vector2( 0, -160 )
+scale = Vector2( 1, 1.2 )
 motion_scale = Vector2( 0.2, 1 )
 motion_mirroring = Vector2( 928, 0 )
 
@@ -1666,6 +1668,8 @@ texture = ExtResource( 15 )
 centered = false
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ForestBackground"]
+position = Vector2( 0, -160 )
+scale = Vector2( 1, 1.2 )
 motion_scale = Vector2( 0.2, 1 )
 motion_mirroring = Vector2( 928, 0 )
 

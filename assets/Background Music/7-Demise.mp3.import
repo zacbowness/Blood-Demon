@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/7-Demise.mp3-9ada1aef620549da8150285ccd21a6c5.mp3str"
+
+[deps]
+
+source_file="res://assets/Background Music/7-Demise.mp3"
+dest_files=[ "res://.import/7-Demise.mp3-9ada1aef620549da8150285ccd21a6c5.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

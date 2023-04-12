@@ -413,7 +413,7 @@ position = Vector2( 728, 416 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
-volume_db = -23.524
+volume_db = -25.0
 
 [node name="Transition" parent="." instance=ExtResource( 11 )]
 

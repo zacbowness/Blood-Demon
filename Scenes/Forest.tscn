@@ -1637,7 +1637,7 @@ __meta__ = {
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 235 )
 animation = "Run"
-frame = 8
+frame = 9
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 whiten_material = SubResource( 235 )
@@ -1649,7 +1649,7 @@ stream = ExtResource( 26 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Player"]
 stream = ExtResource( 29 )
-volume_db = -40.0
+volume_db = -25.0
 
 [node name="HUD" parent="." instance=ExtResource( 3 )]
 

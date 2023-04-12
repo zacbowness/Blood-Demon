@@ -168,7 +168,6 @@ func _on_SpawnTimer4_timeout():
 	final_Spawn_ElfBow()
 	
 func _on_SurvivalTimer_timeout():
-	$Player/Success.play()
 	$FinalArea/SpawnTimer.stop()
 	$FinalArea/SpawnTimer2.stop()
 	$FinalArea/SpawnTimer3.stop()
@@ -178,6 +177,7 @@ func _on_SurvivalTimer_timeout():
 func boss_Dead():
 	$TallBlockade2.visible = false
 	$TallBlockade2/StaticBody2D/CollisionShape2D.set_deferred("disabled", true)
+	$Player/Success.play()
 	#$Transition/AnimationPlayer.play("Fade_in")
 
 func _on_AnimationPlayer_animation_finished(anim_name):
@@ -214,6 +214,8 @@ func _on_Player_respawn():
 	get_tree().call_group("Enemy", "queue_free")
 	death_count = 0
 	enemy_count = 0
+	boss_spawn = false
+	timer_finished = false
 	$Area2D/CollisionShape2D.set_deferred("disabled",false)
 	$Area2D2/CollisionShape2D.set_deferred("disabled",false)
 	$Area2D3/CollisionShape2D.set_deferred("disabled",false)

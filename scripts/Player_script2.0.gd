@@ -370,7 +370,10 @@ func _on_PlayerHurtbox_area_entered(area):
 			takeDamage(body.damage)
 			apply_knockback(position.x > body.position.x)
 	if body in get_tree().get_nodes_in_group("Trap"):
-		takeDamage(1000)
+		if get_parent().name == "Forest":
+			takeDamage(body.damage)
+		else:
+			takeDamage(1000)
 
 func _on_AnimatedSprite_animation_finished():
 #	// STOP ATTACK STATE //
@@ -386,7 +389,6 @@ func _on_AnimatedSprite_animation_finished():
 		isRolling = false
 	if $AnimatedSprite.animation =="Turn Around":
 		isTurning = false
-#	if $AnimatedSprite.animation == ""
 
 func _on_SpawnTimer_timeout():
 	spawn()

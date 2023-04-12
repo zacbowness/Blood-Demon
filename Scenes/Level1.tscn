@@ -16,7 +16,7 @@
 [ext_resource path="res://assets/Tile assets/Level1 Decor/statue.png" type="Texture" id=14]
 [ext_resource path="res://Scenes/Transition.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/Tile assets/Level1 Decor/stone-1.png" type="Texture" id=16]
-[ext_resource path="res://Scenes/Level1.gd" type="Script" id=17]
+[ext_resource path="res://scripts/Level1.gd" type="Script" id=17]
 [ext_resource path="res://assets/Tile assets/Level1 Decor/tree-3.png" type="Texture" id=18]
 [ext_resource path="res://assets/Tile assets/Level1 Decor/stone-2.png" type="Texture" id=19]
 [ext_resource path="res://assets/Tile assets/Level1 Decor/stone-3.png" type="Texture" id=20]

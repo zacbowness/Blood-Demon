@@ -13,6 +13,7 @@ onready var stamina_bar = $StaminaBar/StaminaBar
 onready var Boss_health_bar_over = $BossHealthBar/HealthBarOver
 onready var update_tween3 = $BossHealthBar/UpdateTween
 onready var Boss_health_bar_under = $BossHealthBar/HealthBarUnder
+const DIALOG = preload("res://Scenes/Dialogue.tscn")
 
 func _on_Player_health_updated(health):
 	health_bar_over.value = health
@@ -97,3 +98,7 @@ func _on_Frequency_timeout():
 func _on_Duration_timeout():
 	_reset()
 	$Frequency.stop()
+	
+func generate_dialog():
+	var dialog = DIALOG.instance()
+	add_child(dialog)

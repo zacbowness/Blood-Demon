@@ -83,7 +83,6 @@ func _on_Area2D2_area_entered(area):
 	special_Elf.special_enemyType = true 
 	add_child(special_Elf)
 	spawn($Positions/PositionElfSpear, ElfSpear)
-	spawn($Positions/PositionElfSpear2,ElfSpear)
 	spawn($Positions/PositionElfSpear3, ElfSpear)
 
 #This is on a different layer than the other areas

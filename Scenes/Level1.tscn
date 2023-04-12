@@ -779,12 +779,11 @@ position = Vector2( 5, 4 )
 shape = SubResource( 17 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 3489, 1832 )
+position = Vector2( 533.999, 1717 )
 z_index = 1
 __meta__ = {
 "_edit_group_": true
 }
-playerDamage = 1000
 
 [node name="Camera2D" parent="Player" index="1"]
 position = Vector2( 5.88232, -0.000244141 )

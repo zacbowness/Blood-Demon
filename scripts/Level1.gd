@@ -39,6 +39,7 @@ func adding_enemies(location,enemy,moving_right):
 	add_child(enemy_spawn)
 
 func reset_enemies():
+	$BossRoom/Area2D/CollisionShape2D.set_deferred("disabled", false)
 	for i in enemy_type.size():
 		adding_enemies(enemy_positions[i],enemy_type[i],enemy_movement[i])
 
@@ -52,17 +53,15 @@ func boss_Dead():
 	$BossRoom/FloorFallTimer.start()
 	
 func _on_Area2D_body_entered(body):
+	$BossRoom/Area2D/CollisionShape2D.set_deferred("disabled", true)
 	var hero_spawn = hero.instance()
 	hero_spawn.position = $BossRoom/BossPosition.position
-	hero_spawn.speed = -60
+	hero_spawn.speed = -100
 	add_child(hero_spawn)
 
 func _on_FloorFallTimer_timeout():
-	$FallingFloor.set_collision_layer_bit(2, false)
-	$FallingFloor.set_collision_mask_bit(3, false)
-	$FallingFloor.set_collision_mask_bit(1, false)
-	$FallingFloor.visible = false
 	$FallingFloor.queue_free()
+	$Player.GRAVITY = 5
 	$Transition/AnimationPlayer.play("Fade_in")
 
 func _on_AnimationPlayer_animation_finished(anim_name):

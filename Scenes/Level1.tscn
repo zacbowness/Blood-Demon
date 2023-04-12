@@ -971,6 +971,11 @@ position = Vector2( 337, 37.5 )
 scale = Vector2( -0.408, 0.408 )
 texture = ExtResource( 22 )
 
+[node name="Bush-large3" type="Sprite" parent="Torches/Torch39"]
+position = Vector2( 151, 38.5 )
+scale = Vector2( -0.408, 0.408 )
+texture = ExtResource( 22 )
+
 [node name="Text Boxes" type="Node" parent="."]
 
 [node name="Label" type="Label" parent="Text Boxes"]
@@ -1303,10 +1308,6 @@ position = Vector2( 8510, 3266 )
 [node name="Enemy6" parent="." instance=ExtResource( 13 )]
 position = Vector2( 9195, 3363 )
 
-[node name="Bush-small" type="Sprite" parent="Enemy6"]
-position = Vector2( 131, -26 )
-texture = ExtResource( 24 )
-
 [node name="Enemy7" parent="." instance=ExtResource( 13 )]
 position = Vector2( 5926, 3681 )
 
@@ -1333,12 +1334,12 @@ texture = ExtResource( 14 )
 position = Vector2( 6566, 2129 )
 texture = ExtResource( 14 )
 
-[node name="Statue6" type="Sprite" parent="Decor"]
-position = Vector2( 3846, 1874 )
-texture = ExtResource( 14 )
-
 [node name="Statue" type="Sprite" parent="Decor"]
 position = Vector2( 4896, 4080 )
+texture = ExtResource( 14 )
+
+[node name="Statue7" type="Sprite" parent="Decor"]
+position = Vector2( 3506, 1876 )
 texture = ExtResource( 14 )
 
 [node name="Stone-3" type="Sprite" parent="."]

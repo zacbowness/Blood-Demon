@@ -2,17 +2,18 @@ extends Control
 
 var skelly_dialog = [
 	"Hey there, my name is Skelly",
-	"I was instructed by the Blood Demon himself to explain how your new powers work.",
+	"I was instructed by the Blood Demon to explain your new powers.",
 	"Firstly, the green bar at the top of the screen represents your health.",
 	"I don't think I need to explain how that works.",
 	"Secondly, the blue bar represents your stamina.",
 	"You won't be able to run, dodge, or attack if it's empty.",
-	"Although, you probably know that already.",
+	"Although, you probably knew that already.",
 	"Finally, the red bar at the top of your screen is your blood gauge.", 
 	"Hitting enemies or getting hit yourself fills it up.",
-	"When your blood gauge is full enough you can release a BloodBall to attack enemies from a distance.",
+	"You can expend your blood gauge to release a bloodball to attack enemies from a distance.",
+	"The legendary hero can be found in a castle west of here",
 	"I'll let you figure out everything else on your own.",
-	"Good luck trying to kill the hero. You're going to need it."
+	"Good luck trying to kill him. You're going to need it."
 ]
 
 var dialog_index = 0

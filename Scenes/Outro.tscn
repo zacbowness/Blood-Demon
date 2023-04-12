@@ -2,7 +2,6 @@
 
 [ext_resource path="res://scripts/Outro.gd" type="Script" id=1]
 
-
 [sub_resource type="Animation" id=1]
 resource_name = "ending"
 length = 6.502
@@ -16,7 +15,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ "[center] After defeating the Blood Demon you inherited his power and now became the Blood Demon. [/center]
+"values": [ "[center] After defeating the Blood Demon you inherit his power and now became the new Blood Demon. [/center]
 [center] What will you do with this newfound power?" ]
 }
 tracks/1/type = "value"

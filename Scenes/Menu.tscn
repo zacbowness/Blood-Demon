@@ -216,7 +216,7 @@ text = "Exit to Desktop"
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 13 )
-volume_db = -27.391
+volume_db = -40.074
 
 [node name="ButtonClick" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 6 )

@@ -14,3 +14,8 @@ func _ready():
 
 func reset_enemies():
 	pass
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "Fade_in":
+		get_tree().change_scene()

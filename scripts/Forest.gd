@@ -225,6 +225,7 @@ func _on_Player_respawn():
 	$FloorBlockade/StaticBody2D/CollisionShape2D.set_deferred("disabled",false)
 
 func _on_Area2D6_area_entered(area):
+	$Player/AnimatedSprite.speed_scale = 1
 	$AnimationPlayer.playback_speed = int(($Player.position.x-7042)/59.2)+1
 	$AnimationPlayer.get_animation("toCastle").track_set_key_value(0, 0, Vector2($Player.position.x, 291))
 	$AnimationPlayer.play("toCastle")

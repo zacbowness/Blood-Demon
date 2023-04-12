@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://assets/Junk Wastelands Files/layers/middle.png" type="Texture" id=1]
 [ext_resource path="res://assets/Junk Wastelands Files/layers/near.png" type="Texture" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Scenes/DemonBoss.tscn" type="PackedScene" id=9]
 [ext_resource path="res://assets/Background Music/9-EpicBattle.mp3" type="AudioStream" id=10]
+[ext_resource path="res://Scenes/Transition.tscn" type="PackedScene" id=11]
 
 [sub_resource type="TileSet" id=1]
 1/name = "tileset.png 1"
@@ -413,3 +414,9 @@ position = Vector2( 728, 416 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 10 )
 volume_db = -23.524
+
+[node name="Transition" parent="." instance=ExtResource( 11 )]
+
+[connection signal="animation_finished" from="Transition/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+
+[editable path="Transition"]

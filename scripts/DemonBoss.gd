@@ -107,15 +107,15 @@ func take_damage(damage, dir):
 	var sprite = get_node("Sprite")
 	health = (health - damage)
 	emit_signal("Boss_health_updated", health)
-	sprite.material.set_shader_param("red",true)
-	yield(get_tree().create_timer(red_duration),"timeout")
-	sprite.material.set_shader_param("red",false)
 	if (isAttacking == true):
 		amountHit = amountHit + 1
 	if (health <= 0):
 		death()
 	elif (amountHit == 3):
 		state = DAMAGED
+	sprite.material.set_shader_param("red",true)
+	yield(get_tree().create_timer(red_duration),"timeout")
+	sprite.material.set_shader_param("red",false)
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if (anim_name == "Attack" && seeWall == false):
@@ -125,6 +125,10 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 			state = CHASE
 	elif (anim_name == "TakeHit"):
 		state = CHASE 
+	elif anim_name == "Death":
+		get_parent().get_node("HUD").get_node("BossHealthBar").visible = false
+		yield(get_tree().create_timer(1),"timeout")
+		get_parent().get_node("Transition/AnimationPlayer").play("Fade_in")
 		
 func death():
 	state = DEAD

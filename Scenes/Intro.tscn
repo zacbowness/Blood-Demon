@@ -103,7 +103,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "Quit"
-length = 1.523
+length = 1.208
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:bbcode_text")
 tracks/0/interp = 1
@@ -114,7 +114,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0.2 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ "[center]Then fuck off [/center]
+"values": [ "[center]Get lost then [/center]
 " ]
 }
 tracks/1/type = "value"
@@ -124,7 +124,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.3, 1.1, 1.3 ),
+"times": PoolRealArray( 0.3, 1.1, 1.2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
@@ -136,7 +136,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 1.5 ),
+"times": PoolRealArray( 1.2 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -168,10 +168,8 @@ rect_scale = Vector2( 2.1, 2.1 )
 custom_colors/default_color = Color( 0.909804, 0.152941, 0.152941, 1 )
 custom_fonts/normal_font = SubResource( 1 )
 bbcode_enabled = true
-bbcode_text = "[center]Now go and MAKE THE WORLD BLEED!!!!![/center]
-"
-text = "Now go and MAKE THE WORLD BLEED!!!!!
-"
+bbcode_text = "[center] Ha! You Died"
+text = " Ha! You Died"
 scroll_active = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RichTextLabel"]
@@ -213,6 +211,7 @@ margin_left = 971.0
 margin_top = 566.0
 margin_right = 1009.0
 margin_bottom = 586.0
+custom_colors/font_color_disabled = Color( 0, 0, 0, 1 )
 custom_colors/font_color_hover = Color( 1, 0, 0, 1 )
 text = "Skip"
 flat = true

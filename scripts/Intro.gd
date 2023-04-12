@@ -8,6 +8,7 @@ func _ready():
 func _show_Buttons():
 	$YesButton.disabled = false
 	$NoButton.disabled = false
+	$SkipButton.disabled = true
 
 func _on_YesButton_pressed():
 	$YesButton.disabled = true
@@ -20,7 +21,7 @@ func _on_NoButton_pressed():
 	$RichTextLabel/AnimationPlayer.play("Quit")
 
 func quit():
-	get_tree().quit()
+	get_tree().change_scene("res://Scenes/Menu.tscn")
 
 func continue_to_game():
 	get_tree().change_scene(mainGameScene.resource_path)

@@ -58,4 +58,12 @@ func _on_Area2D_body_entered(body):
 	add_child(hero_spawn)
 
 func _on_FloorFallTimer_timeout():
-	$FallingFloor.collision_layer = 5
+	$FallingFloor.set_collision_layer_bit(2, false)
+	$FallingFloor.set_collision_mask_bit(3, false)
+	$FallingFloor.set_collision_mask_bit(1, false)
+	$FallingFloor.visible = false
+	$Transition/AnimationPlayer.play("Fade_in")
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "Fade_in":
+		get_tree().change_scene(mainGameScene.resource_path)

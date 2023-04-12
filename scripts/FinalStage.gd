@@ -18,4 +18,4 @@ func reset_enemies():
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "Fade_in":
-		get_tree().change_scene()
+		get_tree().change_scene("res://Scenes/Outro.tscn")

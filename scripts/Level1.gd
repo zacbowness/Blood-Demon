@@ -1,10 +1,12 @@
 extends Node2D
 
+export var mainGameScene : PackedScene
 var goblin = preload("res://Scenes/Goblin.tscn")
 var flyingEye = preload("res://Scenes/FlyEye.tscn")
 var knight = preload("res://Scenes/Knight.tscn")
 var fireWorm = preload("res://Scenes/FireWorm.tscn")
 var skeleton = preload("res://Scenes/Skeleton.tscn")
+var hero = preload("res://Scenes/Hero.tscn")
 
 var death_count = 0
 var enemy_positions = []
@@ -45,3 +47,15 @@ func _death_count():
 
 func _on_Player_respawn():
 	get_tree().call_group("Enemy", "queue_free")
+
+func boss_Dead():
+	$BossRoom/FloorFallTimer.start()
+	
+func _on_Area2D_body_entered(body):
+	var hero_spawn = hero.instance()
+	hero_spawn.position = $BossRoom/BossPosition.position
+	hero_spawn.speed = -60
+	add_child(hero_spawn)
+
+func _on_FloorFallTimer_timeout():
+	$FallingFloor.collision_layer = 5

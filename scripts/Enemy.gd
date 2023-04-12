@@ -143,6 +143,8 @@ func death():
 		emmited_signal = true
 	if enemyType == "KnightBoss":
 		get_parent().boss_Dead()
+	if enemyType == "Hero":
+		get_parent().boss_Dead()
 	if special_enemyType == true:
 		emit_signal("specialEnemyDeath")
 
@@ -177,11 +179,9 @@ func Fireball():
 func change_to_idle():
 	if	not is_on_floor():
 		$AnimationPlayer.playback_speed = 0 
-		#$AnimationPlayer.play("Idle") may not be functional 
 		
 func change_to_walk():
 	if is_on_floor():
 		$AnimationPlayer.playback_speed = 1
-		#$AnimationPlayer.play("Walk") may not be needed
 		if airSpawn == true:
 			speed = saved_speed 

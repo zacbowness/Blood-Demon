@@ -66,7 +66,7 @@ func _physics_process(delta):
 		animate_sprite()
 
 func update_movement():
-	controllable = (isAlive and !isAttacking and !isRangeAttacking and $StunTimer.is_stopped() and !isRolling)
+	controllable = (isAlive and !isRangeAttacking and $StunTimer.is_stopped() and !isRolling)
 	direction = (Input.get_action_strength("move_right") - Input.get_action_strength("move_left"))
 	if controllable:
 	#	// MOVE LEFT & RIGHT //
@@ -104,7 +104,7 @@ func update_movement():
 				isTurning = true
 		
 #		// CROUCHING //
-		if Input.is_action_pressed("down"):
+		if Input.is_action_pressed("down") && !isAttacking:
 			isCrouching = true;
 			$RayCast2D.enabled = true
 		elif not underSomething: 

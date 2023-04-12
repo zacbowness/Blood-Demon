@@ -106,13 +106,14 @@ func take_damage(damage, dir):
 		knockback += knockback_Amount
 	else:
 		knockback -= knockback_Amount
-	sprite.material.set_shader_param("red",true)
-	yield(get_tree().create_timer(red_duration),"timeout")
-	sprite.material.set_shader_param("red",false)
 	if has_node("HealthBar"):
 		$HealthBar.value = health
 	if (health <= 0):
 		death()
+	sprite.material.set_shader_param("red",true)
+	yield(get_tree().create_timer(red_duration),"timeout")
+	sprite.material.set_shader_param("red",false)
+
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if (anim_name == "Attack" && seeWall == false):

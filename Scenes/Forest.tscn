@@ -1666,7 +1666,7 @@ max_stamina = 1000.0
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 235 )
 animation = "Run"
-frame = 8
+frame = 6
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 whiten_material = SubResource( 235 )

@@ -47,7 +47,6 @@ tile_data = PoolIntArray( -524300, 4, 0, -524299, 4, 0, -524298, 4, 0, -524297, 
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( 388, 216 )
-max_health = 250.0
 
 [node name="HUD" parent="." instance=ExtResource( 6 )]
 

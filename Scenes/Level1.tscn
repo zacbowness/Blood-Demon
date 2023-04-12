@@ -784,7 +784,6 @@ z_index = 1
 __meta__ = {
 "_edit_group_": true
 }
-max_blood = 25.0
 playerDamage = 1000
 
 [node name="Camera2D" parent="Player" index="1"]

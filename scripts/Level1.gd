@@ -62,6 +62,7 @@ func _on_FloorFallTimer_timeout():
 	$FallingFloor.set_collision_mask_bit(3, false)
 	$FallingFloor.set_collision_mask_bit(1, false)
 	$FallingFloor.visible = false
+	$FallingFloor.queue_free()
 	$Transition/AnimationPlayer.play("Fade_in")
 
 func _on_AnimationPlayer_animation_finished(anim_name):

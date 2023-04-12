@@ -1629,16 +1629,15 @@ format = 1
 tile_data = PoolIntArray( 1049034, 0, 0, 1049036, 0, 0, 1114570, 0, 0, 1114572, 0, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 4032, 288 )
+position = Vector2( 400, -62 )
 __meta__ = {
 "_edit_group_": true
 }
-max_blood = 25.0
 
 [node name="AnimatedSprite" parent="Player" index="2"]
 material = SubResource( 235 )
 animation = "Run"
-frame = 5
+frame = 1
 
 [node name="PlayerHurtbox" parent="Player" index="4"]
 whiten_material = SubResource( 235 )

@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Blood Demon"
-run/main_scene="res://Scenes/Forest.tscn"
+run/main_scene="res://Scenes/Menu.tscn"
 
 [display]
 
